@@ -4,6 +4,7 @@
   "private": true,
   "description": "a webpack starter for excaliburjs projects",
   "main": "index.js",
+  "homepage": ".",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "webpack",
