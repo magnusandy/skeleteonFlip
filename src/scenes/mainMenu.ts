@@ -11,20 +11,14 @@ export class MainMenu extends ex.Scene {
   private game: ex.Engine;
 
   public onInitialize(engine: ex.Engine) {
-    this.screenWidth = engine.canvasWidth;
-    this.screenHeight = engine.canvasHeight;
+    this.screenWidth = engine.drawWidth;
+    this.screenHeight = engine.drawHeight;
     this.engine = engine;
   }
 
   public onActivate() {
 
-    const title = Resources.title.asSprite();
-    const titleActor = new Actor();
-    titleActor.addDrawing(title);
-    titleActor.x = this.screenWidth/2;
-    titleActor.y = this.screenHeight/3;
-    this.add(titleActor);
-    
+
     const startActor = new MenuButton(
       Resources.startMenu, () => this.engine.goToScene(Scenes.GAME_WINDOW)
     );
@@ -40,6 +34,14 @@ export class MainMenu extends ex.Scene {
     optionActor.x = this.screenWidth/2;
     optionActor.y = this.screenHeight/2 + optionActor.drawHeight/2 + Config.gridPadding;
     this.add(optionActor)
+
+    const title = Resources.title.asSprite();
+    const titleActor = new Actor();
+    titleActor.addDrawing(title);
+    titleActor.x = this.screenWidth/2;
+    titleActor.y = this.screenHeight/2 - startActor.drawHeight*2;
+    this.add(titleActor);
+    
   }
   public onDeactivate() {}
 }

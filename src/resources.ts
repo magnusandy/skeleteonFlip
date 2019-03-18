@@ -9,6 +9,16 @@ const startMenu = require('./images/startMenu.png');
 const optionMenu = require('./images/optionsMenu.png');
 const title = require('./images/title.png');
 const gameOverImg = require('./images/gameOver.png');
+const zero = require('./images/numbers/0.png');
+const one = require('./images/numbers/1.png');
+const two = require('./images/numbers/2.png');
+const three = require('./images/numbers/3.png');
+const four = require('./images/numbers/4.png');
+const five = require('./images/numbers/5.png');
+const six = require('./images/numbers/6.png');
+const seven = require('./images/numbers/7.png');
+const eight = require('./images/numbers/8.png');
+const nine = require('./images/numbers/9.png');
 
 const Resources = {
     gameOver: new ex.Texture(gameOverImg),
@@ -19,7 +29,17 @@ const Resources = {
     coin: new ex.Texture(coin),
     card: new ex.Texture(card),
     startMenu: new ex.Texture(startMenu),
-    optionMenu: new ex.Texture(optionMenu),     
+    optionMenu: new ex.Texture(optionMenu),    
+    0: new ex.Texture(zero), 
+    1: new ex.Texture(one), 
+    2: new ex.Texture(two), 
+    3: new ex.Texture(three), 
+    4: new ex.Texture(four), 
+    5: new ex.Texture(five), 
+    6: new ex.Texture(six), 
+    7: new ex.Texture(seven), 
+    8: new ex.Texture(eight), 
+    9: new ex.Texture(nine), 
 }
 
 const Config = {

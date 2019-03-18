@@ -7,6 +7,7 @@ import { GridCoordinator } from "./gridCoordinator";
 import * as ex from "excalibur";
 import { Vector, Label } from "excalibur";
 import { Scenes } from "../scenes/scenes";
+import Count from "../actors/card/count";
 
 
 //this class will handle the building and coordinating of data between the game cards and other UI pieces
@@ -16,23 +17,25 @@ export class GameCoordinatior implements CardCallbackProvider {
     private attackCoordinator: NumberCoordinator;
     private gridCoordinator: GridCoordinator;
 
-    private rowLabels: ex.Label[];
-    private columnLabels: ex.Label[];
+    private rowCounts: Count[];
+    private columnCounts: Count[];
 
     private constructor(engine: ex.Engine, healthCoordinator: NumberCoordinator, attackCoordinator: NumberCoordinator) {
         this.healthCoordinator = healthCoordinator;
         this.attackCoordinator = attackCoordinator;
+        this.engine = engine;
     }
 
     public static initialize(engine: ex.Engine): GameCoordinatior {
+        console.log(Config.maxHealth);
         const coordinator: GameCoordinatior = new GameCoordinatior(
             engine,
-            NumberCoordinator.create("Health: ", 50, 50, Config.maxHealth, () => {engine.goToScene(Scenes.GAME_OVER)}, Config.maxHealth),
-            NumberCoordinator.create("Attack: ", 50, 100, Config.maxAttack, () => {})
+            NumberCoordinator.create("Health: ", 50, 50, Config.maxHealth, () => { engine.goToScene(Scenes.GAME_OVER) }, Config.maxHealth),
+            NumberCoordinator.create("Attack: ", 50, 100, Config.maxAttack, () => { })
         );
         coordinator.gridCoordinator = GridCoordinator.createGrid(coordinator, Config.gridSize, engine);
-        coordinator.rowLabels = coordinator.createRowCounts();
-        coordinator.columnLabels = coordinator.createColCounts();
+        coordinator.rowCounts = coordinator.createRowCountCards();
+        coordinator.columnCounts = coordinator.createColCountCards();
 
         return coordinator;
     }
@@ -44,23 +47,25 @@ export class GameCoordinatior implements CardCallbackProvider {
         ]
     }
 
-    public getRowCounts(): ex.Label[] {
-        return this.rowLabels;
+    public getRowCountCards(): Count[] {
+        return this.rowCounts;
     }
 
-    public getColCounts(): ex.Label[] {
-        return this.columnLabels;
+    public getColCountCards(): Count[] {
+        return this.columnCounts;
     }
 
-    private createRowCounts(): ex.Label[] {
-        return Stream.of(this.gridCoordinator.getCol(0))
-            .map(card => new Label(`${this.skeletonCountForRow(card.getRow())}`, card.x - Config.cardWidth, card.y, "Arial"))
+    private createColCountCards(): Count[] {
+        const center = new Vector(this.engine.drawWidth/2, this.engine.drawHeight/2);
+        return Stream.of(this.gridCoordinator.getRow(0))
+            .map(card => new Count("col", card.getCol(), center, this.skeletonCountForCol(card.getCol())))
             .toArray();
     }
-
-    private createColCounts(): ex.Label[] {
-        return Stream.of(this.gridCoordinator.getRow(0))
-            .map(card => new Label(`${this.skeletonCountForCol(card.getCol())}`, card.x, card.y - Config.cardHeight, "Arial"))
+    
+    private createRowCountCards(): Count[] {
+        const center = new Vector(this.engine.drawWidth/2, this.engine.drawHeight/2);
+        return Stream.of(this.gridCoordinator.getCol(0))
+            .map(card => new Count("row", card.getRow(), center, this.skeletonCountForRow(card.getRow())))
             .toArray();
     }
 
@@ -68,16 +73,14 @@ export class GameCoordinatior implements CardCallbackProvider {
         return Stream.of(this.gridCoordinator.getRow(row))
             .filter(c => !c.isFlipped())
             .filter(c => c.type() == CardType.SKELETON)
-            .count()
-
+            .count();
     }
 
     private skeletonCountForCol(col: number) {
         return Stream.of(this.gridCoordinator.getCol(col))
             .filter(c => !c.isFlipped())
             .filter(c => c.type() == CardType.SKELETON)
-            .count()
-
+            .count();
     }
 
     public getGridAsList(): Card[] {
@@ -85,18 +88,16 @@ export class GameCoordinatior implements CardCallbackProvider {
     }
 
     private updateLabels() {
-        console.log(this.rowLabels);
-        this.rowLabels.forEach((l, idx) => {
-            l.text = `${this.skeletonCountForRow(idx)}`
+        this.rowCounts.forEach((count, idx) => {
+            count.setCount(this.skeletonCountForRow(idx));
         });
 
-        this.columnLabels.forEach((l, idx) => {
-            l.text = `${this.skeletonCountForCol(idx)}`
+        this.columnCounts.forEach((count, idx) => {
+            count.setCount(this.skeletonCountForCol(idx));
         });
     }
 
     public skeletonCardCallback = (): void => {
-        console.log("skelly");
         if (this.attackCoordinator.getCurrent() > 0) {
             this.attackCoordinator.subtract(1);
         } else {
@@ -106,16 +107,13 @@ export class GameCoordinatior implements CardCallbackProvider {
     }
 
     public coinCardCallback = (): void => {
-        console.log("coin")
     }
 
     public attackCardCallback = (): void => {
-        console.log("att")
         this.attackCoordinator.add(1);
     }
 
     public potionCardCallback = (): void => {
-        console.log("pot")
         this.healthCoordinator.add(1);
     }
 }

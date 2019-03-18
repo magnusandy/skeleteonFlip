@@ -17,7 +17,6 @@ interface ICard {
 export class Card extends ex.Actor implements ICard {
 
     private cardType: CardType;
-    private faceColor: ex.Color;
     private passedInOnClick: Supplier<void>;
     private row: number;
     private col: number;
@@ -29,7 +28,6 @@ export class Card extends ex.Actor implements ICard {
         super();
         this.screenCenter = screenCenter;
         this.cardType = type;
-        this.faceColor = faceColor;
         this.passedInOnClick = onClick;
         this.row = row;
         this.col = col;
@@ -37,7 +35,6 @@ export class Card extends ex.Actor implements ICard {
         this.texture = texture;
         this.addDrawing("base", Card.sprite(Resources.card));
         this.addDrawing("flip", Card.sprite(this.texture));
-        this.color = ex.Color.Green;
         this.setWidth(Config.cardWidth);
         this.setHeight(Config.cardHeight);
         this.on("pointerdown", this.fullOnClick);
@@ -71,17 +68,10 @@ export class Card extends ex.Actor implements ICard {
     private fullOnClick(): void {
         if(!this.flipped) {
             this.flipped = true;
-            this.changeColor();
-            console.log(this);
             this.setDrawing("flip");
             this.passedInOnClick();
         }
     }
-
-    private changeColor(): void {
-        this.color = this.faceColor;
-    }
-
     public type(): CardType {
         return this.cardType;
     }
