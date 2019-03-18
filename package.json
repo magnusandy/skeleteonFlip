@@ -4,7 +4,6 @@
   "private": true,
   "description": "a webpack starter for excaliburjs projects",
   "main": "index.js",
-  "homepage": ".",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "webpack",
@@ -12,7 +11,7 @@
     "dev": "npm run webpack-dev-server",
     "start": "npm run dev",
     "build:dev": "npm run webpack -- --env.mode development",
-    "build:prod": "npm run webpack -- --env.mode production"
+    "build:prod": "npm run webpack -- --env.mode production && rm -rf docs/ && mv dist docs"
   },
   "author": "Excalibur.js Team",
   "license": "BSD-2-Clause",
