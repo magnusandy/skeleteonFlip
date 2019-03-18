@@ -1,6 +1,8 @@
 # Skeleton Flip
 Card puzzle game using Excalibur JS
+https://magnusandy.github.io/skeleteonFlip/
 
+Aim of the game, clear the board without running out of health.
 
 # Excalibur TypeScript & Webpack Example
 This example uses [`Webpack`](https://webpack.github.io/) and [`ts-loader`](https://github.com/TypeStrong/ts-loader) module to compile the TypeScript.
