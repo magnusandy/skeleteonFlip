@@ -3,8 +3,8 @@ import { GameWindow } from './scenes/levelOne';
 import { Resources } from './resources';
 import { Scenes } from './scenes/scenes';
 import { MainMenu } from './scenes/mainMenu';
-import Game from './engine/Game';
-import { GameLoader } from './engine/GameLoader';
+import Game from './engine/game';
+import { GameLoader } from './engine/gameLoader';
 import { GameOver } from './scenes/gameOver';
 
 const game = new Game();

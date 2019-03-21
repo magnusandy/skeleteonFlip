@@ -1,7 +1,7 @@
 import { NumberCoordinator } from "./numberCoordinator";
 import { Card, CardType } from "../actors/card/card";
 import { CardCallbackProvider } from "../actors/card/cardCallbackProvider"
-import { Config } from "../resources";
+import { Config, Resources } from "../resources";
 import { Stream, Function, Optional } from "java8script";
 import { GridCoordinator } from "./gridCoordinator";
 import * as ex from "excalibur";
@@ -27,11 +27,10 @@ export class GameCoordinatior implements CardCallbackProvider {
     }
 
     public static initialize(engine: ex.Engine): GameCoordinatior {
-        console.log(Config.maxHealth);
         const coordinator: GameCoordinatior = new GameCoordinatior(
             engine,
-            NumberCoordinator.create("Health: ", 50, 50, Config.maxHealth, () => { engine.goToScene(Scenes.GAME_OVER) }, Config.maxHealth),
-            NumberCoordinator.create("Attack: ", 50, 100, Config.maxAttack, () => { })
+            NumberCoordinator.create(50, 50, Config.maxHealth, () => { engine.goToScene(Scenes.GAME_OVER) }, Resources.uiHeart, Config.maxHealth),
+            NumberCoordinator.create(50, 100, Config.maxAttack, () => { }, Resources.uiSword)
         );
         coordinator.gridCoordinator = GridCoordinator.createGrid(coordinator, Config.gridSize, engine);
         coordinator.rowCounts = coordinator.createRowCountCards();
@@ -40,10 +39,10 @@ export class GameCoordinatior implements CardCallbackProvider {
         return coordinator;
     }
 
-    public getUIBar(): ex.Label[] {
+    public getStatTrackers(): ex.Actor[] {
         return [
-            this.healthCoordinator.getLabel(),
-            this.attackCoordinator.getLabel()
+            ...this.healthCoordinator.getStatActors(),
+            ...this.attackCoordinator.getStatActors()
         ]
     }
 

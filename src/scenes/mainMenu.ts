@@ -41,7 +41,7 @@ export class MainMenu extends ex.Scene {
     titleActor.x = this.screenWidth/2;
     titleActor.y = this.screenHeight/2 - startActor.drawHeight*2;
     this.add(titleActor);
-    
+  
   }
   public onDeactivate() {}
 }

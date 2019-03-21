@@ -1,29 +1,38 @@
-import { Label } from "excalibur";
-import { Supplier } from "java8script";
+import { Label, Texture } from "excalibur";
+import { Supplier, Stream } from "java8script";
+import StatTracker from "../actors/bars/statTracker";
 
 export class NumberCoordinator {
     private max: number;
     private current: number;
-    private labelPrefix: string;
-    private label: Label;
     private onZero: Supplier<void>;
 
-    private constructor(labelPrefix: string, max, current, label: Label, onZeroCallback: Supplier<void>) {
+    private statActors: StatTracker[];
+
+    private constructor(max, current, onZeroCallback: Supplier<void>, statActors: StatTracker[]) {
         this.current = current;
         this.max = max;
-        this.label = label;
-        this.labelPrefix = labelPrefix;
         this.onZero = onZeroCallback;
+        this.statActors = statActors;
     }
 
-    public static create(labelPrefix: string, x, y, max:number, onZeroCallback: Supplier<void>, current?: number): NumberCoordinator {
+    public static create(x, y, max:number, onZeroCallback: Supplier<void>, texture: Texture, current?: number): NumberCoordinator {
         const defaultedCurrent: number = current ? current : 0;
+        const statActors = Stream.range(0, max)
+                            .map(idx => {
+                                if(idx > (defaultedCurrent - 1)) {
+                                    return new StatTracker(false, x + (idx * 50), y, texture);
+                                } else {
+                                    return new StatTracker(true, x + (idx * 50), y, texture);
+                                }
+                            })
+                            .toArray();
+    
         return new NumberCoordinator(
-            labelPrefix,
             max,
             defaultedCurrent,
-            new Label(labelPrefix + defaultedCurrent, x, y, '20px Arial'),
-            onZeroCallback
+            onZeroCallback,
+            statActors
         );
     }
 
@@ -35,7 +44,7 @@ export class NumberCoordinator {
         } else {
             this.current = this.current + value;
         }
-        this.label.text = this.labelPrefix + this.current;
+       this.statActors[this.current - 1].setEnabled(true);
         return this.current;
     }
 
@@ -47,7 +56,7 @@ export class NumberCoordinator {
         } else {
             this.current = this.current - value;
         }
-        this.label.text = this.labelPrefix + this.current;
+        this.statActors[this.current].setEnabled(false);
         return this.current;
     }
 
@@ -56,7 +65,7 @@ export class NumberCoordinator {
         return this.current;
     }
 
-    public getLabel(): Label {
-        return this.label;
+    public getStatActors(): StatTracker[] {
+        return this.statActors;
     }
  }

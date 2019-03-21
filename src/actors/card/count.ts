@@ -27,8 +27,8 @@ export default class Count extends ex.Actor {
 
         this.setWidth(Config.cardWidth);
         this.setHeight(Config.cardHeight);
-        this.x = Count.calcX(type, index, screenCenter)
-        this.y = Count.calcY(type, index, screenCenter)
+        this.x = Count.calcX(type, index, screenCenter) + Config.cardWidth/2;
+        this.y = Count.calcY(type, index, screenCenter) + Config.cardHeight/2;
         this.setCount(initialCount);
     }
 

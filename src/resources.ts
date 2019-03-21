@@ -19,6 +19,9 @@ const six = require('./images/numbers/6.png');
 const seven = require('./images/numbers/7.png');
 const eight = require('./images/numbers/8.png');
 const nine = require('./images/numbers/9.png');
+const uiSword = require('./images/ui/sword.png');
+const uiHeart = require('./images/ui/heart.png');
+
 
 const Resources = {
     gameOver: new ex.Texture(gameOverImg),
@@ -40,6 +43,8 @@ const Resources = {
     7: new ex.Texture(seven), 
     8: new ex.Texture(eight), 
     9: new ex.Texture(nine), 
+    uiSword: new ex.Texture(uiSword),
+    uiHeart: new ex.Texture(uiHeart),
 }
 
 const Config = {
@@ -55,4 +60,4 @@ const Config = {
     backgroundColor: Color.Gray,
 };
 
-export { Resources, Config }
+export { Resources, Config, uiHeart}
