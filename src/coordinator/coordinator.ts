@@ -8,6 +8,7 @@ import * as ex from "excalibur";
 import { Vector, Label } from "excalibur";
 import { Scenes } from "../scenes/scenes";
 import Count from "../actors/card/count";
+import { MainMenu } from "../scenes/mainMenu";
 
 
 //this class will handle the building and coordinating of data between the game cards and other UI pieces
@@ -96,6 +97,14 @@ export class GameCoordinatior implements CardCallbackProvider {
         });
     }
 
+    private checkIfCompleteGame(): void {
+       const allFlipped = Stream.of(this.getGridAsList())
+            .allMatch(card => card.isFlipped());
+        if (allFlipped) {
+            this.engine.goToScene(Scenes.MAIN_MENU);
+        }
+    } 
+
     public skeletonCardCallback = (): void => {
         if (this.attackCoordinator.getCurrent() > 0) {
             this.attackCoordinator.subtract(1);
@@ -103,16 +112,20 @@ export class GameCoordinatior implements CardCallbackProvider {
             this.healthCoordinator.subtract(1);
         }
         this.updateLabels();
+        this.checkIfCompleteGame();
     }
 
     public coinCardCallback = (): void => {
+        this.checkIfCompleteGame();
     }
 
     public attackCardCallback = (): void => {
         this.attackCoordinator.add(1);
+        this.checkIfCompleteGame();
     }
 
     public potionCardCallback = (): void => {
         this.healthCoordinator.add(1);
+        this.checkIfCompleteGame();
     }
 }
