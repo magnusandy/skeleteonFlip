@@ -21,7 +21,12 @@ const eight = require('./images/numbers/8.png');
 const nine = require('./images/numbers/9.png');
 const uiSword = require('./images/ui/sword.png');
 const uiHeart = require('./images/ui/heart.png');
-
+const cardSound = require('./sounds/card.wav');
+const potionSound = require('./sounds/potion.wav');
+const boneSound = require('./sounds/bone.wav');
+const swordSound = require('./sounds/sword.wav');
+const laughSound = require('./sounds/laugh.ogg');
+const coinSound = require('./sounds/coin.wav');
 
 const Resources = {
     gameOver: new ex.Texture(gameOverImg),
@@ -45,6 +50,13 @@ const Resources = {
     9: new ex.Texture(nine), 
     uiSword: new ex.Texture(uiSword),
     uiHeart: new ex.Texture(uiHeart),
+    cardSound: new ex.Sound(cardSound),
+    boneSound: new ex.Sound(boneSound),
+    coinSound: new ex.Sound(coinSound),
+    laughSound: new ex.Sound(laughSound),
+    potionSound: new ex.Sound(potionSound),
+    swordSound: new ex.Sound(swordSound),
+    
 }
 
 const Config = {

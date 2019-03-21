@@ -22,11 +22,9 @@ export class Card extends ex.Actor implements ICard {
     private col: number;
     private flipped: boolean;
     private texture: ex.Texture;
-    private screenCenter: ex.Vector;
 
     public constructor(screenCenter: ex.Vector, col: number, row: number, onClick: Supplier<void>, faceColor: ex.Color, type: CardType, texture: ex.Texture) {
         super();
-        this.screenCenter = screenCenter;
         this.cardType = type;
         this.passedInOnClick = onClick;
         this.row = row;
@@ -70,11 +68,27 @@ export class Card extends ex.Actor implements ICard {
         if (!this.flipped) {
             this.flipped = true;
             this.setDrawing("flip");
+            Resources.cardSound.play().then(this.playSound)
+            
             this.passedInOnClick();
         }
     }
     public type(): CardType {
         return this.cardType;
+    }
+
+    private playSound: ()=>void = () =>  {
+        let sound: ex.Sound;
+        if (this.cardType === CardType.SKELETON) {
+            sound = Resources.boneSound;
+        } else if (this.cardType === CardType.ATTACK) {
+            sound = Resources.swordSound;
+        } else if (this.cardType === CardType.COIN) {
+            sound = Resources.coinSound;
+        } else if (this.cardType === CardType.POTION) {
+            sound = Resources.potionSound;
+        }
+        sound.play(0.3);
     }
 
     public getRow(): number {
