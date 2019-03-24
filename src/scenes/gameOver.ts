@@ -1,9 +1,6 @@
 import * as ex from 'excalibur';
-import { GameCoordinatior } from '../coordinator/coordinator';
-import { Stream } from 'java8script';
 import { Resources } from '../resources';
 import { Scenes } from './scenes';
-import { Sound } from 'excalibur';
 
 export class GameOver extends ex.Scene {
 

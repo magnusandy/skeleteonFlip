@@ -21,7 +21,6 @@ Card Types:
 # Development list
 Todo List:
 - Track score
-- Win screen
 - options page
     - disable/enable sound
     - change difficuly
@@ -29,5 +28,6 @@ Todo List:
 - information/help page
 - better support screen size or better mobile display
 
-# Excalibur TypeScript & Webpack Example
-This example uses [`Webpack`](https://webpack.github.io/) and [`ts-loader`](https://github.com/TypeStrong/ts-loader) module to compile the TypeScript.
+Tools used: 
+- Excalibur JS (https://excaliburjs.com/)
+- Piskel (https://www.piskelapp.com/)

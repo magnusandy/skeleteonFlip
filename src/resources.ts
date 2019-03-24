@@ -21,6 +21,7 @@ const eight = require('./images/numbers/8.png');
 const nine = require('./images/numbers/9.png');
 const uiSword = require('./images/ui/sword.png');
 const uiHeart = require('./images/ui/heart.png');
+const victory = require('./images/victory.png');
 const cardSound = require('./sounds/card.wav');
 const potionSound = require('./sounds/potion.wav');
 const boneSound = require('./sounds/bone.wav');
@@ -29,6 +30,7 @@ const laughSound = require('./sounds/laugh.ogg');
 const coinSound = require('./sounds/coin.wav');
 
 const Resources = {
+    victory: new ex.Texture(victory),
     gameOver: new ex.Texture(gameOverImg),
     title: new ex.Texture(title),
     sword: new ex.Texture(sword),
@@ -68,7 +70,7 @@ const Config = {
     cardHeight: 90,
     cardWidth: 75,
     skeletonDifficultyFactor: 2.0, //easy 3 (30%), medium 2.5 (40%), hard 2 (50%)
-    buffDifficultyFactor: 2, //easy 0, med 1, hard 2
+    buffDifficultyFactor: 3, //easy 0, med 1, hard 2
     backgroundColor: Color.Gray,
 };
 

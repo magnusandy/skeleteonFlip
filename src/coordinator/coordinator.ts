@@ -100,8 +100,8 @@ export class GameCoordinatior implements CardCallbackProvider {
     private checkIfCompleteGame(): void {
        const allFlipped = Stream.of(this.getGridAsList())
             .allMatch(card => card.isFlipped());
-        if (allFlipped) {
-            this.engine.goToScene(Scenes.MAIN_MENU);
+        if (allFlipped && this.healthCoordinator.getCurrent() > 0) {
+            this.engine.goToScene(Scenes.VICTORY);
         }
     } 
 

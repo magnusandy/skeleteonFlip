@@ -68,8 +68,7 @@ export class Card extends ex.Actor implements ICard {
         if (!this.flipped) {
             this.flipped = true;
             this.setDrawing("flip");
-            Resources.cardSound.play().then(this.playSound)
-            
+            Resources.cardSound.play(0.3).then(this.playSound)
             this.passedInOnClick();
         }
     }
@@ -88,7 +87,7 @@ export class Card extends ex.Actor implements ICard {
         } else if (this.cardType === CardType.POTION) {
             sound = Resources.potionSound;
         }
-        sound.play(0.3);
+        sound.play();
     }
 
     public getRow(): number {
