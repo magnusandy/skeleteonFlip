@@ -1,6 +1,7 @@
 import * as ex from 'excalibur';
 import { Resources } from '../resources';
 import { Scenes } from './scenes';
+import SoundManager from '../engine/soundManager';
 
 export class GameOver extends ex.Scene {
 
@@ -8,7 +9,8 @@ export class GameOver extends ex.Scene {
   public onInitialize(engine: ex.Engine) {
   }
   public onActivate() {
-    Resources.laughSound.play();
+    console.log("laugh");
+    SoundManager.get().playSoundInterrupt(Resources.laughSound);
     const gameOverActor = new ex.Actor();
     const spritesheet = new ex.SpriteSheet(Resources.gameOver, 3,1,360, 360);
     const playerIdleAnimation = spritesheet.getAnimationForAll(this.engine, 125);
@@ -18,7 +20,7 @@ export class GameOver extends ex.Scene {
     gameOverActor.y = this.engine.drawHeight/2;
     gameOverActor.setHeight(360);
     gameOverActor.setWidth(360);
-    gameOverActor.on('pointerdown', () => this.engine.goToScene(Scenes.MAIN_MENU));
+    gameOverActor.on('pointerup', () => this.engine.goToScene(Scenes.MAIN_MENU));
   }
 
   public onDeactivate() { 

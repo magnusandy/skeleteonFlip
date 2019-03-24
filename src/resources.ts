@@ -28,6 +28,8 @@ const boneSound = require('./sounds/bone.wav');
 const swordSound = require('./sounds/sword.wav');
 const laughSound = require('./sounds/laugh.ogg');
 const coinSound = require('./sounds/coin.wav');
+const backgroundMusic = require('./sounds/background.wav');
+const victorySound = require('./sounds/victory.mp3');
 
 const Resources = {
     victory: new ex.Texture(victory),
@@ -58,7 +60,8 @@ const Resources = {
     laughSound: new ex.Sound(laughSound),
     potionSound: new ex.Sound(potionSound),
     swordSound: new ex.Sound(swordSound),
-    
+    victorySound: new ex.Sound(victorySound),
+    backgroundMusic: new ex.Sound(backgroundMusic),
 }
 
 const Config = {

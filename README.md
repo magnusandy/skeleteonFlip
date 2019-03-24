@@ -28,6 +28,8 @@ Todo List:
 - information/help page
 - better support screen size or better mobile display
 
-Tools used: 
+Tools and Resources used: 
 - Excalibur JS (https://excaliburjs.com/)
 - Piskel (https://www.piskelapp.com/)
+- Song-Maker (https://musiclab.chromeexperiments.com/Song-Maker/)
+- FreeSound (freesound.org)

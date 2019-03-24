@@ -1,7 +1,9 @@
 import * as ex from 'excalibur';
 import { Config, Resources } from '../../resources';
 import { Supplier } from 'java8script'
-import { Vector } from 'excalibur';
+import { Vector, Sprite } from 'excalibur';
+import { Darken } from 'excalibur/dist/Drawing/SpriteEffects';
+import SoundManager from '../../engine/soundManager';
 
 export enum CardType {
     COIN = "coin",
@@ -23,6 +25,8 @@ export class Card extends ex.Actor implements ICard {
     private flipped: boolean;
     private texture: ex.Texture;
 
+    private baseSprite: Sprite;
+
     public constructor(screenCenter: ex.Vector, col: number, row: number, onClick: Supplier<void>, faceColor: ex.Color, type: CardType, texture: ex.Texture) {
         super();
         this.cardType = type;
@@ -31,23 +35,33 @@ export class Card extends ex.Actor implements ICard {
         this.col = col;
         this.flipped = false;
         this.texture = texture;
-        this.addDrawing("base", Card.sprite(Resources.card));
+        this.baseSprite = Card.sprite(Resources.card);
+        this.addDrawing("base", this.baseSprite);
         this.addDrawing("flip", Card.sprite(this.texture));
         this.setWidth(Config.cardWidth);
         this.setHeight(Config.cardHeight);
-        //this.anchor = new ex.Vector(0,0);
-        this.on("pointerdown", this.fullOnClick);
+        this.on("pointerup", this.fullOnClick);
+        this.on("pointerenter", this.onEnter);
+        this.on("pointerleave", this.onExit);
         this.x = Card.calcX(col, row, screenCenter) + Config.cardWidth/2; //adding on padding for drawing from center of card
         this.y = Card.calcY(col, row, screenCenter) + Config.cardHeight/2;
     }
 
+    private onEnter: () => void = () => {
+        this.baseSprite.clearEffects();
+        this.baseSprite.addEffect(new Darken(0.2));
+      }
+    
+      private onExit: () => void = () => {
+        this.baseSprite.clearEffects();
+      }
+    
     private static calcX(col: number, row: number, center: ex.Vector): number {
         const leftSide = center.x
             - ((Config.gridSize / 2) * Config.cardWidth)
             - ((Config.gridSize - 1) * Config.gridPadding) / 2;
 
         return leftSide + (Config.cardWidth * col) + (Config.gridPadding * col)
-
     }
 
     private static calcY(col: number, row: number, center: ex.Vector) {
@@ -59,7 +73,7 @@ export class Card extends ex.Actor implements ICard {
     }
 
     private static sprite(texture: ex.Texture): ex.Sprite {
-        const sprite: ex.Sprite = texture.asSprite();
+        const sprite: ex.Sprite = new Sprite(texture, 0, 0, texture.width, texture.height);
         sprite.scale = new Vector(0.5, 0.5);
         return sprite;
     }
@@ -68,7 +82,10 @@ export class Card extends ex.Actor implements ICard {
         if (!this.flipped) {
             this.flipped = true;
             this.setDrawing("flip");
-            Resources.cardSound.play(0.3).then(this.playSound)
+            SoundManager.get().playSoundInterrupt(
+                Resources.cardSound,
+                this.playSound
+            );
             this.passedInOnClick();
         }
     }
@@ -87,7 +104,7 @@ export class Card extends ex.Actor implements ICard {
         } else if (this.cardType === CardType.POTION) {
             sound = Resources.potionSound;
         }
-        sound.play();
+        SoundManager.get().playSoundInterrupt(sound);
     }
 
     public getRow(): number {

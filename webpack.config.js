@@ -27,7 +27,7 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
           exclude: /node_modules/
         },
         {
-          test: /\.(png|jpg|bmp|wav|ogg)$/,
+          test: /\.(png|jpg|bmp|wav|ogg|mp3)$/,
           use: [{
             loader: 'file-loader',
             options: {
