@@ -1,16 +1,33 @@
 # Skeleton Flip
 Card puzzle game using Excalibur JS
-https://magnusandy.github.io/skeleteonFlip/
+https://magnusandy.github.io/skeletonFlip/
 
 Aim of the game, clear the board without running out of health.
 
+# How to play
+
+The top left of the screen displays your current life (hearts) and current attack (swords). at the start of a round you will begin with 3 life and 0 attack.
+
+The numbers on the edge of the board are the number of skeletons in that row/column.
+
+The goal of the game is to flip every card on the board without losing all of your life.
+
+Card Types: 
+ - Skeleton: flipping this card will cause you to lose a life, unless you have an attack, then you will kill that skeleton with the sword
+ - Sword: gain an attack
+ - Potion: heal any lost life
+ - Coin: Gives points
+
+# Development list
+Todo List:
+- Track score
+- Win screen
+- options page
+    - disable/enable sound
+    - change difficuly
+    - change grid size
+- information/help page
+- better support screen size or better mobile display
+
 # Excalibur TypeScript & Webpack Example
 This example uses [`Webpack`](https://webpack.github.io/) and [`ts-loader`](https://github.com/TypeStrong/ts-loader) module to compile the TypeScript.
-
-Before you start, install the package via your beloved dependency manager through ```npm install``` or ```yarn install```.
-
-To start debugging your code, run ```start``` for the **development** script. It would compile Excalibur and a whole thing from the **/src** folder into the output **bundle.js** file. You will be able to see a result on ```localhost:8080``` and change your code "on the fly" without recompiling the bundle.
-
-When you are ready to go, compile a **production** version with ```build``` script or choose the appropriate task from VSCode, then check out the **/dist** folder.
-
-**Please note:** when running `npm start` or `yarn start`, the webpack-dev-server generates your files virtually so you won't find them in your /dist folder.# skeleteonFlip
