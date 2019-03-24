@@ -16,6 +16,12 @@ interface ICard {
     type: () => CardType;
 }
 
+interface IDimensions {
+    width: number;
+    height: number; 
+    scale: Vector;
+}
+
 export class Card extends ex.Actor implements ICard {
 
     private cardType: CardType;
@@ -35,16 +41,18 @@ export class Card extends ex.Actor implements ICard {
         this.col = col;
         this.flipped = false;
         this.texture = texture;
-        this.baseSprite = Card.sprite(Resources.card);
+        const dims: IDimensions = Card.calcCardDimensions(screenCenter.y*2, screenCenter.x*2)
+        console.log(dims);
+        this.baseSprite = Card.sprite(Resources.card, dims.scale);
         this.addDrawing("base", this.baseSprite);
-        this.addDrawing("flip", Card.sprite(this.texture));
-        this.setWidth(Config.cardWidth);
-        this.setHeight(Config.cardHeight);
+        this.addDrawing("flip", Card.sprite(this.texture, dims.scale));
+        this.setWidth(dims.width);
+        this.setHeight(dims.height);
         this.on("pointerup", this.fullOnClick);
         this.on("pointerenter", this.onEnter);
         this.on("pointerleave", this.onExit);
-        this.x = Card.calcX(col, row, screenCenter) + Config.cardWidth/2; //adding on padding for drawing from center of card
-        this.y = Card.calcY(col, row, screenCenter) + Config.cardHeight/2;
+        this.x = Card.calcX(col, dims.width, screenCenter) + dims.width; //adding on padding for drawing from center of card
+        this.y = Card.calcY(dims.height, row, screenCenter) + dims.height;
     }
 
     private onEnter: () => void = () => {
@@ -56,25 +64,69 @@ export class Card extends ex.Actor implements ICard {
         this.baseSprite.clearEffects();
       }
     
-    private static calcX(col: number, row: number, center: ex.Vector): number {
+    private static calcX(col: number, cardWidth: number, center: ex.Vector): number {
         const leftSide = center.x
-            - ((Config.gridSize / 2) * Config.cardWidth)
+            - ((Config.gridSize / 2) * cardWidth)
             - ((Config.gridSize - 1) * Config.gridPadding) / 2;
 
-        return leftSide + (Config.cardWidth * col) + (Config.gridPadding * col)
+        return leftSide + (cardWidth * col) + (Config.gridPadding * col)
     }
 
-    private static calcY(col: number, row: number, center: ex.Vector) {
+    private static calcY(cardHeight: number, row: number, center: ex.Vector) {
         const top = center.y
-            - ((Config.gridSize / 2) * Config.cardHeight)
+            - ((Config.gridSize / 2) * cardHeight)
             - ((Config.gridSize - 1) * Config.gridPadding) / 2;
 
-        return top + (Config.cardHeight * row) + (Config.gridPadding * row);
+        return top + (cardHeight * row) + (Config.gridPadding * row);
     }
 
-    private static sprite(texture: ex.Texture): ex.Sprite {
+    public static calcCardDimensions(screenHeight: number, screenWidth: number): IDimensions {
+        const {height, width} = {height: 180, width: 150}
+        const maxHeight = Card.calcMaxCardHeight(screenHeight);
+        const maxWidth = Card.calcMaxCardWidth(screenWidth); 
+        const scaleByWidth = maxWidth/width;
+
+        console.log({
+            screenWidth,
+            screenHeight,
+            width,
+            height,
+            maxHeight,
+            maxWidth,
+            scaleByWidth
+        });
+
+        if((scaleByWidth * (maxHeight * (Config.gridSize+1))) > screenHeight) { 
+            // using width as the scale base pushes height out of the screen
+            console.log("here");
+            const scaleByHeight = maxHeight/height;
+            return {
+                width: width*scaleByHeight,
+                height: maxHeight,
+                scale: new Vector(scaleByHeight, scaleByHeight)
+            }
+        } else {
+            return {
+                width: maxWidth,
+                height: height*scaleByWidth,
+                scale: new Vector(scaleByWidth, scaleByWidth)
+            }
+        }
+    }
+
+    private static calcMaxCardHeight(screenHeight: number): number {
+        const workableScreenHeight = screenHeight*0.85;
+        return (workableScreenHeight / (Config.gridSize + 1)) - Config.gridPadding;
+    }
+
+    private static calcMaxCardWidth(screenWidth: number): number {
+        const workableWidth = screenWidth * 0.85;
+        return (workableWidth / (Config.gridSize + 1)) - Config.gridPadding;
+    }
+
+    private static sprite(texture: ex.Texture, scale: Vector): ex.Sprite {
         const sprite: ex.Sprite = new Sprite(texture, 0, 0, texture.width, texture.height);
-        sprite.scale = new Vector(0.5, 0.5);
+        sprite.scale = scale;
         return sprite;
     }
 

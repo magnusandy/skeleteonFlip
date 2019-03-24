@@ -1,5 +1,7 @@
 import * as ex from 'excalibur';
 import { Resources, Config } from '../../resources';
+import { Card } from './card';
+import { Vector } from 'excalibur';
 
 type CountType = 'col' | 'row';
 
@@ -14,53 +16,56 @@ export default class Count extends ex.Actor {
         this.type = type;
         this.index = index;
         this.screenCenter = screenCenter;
-        this.addDrawing("0", Count.sprite(Resources[0]));
-        this.addDrawing("1", Count.sprite(Resources[1]));
-        this.addDrawing("2", Count.sprite(Resources[2]));
-        this.addDrawing("3", Count.sprite(Resources[3]));
-        this.addDrawing("4", Count.sprite(Resources[4]));
-        this.addDrawing("5", Count.sprite(Resources[5]));
-        this.addDrawing("6", Count.sprite(Resources[6]));
-        this.addDrawing("7", Count.sprite(Resources[7]));
-        this.addDrawing("8", Count.sprite(Resources[8]));
-        this.addDrawing("9", Count.sprite(Resources[9]));
+        const dims = Card.calcCardDimensions(screenCenter.y*2, screenCenter.x*2)
 
-        this.setWidth(Config.cardWidth);
-        this.setHeight(Config.cardHeight);
-        this.x = Count.calcX(type, index, screenCenter) + Config.cardWidth/2;
-        this.y = Count.calcY(type, index, screenCenter) + Config.cardHeight/2;
+        this.addDrawing("0", Count.sprite(Resources[0], dims.scale));
+        this.addDrawing("1", Count.sprite(Resources[1], dims.scale));
+        this.addDrawing("2", Count.sprite(Resources[2], dims.scale));
+        this.addDrawing("3", Count.sprite(Resources[3], dims.scale));
+        this.addDrawing("4", Count.sprite(Resources[4], dims.scale));
+        this.addDrawing("5", Count.sprite(Resources[5], dims.scale));
+        this.addDrawing("6", Count.sprite(Resources[6], dims.scale));
+        this.addDrawing("7", Count.sprite(Resources[7], dims.scale));
+        this.addDrawing("8", Count.sprite(Resources[8], dims.scale));
+        this.addDrawing("9", Count.sprite(Resources[9], dims.scale));
+
+
+        this.setWidth(dims.width);
+        this.setHeight(dims.height);
+        this.x = Count.calcX(type, index, screenCenter, dims.width) + dims.width;
+        this.y = Count.calcY(type, index, screenCenter, dims.height) + dims.height;
         this.setCount(initialCount);
     }
 
-    private static calcX(type: CountType, index: number, center: ex.Vector): number {
+    private static calcX(type: CountType, index: number, center: ex.Vector, cardWidth: number): number {
         const leftSide = center.x
-            - ((Config.gridSize / 2) * Config.cardWidth)
-            - Config.cardWidth
+            - ((Config.gridSize / 2) * cardWidth)
+            - cardWidth
             - ((Config.gridSize+1) * Config.gridPadding) / 2;
 
         if (type === "row") {
             return leftSide;
         } else {
-            return leftSide + Config.cardWidth + (Config.cardWidth * index) + (Config.gridPadding * (index+1));
+            return leftSide + cardWidth + (cardWidth * index) + (Config.gridPadding * (index+1));
         }
     }
 
-    private static calcY(type: CountType, index: number, center: ex.Vector): number {
+    private static calcY(type: CountType, index: number, center: ex.Vector, cardHeight: number): number {
         const top = center.y
-            - ((Config.gridSize/2)* Config.cardHeight)
-            - Config.cardHeight
+            - ((Config.gridSize/2)* cardHeight)
+            - cardHeight
             - ((Config.gridSize+1) * Config.gridPadding)/2;
 
             if(type === "col") {
                 return top;
             } else {
-                return top + Config.cardHeight + (Config.cardHeight * index) + (Config.gridPadding * (index + 1))
+                return top + cardHeight + (cardHeight * index) + (Config.gridPadding * (index + 1))
             }
     }
 
-    private static sprite(texture: ex.Texture): ex.Sprite {
+    private static sprite(texture: ex.Texture, scale: Vector): ex.Sprite {
         const sprite: ex.Sprite = texture.asSprite();
-        sprite.scale = new ex.Vector(0.5, 0.5);
+        sprite.scale = scale;
         return sprite;
     }
 
