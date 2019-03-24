@@ -70,7 +70,7 @@ const Config = {
     cardHeight: 90,
     cardWidth: 75,
     skeletonDifficultyFactor: 2.0, //easy 3 (30%), medium 2.5 (40%), hard 2 (50%)
-    buffDifficultyFactor: 3, //easy 0, med 1, hard 2
+    buffDifficultyFactor: 1, //easy 0, med 1, hard 2
     backgroundColor: Color.Gray,
 };
 
