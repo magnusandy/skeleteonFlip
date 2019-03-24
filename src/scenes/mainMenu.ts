@@ -19,7 +19,6 @@ export class MainMenu extends ex.Scene {
   }
 
   public onActivate() {
-    SoundManager.get().backgroundMusicStart();
     const startActor = new MenuButton(
       Resources.startMenu, () => this.engine.goToScene(Scenes.GAME_WINDOW)
     );
