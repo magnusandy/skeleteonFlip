@@ -1,0 +1,20 @@
+{
+  "icons": [
+    {
+      "src": "icon_512x512.d72093fdad71e20555b43c4f93cf8bb4.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_192x192.91a4ffc78af0a7f5987c7e11bb6b7dcc.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "name": "Skeleton Flip",
+  "short_name": "Flip",
+  "orientation": "portrait",
+  "display": "standalone",
+  "start_url": ".",
+  "background_color": "#ffffff"
+}

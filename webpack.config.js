@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const webpackMerge = require("webpack-merge");
+const WebpackPwaManifest = require('webpack-pwa-manifest');
 
 const modeConfig = env => require(`./build-utils/webpack.${env}`)(env);
 
@@ -54,7 +55,23 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
       new CleanWebpackPlugin(['dist']),
       new HtmlWebPackPlugin({
         title: 'Skeleton Flip'
-      })
+      }),
+      new WebpackPwaManifest({
+        filename: "manifest.json",
+        name: 'Skeleton Flip',
+        short_name: 'Flip',
+        background_color: '#ffffff',
+        icons: [
+          {
+            src: path.resolve('src/images/icon-192.png'),
+            size: '192x192' 
+          },
+          {
+            src: path.resolve('src/images/icon-512.png'),
+            size: '512x512'
+          }
+        ]
+      }),
     ]
   },
   modeConfig(mode)
