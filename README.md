@@ -27,9 +27,14 @@ Todo List:
     - change difficuly
     - change grid size
 - information/help page
+- add X in corner of game screem
+- add a menu bar to the top (maybe game title) better size the health part
+- redraw if resize
 - better support screen size or better mobile display
-    - grid scaling (done)
     - main menu/gameover/victory
+- Android stuff
+    - icon
+    - lock portrait?
 
 Tools and Resources used: 
 - Excalibur JS (https://excaliburjs.com/)
