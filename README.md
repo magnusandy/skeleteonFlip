@@ -27,6 +27,8 @@ Todo List:
     - change grid size
 - information/help page
 - better support screen size or better mobile display
+    - grid scaling (done)
+    - main menu/gameover/victory
 
 Tools and Resources used: 
 - Excalibur JS (https://excaliburjs.com/)

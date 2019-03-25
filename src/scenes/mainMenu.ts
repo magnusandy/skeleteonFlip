@@ -1,12 +1,10 @@
-import * as ex from 'excalibur';
-import { Label, Actor, Vector, Engine, SpriteSheet, Sprite, Events } from 'excalibur';
+import { Actor, Vector, Sprite, Scene } from 'excalibur';
 import { Resources, Config } from '../resources';
 import { Scenes } from './scenes';
 import { Supplier } from 'java8script';
 import { Darken } from 'excalibur/dist/Drawing/SpriteEffects';
-import SoundManager from '../engine/soundManager';
 
-export class MainMenu extends ex.Scene {
+export class MainMenu extends Scene {
 
   private screenWidth: number;
   private screenHeight: number;
@@ -15,12 +13,12 @@ export class MainMenu extends ex.Scene {
   public onInitialize(engine: ex.Engine) {
     this.screenWidth = engine.drawWidth;
     this.screenHeight = engine.drawHeight;
-    this.engine = engine;
+    this.game = engine;
   }
 
   public onActivate() {
     const startActor = new MenuButton(
-      Resources.startMenu, () => this.engine.goToScene(Scenes.GAME_WINDOW)
+      Resources.startMenu, () => this.game.goToScene(Scenes.GAME_WINDOW)
     );
     startActor.x = this.screenWidth/2;
     startActor.y = this.screenHeight/2 - startActor.drawHeight/2 - Config.gridPadding;
@@ -46,7 +44,7 @@ export class MainMenu extends ex.Scene {
   public onDeactivate() {}
 }
 
-class MenuButton extends ex.Actor {
+class MenuButton extends Actor {
   static buttonScale = new Vector(0.4, 0.4);
   public drawHeight: number;
   private sprite: Sprite;
@@ -58,7 +56,7 @@ class MenuButton extends ex.Actor {
     this.addDrawing(this.sprite)
     this.setHeight(this.sprite.drawHeight);
     this.setWidth(this.sprite.drawWidth);
-    this.on("pointerDown", this.onDown);
+    this.on("pointerdown", this.onDown);
     this.on("pointerup", onClick);
     this.on("pointerenter", this.onEnter);
     this.on("pointerleave", this.onExit);

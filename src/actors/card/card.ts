@@ -18,7 +18,7 @@ interface ICard {
 
 interface IDimensions {
     width: number;
-    height: number; 
+    height: number;
     scale: Vector;
 }
 
@@ -41,8 +41,7 @@ export class Card extends ex.Actor implements ICard {
         this.col = col;
         this.flipped = false;
         this.texture = texture;
-        const dims: IDimensions = Card.calcCardDimensions(screenCenter.y*2, screenCenter.x*2)
-        console.log(dims);
+        const dims: IDimensions = Card.calcCardDimensions(screenCenter.y * 2, screenCenter.x * 2)
         this.baseSprite = Card.sprite(Resources.card, dims.scale);
         this.addDrawing("base", this.baseSprite);
         this.addDrawing("flip", Card.sprite(this.texture, dims.scale));
@@ -58,12 +57,12 @@ export class Card extends ex.Actor implements ICard {
     private onEnter: () => void = () => {
         this.baseSprite.clearEffects();
         this.baseSprite.addEffect(new Darken(0.2));
-      }
-    
-      private onExit: () => void = () => {
+    }
+
+    private onExit: () => void = () => {
         this.baseSprite.clearEffects();
-      }
-    
+    }
+
     private static calcX(col: number, cardWidth: number, center: ex.Vector): number {
         const leftSide = center.x
             - ((Config.gridSize / 2) * cardWidth)
@@ -81,41 +80,30 @@ export class Card extends ex.Actor implements ICard {
     }
 
     public static calcCardDimensions(screenHeight: number, screenWidth: number): IDimensions {
-        const {height, width} = {height: 180, width: 150}
+        const { height, width } = Resources.card;
         const maxHeight = Card.calcMaxCardHeight(screenHeight);
-        const maxWidth = Card.calcMaxCardWidth(screenWidth); 
-        const scaleByWidth = maxWidth/width;
+        const maxWidth = Card.calcMaxCardWidth(screenWidth);
+        const scaleByWidth = maxWidth / width;
 
-        console.log({
-            screenWidth,
-            screenHeight,
-            width,
-            height,
-            maxHeight,
-            maxWidth,
-            scaleByWidth
-        });
-
-        if((scaleByWidth * (maxHeight * (Config.gridSize+1))) > screenHeight) { 
+        if ((scaleByWidth * (height * (Config.gridSize + 1))) > screenHeight) {
             // using width as the scale base pushes height out of the screen
-            console.log("here");
-            const scaleByHeight = maxHeight/height;
+            const scaleByHeight = maxHeight / height;
             return {
-                width: width*scaleByHeight,
+                width: width * scaleByHeight,
                 height: maxHeight,
                 scale: new Vector(scaleByHeight, scaleByHeight)
             }
         } else {
             return {
                 width: maxWidth,
-                height: height*scaleByWidth,
+                height: height * scaleByWidth,
                 scale: new Vector(scaleByWidth, scaleByWidth)
             }
         }
     }
 
     private static calcMaxCardHeight(screenHeight: number): number {
-        const workableScreenHeight = screenHeight*0.85;
+        const workableScreenHeight = screenHeight * 0.85;
         return (workableScreenHeight / (Config.gridSize + 1)) - Config.gridPadding;
     }
 
@@ -145,7 +133,7 @@ export class Card extends ex.Actor implements ICard {
         return this.cardType;
     }
 
-    private playSound: ()=>void = () =>  {
+    private playSound: () => void = () => {
         let sound: ex.Sound;
         if (this.cardType === CardType.SKELETON) {
             sound = Resources.boneSound;

@@ -7,8 +7,10 @@ import SoundManager from '../engine/soundManager';
 export class GameWindow extends ex.Scene {
 
   private coordinator;
+  private engine;
 
   public onInitialize(engine: ex.Engine) {
+    this.engine = engine;
   }
 
   public onActivate() {

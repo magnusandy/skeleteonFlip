@@ -4,7 +4,8 @@ import { Config } from '../resources';
 export default class Game extends ex.Engine {
   constructor() {
     super({ 
-      displayMode: ex.DisplayMode.FullScreen 
+      displayMode: ex.DisplayMode.FullScreen,
+      suppressPlayButton: true //todo think about customizing the button
     });
     this.backgroundColor = Config.backgroundColor;
   }

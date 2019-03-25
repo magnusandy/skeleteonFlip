@@ -67,10 +67,8 @@ const Resources = {
 const Config = {
     maxHealth: 3,
     maxAttack: 2,
-    gridPadding: 8,
-    gridSize: 4,
-    //cardHeight: 90,
-    //cardWidth: 75,
+    gridPadding: 4,
+    gridSize: 6,
     skeletonDifficultyFactor: 2.0, //easy 3 (30%), medium 2.5 (40%), hard 2 (50%)
     buffDifficultyFactor: 1, //easy 0, med 1, hard 2
     backgroundColor: Color.Gray,
