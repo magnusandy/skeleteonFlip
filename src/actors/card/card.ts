@@ -4,6 +4,7 @@ import { Supplier } from 'java8script'
 import { Vector, Sprite } from 'excalibur';
 import { Darken } from 'excalibur/dist/Drawing/SpriteEffects';
 import SoundManager from '../../engine/soundManager';
+import ProgressionManager from '../../engine/progressionManager';
 
 export enum CardType {
     COIN = "coin",
@@ -30,7 +31,6 @@ export class Card extends ex.Actor implements ICard {
     private col: number;
     private flipped: boolean;
     private texture: ex.Texture;
-
     private baseSprite: Sprite;
 
     public constructor(screenCenter: ex.Vector, col: number, row: number, onClick: Supplier<void>, faceColor: ex.Color, type: CardType, texture: ex.Texture) {
@@ -65,16 +65,16 @@ export class Card extends ex.Actor implements ICard {
 
     private static calcX(col: number, cardWidth: number, center: ex.Vector): number {
         const leftSide = center.x
-            - ((Config.gridSize / 2) * cardWidth)
-            - ((Config.gridSize - 1) * Config.gridPadding) / 2;
+            - ((ProgressionManager.get().getGridSize() / 2) * cardWidth)
+            - ((ProgressionManager.get().getGridSize() - 1) * Config.gridPadding) / 2;
 
         return leftSide + (cardWidth * col) + (Config.gridPadding * col)
     }
 
     private static calcY(cardHeight: number, row: number, center: ex.Vector) {
         const top = center.y
-            - ((Config.gridSize / 2) * cardHeight)
-            - ((Config.gridSize - 1) * Config.gridPadding) / 2;
+            - ((ProgressionManager.get().getGridSize() / 2) * cardHeight)
+            - ((ProgressionManager.get().getGridSize() - 1) * Config.gridPadding) / 2;
 
         return top + (cardHeight * row) + (Config.gridPadding * row);
     }
@@ -85,7 +85,7 @@ export class Card extends ex.Actor implements ICard {
         const maxWidth = Card.calcMaxCardWidth(screenWidth);
         const scaleByWidth = maxWidth / width;
 
-        if ((scaleByWidth * (height * (Config.gridSize + 1))) > screenHeight) {
+        if ((scaleByWidth * (height * (ProgressionManager.get().getGridSize() + 1))) > screenHeight) {
             // using width as the scale base pushes height out of the screen
             const scaleByHeight = maxHeight / height;
             return {
@@ -104,12 +104,12 @@ export class Card extends ex.Actor implements ICard {
 
     private static calcMaxCardHeight(screenHeight: number): number {
         const workableScreenHeight = screenHeight * 0.85;
-        return (workableScreenHeight / (Config.gridSize + 1)) - Config.gridPadding;
+        return (workableScreenHeight / (ProgressionManager.get().getGridSize() + 1)) - Config.gridPadding;
     }
 
     private static calcMaxCardWidth(screenWidth: number): number {
         const workableWidth = screenWidth * 0.85;
-        return (workableWidth / (Config.gridSize + 1)) - Config.gridPadding;
+        return (workableWidth / (ProgressionManager.get().getGridSize() + 1)) - Config.gridPadding;
     }
 
     private static sprite(texture: ex.Texture, scale: Vector): ex.Sprite {

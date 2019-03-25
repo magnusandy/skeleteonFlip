@@ -9,6 +9,7 @@ import { Vector, Label } from "excalibur";
 import { Scenes } from "../scenes/scenes";
 import Count from "../actors/card/count";
 import { MainMenu } from "../scenes/mainMenu";
+import ProgressionManager from "../engine/progressionManager";
 
 
 //this class will handle the building and coordinating of data between the game cards and other UI pieces
@@ -33,7 +34,7 @@ export class GameCoordinatior implements CardCallbackProvider {
             NumberCoordinator.create(50, 50, Config.maxHealth, () => { engine.goToScene(Scenes.GAME_OVER) }, Resources.uiHeart, Config.maxHealth),
             NumberCoordinator.create(50, 100, Config.maxAttack, () => { }, Resources.uiSword)
         );
-        coordinator.gridCoordinator = GridCoordinator.createGrid(coordinator, Config.gridSize, engine);
+        coordinator.gridCoordinator = GridCoordinator.createGrid(coordinator, ProgressionManager.get().getGridSize(), engine);
         coordinator.rowCounts = coordinator.createRowCountCards();
         coordinator.columnCounts = coordinator.createColCountCards();
 

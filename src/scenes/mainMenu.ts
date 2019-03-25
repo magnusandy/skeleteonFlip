@@ -3,6 +3,7 @@ import { Resources, Config } from '../resources';
 import { Scenes } from './scenes';
 import { Supplier } from 'java8script';
 import { Darken } from 'excalibur/dist/Drawing/SpriteEffects';
+import ButtonBase from '../actors/bars/buttonBase';
 
 export class MainMenu extends Scene {
 
@@ -17,17 +18,20 @@ export class MainMenu extends Scene {
   }
 
   public onActivate() {
-    const startActor = new MenuButton(
-      Resources.startMenu, () => this.game.goToScene(Scenes.GAME_WINDOW)
+    const scale = new Vector(0.5,0.5);
+    const startActor = new ButtonBase(
+      Resources.startMenu, () => this.game.goToScene(Scenes.GAME_WINDOW),
+      scale
     );
     startActor.x = this.screenWidth/2;
     startActor.y = this.screenHeight/2 - startActor.drawHeight/2 - Config.gridPadding;
 
     this.add(startActor)
 
-    const optionActor = new MenuButton(
+    const optionActor = new ButtonBase(
       Resources.optionMenu,
-      () => {}
+      () => {},
+      scale
     );
     optionActor.x = this.screenWidth/2;
     optionActor.y = this.screenHeight/2 + optionActor.drawHeight/2 + Config.gridPadding;
@@ -42,39 +46,4 @@ export class MainMenu extends Scene {
   
   }
   public onDeactivate() {}
-}
-
-class MenuButton extends Actor {
-  static buttonScale = new Vector(0.4, 0.4);
-  public drawHeight: number;
-  private sprite: Sprite;
-
-  public constructor(texture: ex.Texture, onClick: Supplier<void>) {
-    super();
-    this.sprite = texture.asSprite();
-    this.sprite.scale = MenuButton.buttonScale;
-    this.addDrawing(this.sprite)
-    this.setHeight(this.sprite.drawHeight);
-    this.setWidth(this.sprite.drawWidth);
-    this.on("pointerdown", this.onDown);
-    this.on("pointerup", onClick);
-    this.on("pointerenter", this.onEnter);
-    this.on("pointerleave", this.onExit);
-    this.drawHeight = this.sprite.drawHeight;
-  }
-
-  private onDown: () => void = () => {
-    this.sprite.clearEffects();
-    this.sprite.addEffect(new Darken(0.2))
-  }
-
-  private onEnter: () => void = () => {
-    this.sprite.clearEffects();
-    this.sprite.addEffect(new Darken(0.1))
-  }
-
-  private onExit: () => void = () => {
-    this.sprite.clearEffects();
-  }
-  
 }

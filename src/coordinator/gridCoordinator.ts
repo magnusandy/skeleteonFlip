@@ -4,6 +4,7 @@ import { Stream, Function, Supplier } from "java8script";
 import { Config } from "../resources";
 import * as ex from 'excalibur';
 import { Vector } from "excalibur";
+import ProgressionManager from "../engine/progressionManager";
 
 
 export class GridCoordinator {
@@ -109,12 +110,12 @@ export class GridCoordinator {
     } 
 
     private needMoreSkeletons(): boolean {
-        return this.skeletonCount < Math.ceil(((this.gridSize * this.gridSize)) / Config.skeletonDifficultyFactor);
+        return this.skeletonCount < Math.ceil(((this.gridSize * this.gridSize)) / ProgressionManager.get().getSkullFactor());
     }
 
     private needMoreBuffs() {
         const totalBuffs = this.potionCount + this.swordCount;
-        return totalBuffs < this.skeletonCount - Config.buffDifficultyFactor;
+        return totalBuffs < this.skeletonCount - ProgressionManager.get().getBuffFactor();
     }
 
     private randomCoord(): number {

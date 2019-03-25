@@ -19,8 +19,15 @@ const six = require('./images/numbers/6.png');
 const seven = require('./images/numbers/7.png');
 const eight = require('./images/numbers/8.png');
 const nine = require('./images/numbers/9.png');
+
 const uiSword = require('./images/ui/sword.png');
 const uiHeart = require('./images/ui/heart.png');
+const uiLeft = require('./images/ui/left.png');
+const uiRight = require('./images/ui/right.png');
+const uiX = require('./images/ui/x.png');
+const uiBlank = require('./images/ui/blank.png');
+
+
 const victory = require('./images/victory.png');
 const cardSound = require('./sounds/card.wav');
 const potionSound = require('./sounds/potion.wav');
@@ -41,7 +48,8 @@ const Resources = {
     coin: new ex.Texture(coin),
     card: new ex.Texture(card),
     startMenu: new ex.Texture(startMenu),
-    optionMenu: new ex.Texture(optionMenu),    
+    optionMenu: new ex.Texture(optionMenu), 
+
     0: new ex.Texture(zero), 
     1: new ex.Texture(one), 
     2: new ex.Texture(two), 
@@ -52,8 +60,14 @@ const Resources = {
     7: new ex.Texture(seven), 
     8: new ex.Texture(eight), 
     9: new ex.Texture(nine), 
+
     uiSword: new ex.Texture(uiSword),
     uiHeart: new ex.Texture(uiHeart),
+    uiLeft: new ex.Texture(uiLeft),
+    uiRight: new ex.Texture(uiRight),
+    uiX: new ex.Texture(uiX),
+    uiBlank: new ex.Texture(uiBlank),
+
     cardSound: new ex.Sound(cardSound),
     boneSound: new ex.Sound(boneSound),
     coinSound: new ex.Sound(coinSound),
@@ -68,9 +82,6 @@ const Config = {
     maxHealth: 3,
     maxAttack: 2,
     gridPadding: 4,
-    gridSize: 6,
-    skeletonDifficultyFactor: 2.0, //easy 3 (30%), medium 2.5 (40%), hard 2 (50%)
-    buffDifficultyFactor: 1, //easy 0, med 1, hard 2
     backgroundColor: Color.Gray,
 };
 

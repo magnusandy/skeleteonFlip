@@ -3,6 +3,7 @@ import { Resources } from '../resources';
 import { Scenes } from './scenes';
 import SoundManager from '../engine/soundManager';
 import { Engine } from 'excalibur';
+import ProgressionManager from '../engine/progressionManager';
 
 export class GameOver extends ex.Scene {
 
@@ -24,7 +25,10 @@ export class GameOver extends ex.Scene {
     gameOverActor.y = this.engine.drawHeight/2;
     gameOverActor.setHeight(360);
     gameOverActor.setWidth(360);
-    gameOverActor.on('pointerup', () => this.engine.goToScene(Scenes.MAIN_MENU));
+    gameOverActor.on('pointerup', () => {
+      ProgressionManager.get().resetProgress();
+      this.engine.goToScene(Scenes.MAIN_MENU);
+    });
   }
 
   public onDeactivate() { 

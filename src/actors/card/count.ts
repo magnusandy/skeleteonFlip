@@ -2,6 +2,7 @@ import * as ex from 'excalibur';
 import { Resources, Config } from '../../resources';
 import { Card } from './card';
 import { Vector } from 'excalibur';
+import ProgressionManager from '../../engine/progressionManager';
 
 type CountType = 'col' | 'row';
 
@@ -39,9 +40,9 @@ export default class Count extends ex.Actor {
 
     private static calcX(type: CountType, index: number, center: ex.Vector, cardWidth: number): number {
         const leftSide = center.x
-            - ((Config.gridSize / 2) * cardWidth)
+            - ((ProgressionManager.get().getGridSize() / 2) * cardWidth)
             - cardWidth
-            - ((Config.gridSize+1) * Config.gridPadding) / 2;
+            - ((ProgressionManager.get().getGridSize()+1) * Config.gridPadding) / 2;
 
         if (type === "row") {
             return leftSide;
@@ -52,9 +53,9 @@ export default class Count extends ex.Actor {
 
     private static calcY(type: CountType, index: number, center: ex.Vector, cardHeight: number): number {
         const top = center.y
-            - ((Config.gridSize/2)* cardHeight)
+            - ((ProgressionManager.get().getGridSize()/2)* cardHeight)
             - cardHeight
-            - ((Config.gridSize+1) * Config.gridPadding)/2;
+            - ((ProgressionManager.get().getGridSize()+1) * Config.gridPadding)/2;
 
             if(type === "col") {
                 return top;

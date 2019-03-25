@@ -1,7 +1,6 @@
 import * as ex from 'excalibur';
 import { GameCoordinatior } from '../coordinator/coordinator';
 import { Stream } from 'java8script';
-import { Color } from 'excalibur';
 import SoundManager from '../engine/soundManager';
 
 export class GameWindow extends ex.Scene {
