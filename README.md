@@ -21,6 +21,7 @@ Card Types:
 # Development list
 Todo List:
 - Track score
+- Visible level names when in progression
 - options page
     - disable/enable sound
     - change difficuly
@@ -35,3 +36,4 @@ Tools and Resources used:
 - Piskel (https://www.piskelapp.com/)
 - Song-Maker (https://musiclab.chromeexperiments.com/Song-Maker/)
 - FreeSound (freesound.org)
+- Cordova (https://cordova.apache.org/)

@@ -59,6 +59,7 @@ export default class ProgressionManager {
                 const next = this.nextDifficulty(this.difficulty, this.gridSize); 
                 this.difficulty = this.nextDifficulty(this.difficulty, this.gridSize); 
             }   
+            console.log(this);
         }
     }
 
