@@ -5,6 +5,7 @@ import { Vector, Sprite } from 'excalibur';
 import { Darken } from 'excalibur/dist/Drawing/SpriteEffects';
 import SoundManager from '../../engine/soundManager';
 import ProgressionManager from '../../engine/progressionManager';
+import { IDimensions } from '../../engine/helpers';
 
 export enum CardType {
     COIN = "coin",
@@ -15,12 +16,6 @@ export enum CardType {
 
 interface ICard {
     type: () => CardType;
-}
-
-interface IDimensions {
-    width: number;
-    height: number;
-    scale: Vector;
 }
 
 export class Card extends ex.Actor implements ICard {

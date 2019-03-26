@@ -9,15 +9,10 @@ export default class ButtonBase extends Actor {
     public constructor(texture: ex.Texture, onClick: Supplier<void>, scale: Vector) {
         super();
         this.sprite = texture.asSprite();
-        this.sprite.scale = scale;
-        this.addDrawing(this.sprite)
-        this.setHeight(this.sprite.drawHeight);
-        this.setWidth(this.sprite.drawWidth);
         this.on("pointerdown", this.onDown);
         this.on("pointerup", this.onClickWrapper(onClick));
         this.on("pointerenter", this.onEnter);
         this.on("pointerleave", this.onExit);
-        this.drawHeight = this.sprite.drawHeight;
     }
 
     private onClickWrapper(onClick: Supplier<void>): Supplier<void> {

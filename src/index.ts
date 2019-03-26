@@ -9,7 +9,8 @@ import { GameOver } from './scenes/gameOver';
 import { Victory } from './scenes/victory';
 
 const game = new Game();
-game.add(Scenes.MAIN_MENU, new MainMenu(game));
+const mainMenu = new MainMenu(game);
+game.add(Scenes.MAIN_MENU, mainMenu);
 game.add(Scenes.GAME_OVER, new GameOver(game));
 game.add(Scenes.GAME_WINDOW, new GameWindow(game));
 game.add(Scenes.VICTORY, new Victory(game));
