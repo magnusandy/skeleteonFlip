@@ -12,9 +12,9 @@ export default class StatTracker extends Actor {
         this.y = y;
         this.sprite = new Sprite(texture, 0, 0, texture.width, texture.height );
         this.addDrawing(this.sprite);
-        this.setHeight(50);
-        this.setWidth(50);
-        this.scale = new Vector(0.25, 0.25);
+        //this.setHeight(256);
+        //this.setWidth(256);
+        this.scale = new Vector(0.20, 0.20);
         this.setEnabled(enabled);
         
     }

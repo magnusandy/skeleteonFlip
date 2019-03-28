@@ -3,6 +3,8 @@ import { Resources } from '../resources';
 import { Scenes } from './scenes';
 import SoundManager from '../engine/soundManager';
 import ProgressionManager from '../engine/progressionManager';
+import { calcDimensionsSingleObject, calcDimensionsSingleObjectTexture } from '../engine/helpers';
+import BackgroundManager from '../engine/backgroundManager';
 
 export class Victory extends ex.Scene {
 
@@ -10,20 +12,23 @@ export class Victory extends ex.Scene {
 
   public onInitialize(engine: ex.Engine) {
     this.engine = engine;
-  }
-  public onActivate() {
-    SoundManager.get().playSoundInterrupt(Resources.victorySound);
     const victoryActor = new ex.Actor();
     victoryActor.addDrawing(Resources.victory.asSprite());
     victoryActor.x = this.engine.drawWidth / 2;
     victoryActor.y = this.engine.drawHeight / 2;
-    victoryActor.setHeight(360);
-    victoryActor.setWidth(480);
+    const dims = calcDimensionsSingleObjectTexture(this.engine.drawHeight, this.engine.drawWidth, Resources.victory, 0.8, 1.5)
+    victoryActor.setHeight(dims.height);
+    victoryActor.setWidth(dims.width);
+    victoryActor.scale = dims.scale;
     victoryActor.on('pointerup', () => {
       ProgressionManager.get().progress();
       this.engine.goToScene(Scenes.GAME_WINDOW);
     });
     this.add(victoryActor);
+    this.add(new BackgroundManager(engine).getTileMap())
+  }
+  public onActivate() {
+    SoundManager.get().playSoundInterrupt(Resources.victorySound);
   }
   public onDeactivate() {
   }

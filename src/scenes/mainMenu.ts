@@ -1,10 +1,9 @@
-import { Actor, Vector, Sprite, Scene } from 'excalibur';
+import { Actor, Vector, Scene } from 'excalibur';
 import { Resources, Config } from '../resources';
 import { Scenes } from './scenes';
-import { Supplier } from 'java8script';
-import { Darken } from 'excalibur/dist/Drawing/SpriteEffects';
 import ButtonBase from '../actors/bars/buttonBase';
-import { calcDimensionsSingleObject } from '../engine/helpers';
+import { calcDimensionsSingleObjectTexture } from '../engine/helpers';
+import BackgroundManager from '../engine/backgroundManager';
 
 export class MainMenu extends Scene {
 
@@ -20,6 +19,8 @@ export class MainMenu extends Scene {
     this.screenWidth = engine.drawWidth;
     this.screenHeight = engine.drawHeight;
     this.game = engine;
+    const bgManager = new BackgroundManager(engine);
+    this.addTileMap(bgManager.getTileMap())
   }
 
   public onActivate() {
@@ -28,6 +29,7 @@ export class MainMenu extends Scene {
       Resources.startMenu, () => this.game.goToScene(Scenes.GAME_WINDOW),
       scale
     );
+
     this.sizeProperly(this.start, 0.4, 0.5, Resources.startMenu);
     this.add(this.start)
 
@@ -36,7 +38,7 @@ export class MainMenu extends Scene {
       () => { },
       scale
     );
-    this.sizeProperly(this.options, 0.4, 0.5,Resources.startMenu);
+    this.sizeProperly(this.options, 0.4, 0.5,Resources.optionMenu);
 
     this.add(this.options);
     
@@ -45,12 +47,13 @@ export class MainMenu extends Scene {
     this.add(this.title);
 
 
+
     this.placeActors();
+    
   }
 
   public sizeProperly(actor, padding, scale, resource): Actor {
-    const dims = calcDimensionsSingleObject(this.screenHeight, this.screenWidth, resource, padding, scale);
-    console.log(dims);
+    const dims = calcDimensionsSingleObjectTexture(this.screenHeight, this.screenWidth, resource, padding, scale);
     actor.addDrawing(resource);
     actor.scale = dims.scale;
     actor.setHeight(dims.height);
@@ -59,7 +62,6 @@ export class MainMenu extends Scene {
   }
 
   public placeActors() {
-    console.log(this.start);
     this.start.x = this.screenWidth / 2;
     this.start.y = this.screenHeight / 2 - this.start.getHeight() / 2 - Config.gridPadding;
 

@@ -38,6 +38,8 @@ const coinSound = require('./sounds/coin.wav');
 const backgroundMusic = require('./sounds/background.wav');
 const victorySound = require('./sounds/victory.mp3');
 
+const backgroundTile = require('./images/background.png');
+
 const Resources = {
     victory: new ex.Texture(victory),
     gameOver: new ex.Texture(gameOverImg),
@@ -49,6 +51,7 @@ const Resources = {
     card: new ex.Texture(card),
     startMenu: new ex.Texture(startMenu),
     optionMenu: new ex.Texture(optionMenu), 
+    backgroundTile: new ex.Texture(backgroundTile),
 
     0: new ex.Texture(zero), 
     1: new ex.Texture(one), 

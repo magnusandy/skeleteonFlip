@@ -2,6 +2,7 @@ import * as ex from 'excalibur';
 import { GameCoordinatior } from '../coordinator/coordinator';
 import { Stream } from 'java8script';
 import SoundManager from '../engine/soundManager';
+import BackgroundManager from '../engine/backgroundManager';
 
 export class GameWindow extends ex.Scene {
 
@@ -10,6 +11,7 @@ export class GameWindow extends ex.Scene {
 
   public onInitialize(engine: ex.Engine) {
     this.engine = engine;
+    this.add(new BackgroundManager(engine).getTileMap())
   }
 
   public onActivate() {

@@ -32,9 +32,10 @@ Todo List:
 - redraw if resize
 - better support screen size or better mobile display
     - main menu/gameover/victory
+- background image, maybe a way to do like a tiled background, a stone wall could be sweet
+
 - Android stuff
     - icon
-    - lock portrait?
 
 Tools and Resources used: 
 - Excalibur JS (https://excaliburjs.com/)

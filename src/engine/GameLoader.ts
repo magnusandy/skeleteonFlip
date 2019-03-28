@@ -8,7 +8,7 @@ export class GameLoader extends ex.Loader {
         super();
         this.backgroundColor = Config.backgroundColor.toString();
         this.logo = logoImg;
-        this.logoHeight = 96;
-        this.logoWidth = 480;
+        this.logoHeight = 256;
+        this.logoWidth = 1280;
     }
 }
