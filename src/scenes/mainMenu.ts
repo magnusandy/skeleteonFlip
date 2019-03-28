@@ -43,7 +43,7 @@ export class MainMenu extends Scene {
     this.add(this.options);
     
 
-    this.title = this.sizeProperly(new Actor(), 0.8, 1.5,Resources.title);
+    this.title = this.sizeProperly(new Actor(), 0.9, 1.5,Resources.title);
     this.add(this.title);
 
 
@@ -69,7 +69,7 @@ export class MainMenu extends Scene {
     this.options.y = this.screenHeight / 2 + this.options.getHeight() / 2 + Config.gridPadding;
 
     this.title.x = this.screenWidth / 2;
-    this.title.y = this.screenHeight / 2 - this.start.getHeight()*1.7;
+    this.title.y = this.screenHeight / 2 - this.start.getHeight()*1.8;
   }
 
   public onDeactivate() { }
