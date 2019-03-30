@@ -28,29 +28,29 @@ export class GameWindow extends ex.Scene {
     this.add(bar);//todo remove
     */
 
-    
+
     const exitT: Texture = Resources.uiX;
     const exit = new ButtonBase(
-      exitT, 
+      exitT,
       () => engine.goToScene(Scenes.MAIN_MENU)
     );
 
     exit.addDrawing(exitT);
-    exit.scale = new Vector(Config.uiItemSize/exitT.width, Config.uiItemSize/exitT.height);
+    exit.scale = new Vector(Config.uiItemSize / exitT.width, Config.uiItemSize / exitT.height);
     exit.setHeight(Config.uiItemSize);
     exit.setWidth(Config.uiItemSize);
-    exit.x = engine.drawWidth - Config.uiItemSize/2 - Config.gridPadding;
-    exit.y = Config.uiItemSize/2 + Config.gridPadding;
+    exit.x = engine.drawWidth - Config.uiItemSize / 2 - Config.gridPadding;
+    exit.y = Config.uiItemSize / 2 + Config.gridPadding;
     this.add(exit);
 
     //todo move this to be actually score keeper
     const coins: Actor = new Actor();
     coins.addDrawing(Resources.uiCoins);
-    coins.scale = new Vector(Config.uiItemSize/Resources.uiCoins.width, Config.uiItemSize/Resources.uiCoins.height);
-    coins.x = Config.uiItemSize/2;
-    coins.y = Config.uiItemSize*2.5;
+    coins.scale = new Vector(Config.uiItemSize / Resources.uiCoins.width, Config.uiItemSize / Resources.uiCoins.height);
+    coins.x = Config.uiItemSize / 2;
+    coins.y = Config.uiItemSize * 2.5;
     this.add(coins);
-    
+
   }
 
   public onActivate() {
@@ -67,11 +67,17 @@ export class GameWindow extends ex.Scene {
     coordinator.getRowCountCards()
       .forEach(c => this.add(c));
 
-      Stream.ofValues(this.coordinator.getStatTrackers())
+    Stream.ofValues(this.coordinator.getStatTrackers())
       .map(l => Stream.ofValues(...l))
       .flatMap(l => l)
       .forEach(c => this.add(c));
+
+    //cordova specific
+    document.addEventListener("backbutton", this.onBackButton);
   }
+
+  private onBackButton = () => this.engine.goToScene(Scenes.MAIN_MENU);
+
   public onDeactivate() {
     this.coordinator.getGridAsList()
       .forEach(c => this.remove(c));
@@ -86,6 +92,7 @@ export class GameWindow extends ex.Scene {
       .map(l => Stream.ofValues(...l))
       .flatMap(l => l)
       .forEach(c => this.remove(c));
-
+      
+    document.removeEventListener("backbutton", this.onBackButton);
   }
 } 
