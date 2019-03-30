@@ -1,5 +1,5 @@
 import * as ex from 'excalibur';
-import { GameWindow } from './scenes/levelOne';
+import { GameWindow } from './scenes/gameWindow';
 import { Resources } from './resources';
 import { Scenes } from './scenes/scenes';
 import { MainMenu } from './scenes/mainMenu';

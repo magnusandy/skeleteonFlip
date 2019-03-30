@@ -1,7 +1,6 @@
 import { Card, CardType } from "../actors/card/card";
 import { CardCallbackProvider } from "../actors/card/cardCallbackProvider";
-import { Stream, Function, Supplier } from "java8script";
-import { Config } from "../resources";
+import { Stream, Function } from "java8script";
 import * as ex from 'excalibur';
 import { Vector } from "excalibur";
 import ProgressionManager from "../engine/progressionManager";

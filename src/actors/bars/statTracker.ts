@@ -1,5 +1,5 @@
 import { Actor, Vector, Sprite, Texture } from "excalibur";
-import { Resources, uiHeart } from "../../resources";
+import { Config } from "../../resources";
 
 export default class StatTracker extends Actor {
     private enabled: boolean;
@@ -11,10 +11,8 @@ export default class StatTracker extends Actor {
         this.x = x;
         this.y = y;
         this.sprite = new Sprite(texture, 0, 0, texture.width, texture.height );
+        this.scale = new Vector(Config.uiItemSize/texture.width, Config.uiItemSize/texture.height);
         this.addDrawing(this.sprite);
-        //this.setHeight(256);
-        //this.setWidth(256);
-        this.scale = new Vector(0.20, 0.20);
         this.setEnabled(enabled);
         
     }

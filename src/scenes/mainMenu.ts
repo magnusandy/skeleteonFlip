@@ -69,7 +69,7 @@ export class MainMenu extends Scene {
     this.options.y = this.screenHeight / 2 + this.options.getHeight() / 2 + Config.gridPadding;
 
     this.title.x = this.screenWidth / 2;
-    this.title.y = this.screenHeight / 2 - this.start.getHeight()*1.8;
+    this.title.y = this.title.getHeight();
   }
 
   public onDeactivate() { }

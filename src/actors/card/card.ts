@@ -67,7 +67,8 @@ export class Card extends ex.Actor implements ICard {
     }
 
     private static calcY(cardHeight: number, row: number, center: ex.Vector) {
-        const top = center.y
+        const top = center.y // center of screen
+            + (Config.menuHeight/2) //adjust for menu size
             - ((ProgressionManager.get().getGridSize() / 2) * cardHeight)
             - ((ProgressionManager.get().getGridSize() - 1) * Config.gridPadding) / 2;
 
@@ -76,11 +77,12 @@ export class Card extends ex.Actor implements ICard {
 
     public static calcCardDimensions(screenHeight: number, screenWidth: number): IDimensions {
         const { height, width } = Resources.card;
-        const maxHeight = Card.calcMaxCardHeight(screenHeight);
+        const usableHeight = screenHeight - Config.menuHeight;
+        const maxHeight = Card.calcMaxCardHeight(usableHeight);
         const maxWidth = Card.calcMaxCardWidth(screenWidth);
         const scaleByWidth = maxWidth / width;
 
-        if ((scaleByWidth * (height * (ProgressionManager.get().getGridSize() + 1))) > screenHeight) {
+        if ((scaleByWidth * (height * (ProgressionManager.get().getGridSize() + 1))) > usableHeight) {
             // using width as the scale base pushes height out of the screen
             const scaleByHeight = maxHeight / height;
             return {
@@ -98,12 +100,12 @@ export class Card extends ex.Actor implements ICard {
     }
 
     private static calcMaxCardHeight(screenHeight: number): number {
-        const workableScreenHeight = screenHeight * 0.85;
+        const workableScreenHeight = screenHeight * 0.95;
         return (workableScreenHeight / (ProgressionManager.get().getGridSize() + 1)) - Config.gridPadding;
     }
 
     private static calcMaxCardWidth(screenWidth: number): number {
-        const workableWidth = screenWidth * 0.85;
+        const workableWidth = screenWidth * 0.95;
         return (workableWidth / (ProgressionManager.get().getGridSize() + 1)) - Config.gridPadding;
     }
 

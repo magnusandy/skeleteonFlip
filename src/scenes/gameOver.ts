@@ -10,8 +10,6 @@ import BackgroundManager from '../engine/backgroundManager';
 export class GameOver extends ex.Scene {
 
   private engine: Engine;
-  private gameOverImage: Actor;
-
 
   public onInitialize(engine: ex.Engine) {
     this.engine = engine;

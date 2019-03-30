@@ -85,7 +85,9 @@ const Config = {
     maxHealth: 3,
     maxAttack: 2,
     gridPadding: 4,
-    backgroundColor: Color.Gray,
+    backgroundColor: "#bfbfbf",
+    uiItemSize: 50,
+    menuHeight: 150, // 3 times item size
 };
 
 export { Resources, Config, uiHeart}

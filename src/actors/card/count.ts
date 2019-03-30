@@ -53,6 +53,7 @@ export default class Count extends ex.Actor {
 
     private static calcY(type: CountType, index: number, center: ex.Vector, cardHeight: number): number {
         const top = center.y
+            + Config.menuHeight / 2
             - ((ProgressionManager.get().getGridSize()/2)* cardHeight)
             - cardHeight
             - ((ProgressionManager.get().getGridSize()+1) * Config.gridPadding)/2;
