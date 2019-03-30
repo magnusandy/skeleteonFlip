@@ -6,7 +6,7 @@ export default class ButtonBase extends Actor {
     private sprite: Sprite;
     public drawHeight: number;
 
-    public constructor(texture: ex.Texture, onClick: Supplier<void>, scale: Vector) {
+    public constructor(texture: ex.Texture, onClick: Supplier<void>) {
         super();
         this.sprite = texture.asSprite();
         this.on("pointerdown", this.onDown);

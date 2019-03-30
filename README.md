@@ -27,14 +27,12 @@ Todo List:
     - change difficuly
     - change grid size
 - information/help page
-- add X in corner of game screen
 - add a menu bar to the top (maybe game title) better size the health part
 - redraw if resize
-- better support screen size or better mobile display
-    - main menu/gameover/victory
 - upgrades?
 - storage of progress
 - refactor the scenes to initialize actions on initialize not activate
+- maybe change up the progression
 
 
 Tools and Resources used: 

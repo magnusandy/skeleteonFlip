@@ -13,6 +13,7 @@ export class MainMenu extends Scene {
 
   private title: Actor;
   private start: Actor;
+  private help: Actor;
   private options: Actor;
 
   public onInitialize(engine: ex.Engine) {
@@ -20,36 +21,35 @@ export class MainMenu extends Scene {
     this.screenHeight = engine.drawHeight;
     this.game = engine;
     const bgManager = new BackgroundManager(engine);
-    this.addTileMap(bgManager.getTileMap())
-  }
+    this.addTileMap(bgManager.getTileMap());
 
-  public onActivate() {
-    const scale = new Vector(1, 1);
     this.start = new ButtonBase(
       Resources.startMenu, () => this.game.goToScene(Scenes.GAME_WINDOW),
-      scale
     );
-
     this.sizeProperly(this.start, 0.4, 0.5, Resources.startMenu);
     this.add(this.start)
 
     this.options = new ButtonBase(
       Resources.optionMenu,
       () => { },
-      scale
     );
-    this.sizeProperly(this.options, 0.4, 0.5,Resources.optionMenu);
-
+    this.sizeProperly(this.options, 0.4, 0.5, Resources.optionMenu);
     this.add(this.options);
-    
 
-    this.title = this.sizeProperly(new Actor(), 0.9, 1.5,Resources.title);
+    this.help = new ButtonBase(
+      Resources.helpMenu,
+      () => { },
+    );
+    this.sizeProperly(this.help, 0.4, 0.5, Resources.helpMenu);
+    this.add(this.help);
+
+    this.title = this.sizeProperly(new Actor(), 0.9, 1, Resources.title);
     this.add(this.title);
 
-
-
     this.placeActors();
-    
+  }
+
+  public onActivate() {
   }
 
   public sizeProperly(actor, padding, scale, resource): Actor {
@@ -63,13 +63,16 @@ export class MainMenu extends Scene {
 
   public placeActors() {
     this.start.x = this.screenWidth / 2;
-    this.start.y = this.screenHeight / 2 - this.start.getHeight() / 2 - Config.gridPadding;
+    this.start.y = this.screenHeight / 2 - this.start.getHeight() - Config.gridPadding;
 
     this.options.x = this.screenWidth / 2;
-    this.options.y = this.screenHeight / 2 + this.options.getHeight() / 2 + Config.gridPadding;
+    this.options.y = this.screenHeight / 2;
+
+    this.help.x = this.screenWidth / 2;
+    this.help.y = this.screenHeight / 2 + this.help.getHeight() + Config.gridPadding;
 
     this.title.x = this.screenWidth / 2;
-    this.title.y = this.title.getHeight();
+    this.title.y = this.title.getHeight()/2 + Config.gridPadding;
   }
 
   public onDeactivate() { }

@@ -7,6 +7,7 @@ const coin = require('./images/coin.png');
 const card = require('./images/card.png');
 const startMenu = require('./images/startMenu.png');
 const optionMenu = require('./images/optionsMenu.png');
+const helpMenu = require('./images/helpMenu.png');
 const title = require('./images/title.png');
 const gameOverImg = require('./images/gameOver.png');
 const zero = require('./images/numbers/0.png');
@@ -22,6 +23,7 @@ const nine = require('./images/numbers/9.png');
 
 const uiSword = require('./images/ui/sword.png');
 const uiHeart = require('./images/ui/heart.png');
+const uiCoins = require('./images/ui/coinPile.png');
 const uiLeft = require('./images/ui/left.png');
 const uiRight = require('./images/ui/right.png');
 const uiX = require('./images/ui/x.png');
@@ -51,6 +53,7 @@ const Resources = {
     card: new ex.Texture(card),
     startMenu: new ex.Texture(startMenu),
     optionMenu: new ex.Texture(optionMenu), 
+    helpMenu: new ex.Texture(helpMenu),
     backgroundTile: new ex.Texture(backgroundTile),
 
     0: new ex.Texture(zero), 
@@ -70,6 +73,7 @@ const Resources = {
     uiRight: new ex.Texture(uiRight),
     uiX: new ex.Texture(uiX),
     uiBlank: new ex.Texture(uiBlank),
+    uiCoins: new ex.Texture(uiCoins),
 
     cardSound: new ex.Sound(cardSound),
     boneSound: new ex.Sound(boneSound),
