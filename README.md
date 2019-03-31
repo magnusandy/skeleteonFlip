@@ -33,7 +33,9 @@ Todo List:
 - storage of progress
 - refactor the scenes to initialize actions on initialize not activate
 - maybe change up the progression
+
 - al bhed mode
+
 
 Tools and Resources used: 
 - Excalibur JS (https://excaliburjs.com/)

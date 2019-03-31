@@ -11,7 +11,7 @@
     "dev": "npm run webpack-dev-server",
     "start": "npm run dev",
     "build:dev": "npm run webpack -- --env.mode development",
-    "build:prod":"npm run webpack -- --env.mode production && rm -rf docs/ && mv dist docs && rm docs/*.gz",
+    "build:prod": "npm run webpack -- --env.mode production && rm -rf docs/ && mv dist docs && rm docs/*.gz",
     "cordova:update": "yarn build:prod && cd cordovaFlip && rm -rf www/ && rm -rf /platform/android && cp -R ../docs www",
     "cordova:android-build": "cd cordovaFlip && cordova build android",
     "cordova:android-full": "yarn cordova:update && yarn cordova:android-build"
@@ -35,7 +35,7 @@
     "webpack-pwa-manifest": "^4.0.0"
   },
   "dependencies": {
-    "excalibur": "0.21.0",
+    "excalibur": "^0.21.0",
     "java8script": "^1.1.1"
   }
 }

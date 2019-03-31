@@ -25,7 +25,6 @@ export default class NumberSelector {
         this.numberLabel.fontSize = this.fontSize;
         this.numberLabel.baseAlign = BaseAlign.Middle;
         this.numberLabel.textAlign = TextAlign.Center;
-        console.log(this.numberLabel);
 
         //left button
         this.leftButton = new ButtonBase(Resources.uiLeft, () => this.addBy(-1));

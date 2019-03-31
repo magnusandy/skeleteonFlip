@@ -1,6 +1,7 @@
-import { Actor, Sprite, Vector } from "excalibur";
-import { Supplier } from "java8script";
+import { Actor, Sprite, Vector, GameEvent, pointerup, EventTypes } from "excalibur";
+import { Supplier, Consumer } from "java8script";
 import { Darken } from "excalibur/dist/Drawing/SpriteEffects";
+import { Pointer } from "excalibur/dist/Input";
 
 export default class ButtonBase extends Actor {
     private sprite: Sprite;
@@ -11,15 +12,19 @@ export default class ButtonBase extends Actor {
         this.addDrawing(texture);
         this.sprite = texture.asSprite();
         this.on("pointerdown", this.onDown);
-        this.on("pointerup", this.onClickWrapper(onClick));
+        this.on(EventTypes.PointerUp, this.onClickWrapper(onClick));
         this.on("pointerenter", this.onEnter);
         this.on("pointerleave", this.onExit);
     }
 
-    private onClickWrapper(onClick: Supplier<void>): Supplier<void> {
-        return () => {
-            this.sprite.clearEffects();
-            onClick();
+    private onClickWrapper(onClick: Supplier<void>) {
+        return (event?: any) => {
+            if(event.ev.type === "pointerup") {
+                //this is kinda nasty need to filter out the duplicate touch events, only accept the regular pointer up ones
+                this.sprite.clearEffects();
+                onClick();
+            } else {
+            }
         }
     }
 
