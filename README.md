@@ -41,13 +41,15 @@ Second Iteration (upgrades):
     - track coins
     - only get coins on victory
     - local storage
+    - add a grid size level bonus when you hit your max size in progression
+    - level bonus should scale with difficulty
     - upgrade to get more heart/sword storage
     - upgrade to get more base hearts/swords
     - upgrade to higher difficulties
     - upgrade for higher grid sizes
     - upgrade sword kills give a coin
     - upgrade to switch grid counts between card types
-    - 
+    - upgrade level bonus
 
 Misc:
     - redraw if resize
