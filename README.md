@@ -25,7 +25,7 @@ Todo List:
 - options page
     - disable/enable sound
     - change difficuly
-    - change grid size
+    - change grid size label
 - information/help page
 - add a menu bar to the top (maybe game title) better size the health part
 - redraw if resize
@@ -33,7 +33,7 @@ Todo List:
 - storage of progress
 - refactor the scenes to initialize actions on initialize not activate
 - maybe change up the progression
-
+- al bhed mode
 
 Tools and Resources used: 
 - Excalibur JS (https://excaliburjs.com/)

@@ -3,4 +3,6 @@ export enum Scenes {
     MAIN_MENU = "mainMenu",
     GAME_OVER = "gameOver",
     VICTORY = "victory",
+    OPTIONS = "options",
+    HELP = "help",
 }

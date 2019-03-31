@@ -35,7 +35,6 @@ export class GameWindow extends ex.Scene {
       () => engine.goToScene(Scenes.MAIN_MENU)
     );
 
-    exit.addDrawing(exitT);
     exit.scale = new Vector(Config.uiItemSize / exitT.width, Config.uiItemSize / exitT.height);
     exit.setHeight(Config.uiItemSize);
     exit.setWidth(Config.uiItemSize);
@@ -73,7 +72,7 @@ export class GameWindow extends ex.Scene {
       .forEach(c => this.add(c));
 
     //cordova specific
-    document.addEventListener("backbutton", this.onBackButton);
+    //document.addEventListener("backbutton", this.onBackButton);
   }
 
   private onBackButton = () => this.engine.goToScene(Scenes.MAIN_MENU);
@@ -92,7 +91,7 @@ export class GameWindow extends ex.Scene {
       .map(l => Stream.ofValues(...l))
       .flatMap(l => l)
       .forEach(c => this.remove(c));
-      
-    document.removeEventListener("backbutton", this.onBackButton);
+
+    //document.removeEventListener("backbutton", this.onBackButton);
   }
 } 

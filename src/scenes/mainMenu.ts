@@ -31,19 +31,20 @@ export class MainMenu extends Scene {
 
     this.options = new ButtonBase(
       Resources.optionMenu,
-      () => { },
+      () => this.game.goToScene(Scenes.OPTIONS),
     );
     this.sizeProperly(this.options, 0.4, 0.5, Resources.optionMenu);
     this.add(this.options);
 
     this.help = new ButtonBase(
       Resources.helpMenu,
-      () => { },
+      () => this.game.goToScene(Scenes.HELP),
     );
     this.sizeProperly(this.help, 0.4, 0.5, Resources.helpMenu);
     this.add(this.help);
 
     this.title = this.sizeProperly(new Actor(), 0.9, 1, Resources.title);
+    this.title.addDrawing(Resources.title);
     this.add(this.title);
 
     this.placeActors();
@@ -54,7 +55,6 @@ export class MainMenu extends Scene {
 
   public sizeProperly(actor, padding, scale, resource): Actor {
     const dims = calcDimensionsSingleObjectTexture(this.screenHeight, this.screenWidth, resource, padding, scale);
-    actor.addDrawing(resource);
     actor.scale = dims.scale;
     actor.setHeight(dims.height);
     actor.setWidth(dims.width);
