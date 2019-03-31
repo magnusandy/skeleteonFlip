@@ -43,12 +43,14 @@ export class GameWindow extends ex.Scene {
     this.add(exit);
 
     //todo move this to be actually score keeper
+    /*
     const coins: Actor = new Actor();
     coins.addDrawing(Resources.uiCoins);
     coins.scale = new Vector(Config.uiItemSize / Resources.uiCoins.width, Config.uiItemSize / Resources.uiCoins.height);
     coins.x = Config.uiItemSize / 2;
     coins.y = Config.uiItemSize * 2.5;
     this.add(coins);
+    */
 
   }
 

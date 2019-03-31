@@ -94,7 +94,7 @@ const Config = {
     gridPadding: 4,
     backgroundColor: "#dddddd",
     uiItemSize: 50,
-    menuHeight: 150, // 3 times item size
+    menuHeight: 100, // 2 times item size
 };
 
 export { Resources, Config, uiHeart}

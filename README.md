@@ -20,22 +20,41 @@ Card Types:
 
 # Development list
 Todo List:
-- Track score
-- Visible level names when in progression
-- options page
-    - disable/enable sound
-    - change difficuly
-    - change grid size label
-- information/help page
-- add a menu bar to the top (maybe game title) better size the health part
-- redraw if resize
-- upgrades?
-- storage of progress
-- refactor the scenes to initialize actions on initialize not activate
-- maybe change up the progression
+First Iteration (basic functionality): 
+    - bug: options page needs to update label on activate
+    - change progression, should be 3 levels per grid size, same difficulty.
+    - better font
+    - level numbers
+    - Options:
+        - sound disable/enable
+        - change difficulty
+        - disable story/progression
+            - this makes the grid size toggles available
+        - "confirm" type button on options page
+    - Help Page
+    - stop sound when not on game screen
+    - a button noise
+    - victory/game over taps should be whole screen OR buttons (contine for victory or menu for end)
+    - consider scaling menu with screen size a bit
 
-- al bhed mode
+Second Iteration (upgrades):
+    - track coins
+    - only get coins on victory
+    - local storage
+    - upgrade to get more heart/sword storage
+    - upgrade to get more base hearts/swords
+    - upgrade to higher difficulties
+    - upgrade for higher grid sizes
+    - upgrade sword kills give a coin
+    - upgrade to switch grid counts between card types
+    - 
 
+Misc:
+    - redraw if resize
+    - refactor the scenes to initialize actions on initialize not activate
+    - maybe when you clear a row/col it disappears
+    - unlimited mode, clearing a row or column will delete and add a new on the end
+    - al bhed mode
 
 Tools and Resources used: 
 - Excalibur JS (https://excaliburjs.com/)
