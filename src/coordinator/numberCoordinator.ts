@@ -22,9 +22,9 @@ export class NumberCoordinator {
         const statActors = Stream.range(0, max)
                             .map(idx => {
                                 if(idx > (defaultedCurrent - 1)) {
-                                    return new StatTracker(false, x + (idx * Config.uiItemSize), y, texture);
+                                    return new StatTracker(false, x + (idx * Config.exitButtonSize), y, texture);
                                 } else {
-                                    return new StatTracker(true, x + (idx * Config.uiItemSize), y, texture);
+                                    return new StatTracker(true, x + (idx * Config.exitButtonSize), y, texture);
                                 }
                             })
                             .toArray();

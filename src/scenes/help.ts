@@ -20,11 +20,11 @@ export class Help extends ex.Scene {
       exitT,
       () => engine.goToScene(Scenes.MAIN_MENU)
     );
-    exit.scale = new Vector(Config.uiItemSize / exitT.width, Config.uiItemSize / exitT.height);
-    exit.setHeight(Config.uiItemSize);
-    exit.setWidth(Config.uiItemSize);
-    exit.x = engine.drawWidth - Config.uiItemSize / 2 - Config.gridPadding;
-    exit.y = Config.uiItemSize / 2 + Config.gridPadding;
+    exit.scale = new Vector(Config.exitButtonSize / exitT.width, Config.exitButtonSize / exitT.height);
+    exit.setHeight(Config.exitButtonSize);
+    exit.setWidth(Config.exitButtonSize);
+    exit.x = engine.drawWidth - Config.exitButtonSize / 2 - Config.gridPadding;
+    exit.y = Config.exitButtonSize / 2 + Config.gridPadding;
     this.add(exit);
   }
   

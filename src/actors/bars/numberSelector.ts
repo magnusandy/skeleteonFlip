@@ -1,5 +1,5 @@
 import { Actor, Label, Vector, SpriteFont, TextAlign, BaseAlign } from "excalibur";
-import { Resources, uiHeart } from "../../resources";
+import { Resources, uiHeart, Config } from "../../resources";
 import ButtonBase from "./buttonBase";
 
 export default class NumberSelector {
@@ -7,20 +7,28 @@ export default class NumberSelector {
     private max: number;
     private current: number;
     private fontSize: number;
+    private labelText: string;
 
     private leftButton: Actor;
     private rightButton: Actor;
     private numberLabel: Label;
+    private topLabel: Label;
 
-    public constructor(min: number, max: number, current: number, x: number, y: number, fontSize: number) {
+    public constructor(label: string, min: number, max: number, current: number, x: number, y: number, fontSize: number) {
+        this.labelText = label;
         this.min = min;
         this.max = max;
         this.current = current;
         this.fontSize = fontSize;
+        const font = new SpriteFont(Resources.myMono, '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ', true, 12, 4, 99, 135);
 
+        //top text
+        this.topLabel = new Label(this.labelText, x, y-Config.gridPadding, null, font);
+        this.topLabel.fontSize = this.fontSize;
+        this.topLabel.baseAlign = BaseAlign.Middle;
+        this.topLabel.textAlign = TextAlign.Center;
         //central Number Label
-        const font = new SpriteFont(Resources.fontNumbers, '0123456789 ', true, 11, 1, 27, 32);
-        this.numberLabel = new Label(`${current}`, x, y, null, font);
+        this.numberLabel = new Label(`${current}`, x, y+fontSize, null, font);
         //this.numberLabel.anchor = new Vector(1, 1);
         this.numberLabel.fontSize = this.fontSize;
         this.numberLabel.baseAlign = BaseAlign.Middle;
@@ -28,17 +36,16 @@ export default class NumberSelector {
 
         //left button
         this.leftButton = new ButtonBase(Resources.uiLeft, () => this.addBy(-1));
-        this.leftButton.x = x - this.fontSize
-        this.leftButton.y = y;
+        this.leftButton.x = x - this.fontSize*1.5
+        this.leftButton.y = y + fontSize;
         this.leftButton.scale = new Vector(this.fontSize/Resources.uiLeft.width, this.fontSize/Resources.uiLeft.height);
         this.leftButton.setHeight(this.fontSize);
         this.leftButton.setWidth(this.fontSize);
         
-
         //right button
         this.rightButton = new ButtonBase(Resources.uiRight, () => this.addBy(1));
-        this.rightButton.x = x + this.fontSize;
-        this.rightButton.y = y;
+        this.rightButton.x = x + this.fontSize*1.5;
+        this.rightButton.y = y + fontSize;
         this.rightButton.scale = new Vector(this.fontSize/Resources.uiRight.width, this.fontSize/Resources.uiRight.height);
         this.rightButton.setHeight(this.fontSize);
         this.rightButton.setWidth(this.fontSize);
@@ -57,11 +64,17 @@ export default class NumberSelector {
         return this.current;
     }
 
+    public setCurrent(newCurrent: number): void {
+        this.current = newCurrent;
+        this.numberLabel.text = `${newCurrent}`;
+    }
+
     public getDrawables(): Actor[] {
         return [
             this.leftButton, 
             this.rightButton,
-            this.numberLabel
+            this.numberLabel,
+            this.topLabel
         ];
     }
 }

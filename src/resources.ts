@@ -29,7 +29,7 @@ const uiRight = require('./images/ui/right.png');
 const uiX = require('./images/ui/x.png');
 const uiBlank = require('./images/ui/blank.png');
 
-const fontNumbers = require('./fonts/numbers.png');
+const fontMono = require('./fonts/myMono.png');
 
 const victory = require('./images/victory.png');
 const cardSound = require('./sounds/card.wav');
@@ -76,7 +76,7 @@ const Resources = {
     uiBlank: new ex.Texture(uiBlank),
     uiCoins: new ex.Texture(uiCoins),
 
-    fontNumbers: new ex.Texture(fontNumbers),
+    myMono: new ex.Texture(fontMono),
 
     cardSound: new ex.Sound(cardSound),
     boneSound: new ex.Sound(boneSound),
@@ -93,8 +93,10 @@ const Config = {
     maxAttack: 2,
     gridPadding: 4,
     backgroundColor: "#dddddd",
-    uiItemSize: 50,
+    exitButtonSize: 50,
+    uiBigSize: 50,
     menuHeight: 100, // 2 times item size
+    optionPadding: 50,
 };
 
 export { Resources, Config, uiHeart}

@@ -11,7 +11,7 @@ export default class StatTracker extends Actor {
         this.x = x;
         this.y = y;
         this.sprite = new Sprite(texture, 0, 0, texture.width, texture.height );
-        this.scale = new Vector(Config.uiItemSize/texture.width, Config.uiItemSize/texture.height);
+        this.scale = new Vector(Config.exitButtonSize/texture.width, Config.exitButtonSize/texture.height);
         this.addDrawing(this.sprite);
         this.setEnabled(enabled);
         

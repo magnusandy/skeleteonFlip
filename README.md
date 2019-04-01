@@ -21,13 +21,9 @@ Card Types:
 # Development list
 Todo List:
 First Iteration (basic functionality): 
-    - bug: options page needs to update label on activate
     - change progression, should be 3 levels per grid size, same difficulty.
-    - better font
     - level numbers
     - Options:
-        - sound disable/enable
-        - change difficulty
         - disable story/progression
             - this makes the grid size toggles available
         - "confirm" type button on options page
@@ -52,6 +48,7 @@ Second Iteration (upgrades):
     - upgrade level bonus
 
 Misc:
+    - consolidate font
     - redraw if resize
     - refactor the scenes to initialize actions on initialize not activate
     - maybe when you clear a row/col it disappears

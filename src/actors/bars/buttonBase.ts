@@ -1,7 +1,6 @@
-import { Actor, Sprite, Vector, GameEvent, pointerup, EventTypes } from "excalibur";
-import { Supplier, Consumer } from "java8script";
+import { Actor, Sprite, EventTypes } from "excalibur";
+import { Supplier } from "java8script";
 import { Darken } from "excalibur/dist/Drawing/SpriteEffects";
-import { Pointer } from "excalibur/dist/Input";
 
 export default class ButtonBase extends Actor {
     private sprite: Sprite;
@@ -9,8 +8,8 @@ export default class ButtonBase extends Actor {
 
     public constructor(texture: ex.Texture, onClick: Supplier<void>) {
         super();
-        this.addDrawing(texture);
-        this.sprite = texture.asSprite();
+        this.sprite = new Sprite(texture, 0, 0, texture.width, texture.height);
+        this.addDrawing(this.sprite);
         this.on("pointerdown", this.onDown);
         this.on(EventTypes.PointerUp, this.onClickWrapper(onClick));
         this.on("pointerenter", this.onEnter);

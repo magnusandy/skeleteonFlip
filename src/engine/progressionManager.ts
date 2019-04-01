@@ -66,6 +66,10 @@ export default class ProgressionManager {
         this.gridSize = newSize;
     }
 
+    public setDifficulty(newDifficulty: number) {
+        this.difficulty = newDifficulty;
+    }
+
     public resetProgress(): void {
         if (!this.disableProgression) {
             this.difficulty = ProgressionManager.baseDifficulty;

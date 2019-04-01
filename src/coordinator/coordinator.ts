@@ -32,8 +32,8 @@ export class GameCoordinatior implements CardCallbackProvider {
         
         const coordinator: GameCoordinatior = new GameCoordinatior(
             engine,
-            NumberCoordinator.create(Config.uiItemSize/2, Config.uiItemSize/2, Config.maxHealth, () => { engine.goToScene(Scenes.GAME_OVER) }, Resources.uiHeart, Config.maxHealth),
-            NumberCoordinator.create(Config.uiItemSize/2, Config.uiItemSize * 1.5, Config.maxAttack, () => { }, Resources.uiSword)           
+            NumberCoordinator.create(Config.exitButtonSize/2, Config.exitButtonSize/2, Config.maxHealth, () => { engine.goToScene(Scenes.GAME_OVER) }, Resources.uiHeart, Config.maxHealth),
+            NumberCoordinator.create(Config.exitButtonSize/2, Config.exitButtonSize * 1.5, Config.maxAttack, () => { }, Resources.uiSword)           
         );
         coordinator.gridCoordinator = GridCoordinator.createGrid(coordinator, ProgressionManager.get().getGridSize(), engine);
         coordinator.rowCounts = coordinator.createRowCountCards();

@@ -5,6 +5,7 @@ export default class SoundManager {
     private static soundManager: SoundManager;
     private currentSound: Sound;
     private backgroundSound: Sound;
+    private disabled: boolean = false;
 
     /**
      * returns a singleton instance of the sound manager
@@ -18,11 +19,25 @@ export default class SoundManager {
         }
     }
 
+    public disableSound() {
+        this.disabled = true;
+        if (this.backgroundSound) {
+            this.backgroundSound.stop();
+            this.backgroundSound = null;
+        }
+    }
+
+    public enableSound() {
+        this.disabled = false;
+    }
+
     public backgroundMusicStart(): void {
-        if (!this.backgroundSound) {
-            this.backgroundSound = Resources.backgroundMusic;
-            this.backgroundSound.loop = true;
-            this.backgroundSound.play(0.1);
+        if (!this.disabled) {
+            if (!this.backgroundSound) {
+                this.backgroundSound = Resources.backgroundMusic;
+                this.backgroundSound.loop = true;
+                this.backgroundSound.play(0.1);
+            }
         }
     }
 
@@ -37,11 +52,13 @@ export default class SoundManager {
     }
 
     private playSoundWithAfter(sound: Sound, after?: () => void) {
-        this.currentSound = sound;
-        if (after) {
-            sound.play().then(after);
-        } else {
-            sound.play();
+        if (!this.disabled) {
+            this.currentSound = sound;
+            if (after) {
+                sound.play().then(after);
+            } else {
+                sound.play();
+            }
         }
     }
 
