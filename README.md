@@ -21,6 +21,8 @@ Card Types:
 # Development list
 Todo List:
 First Iteration (basic functionality): 
+    - better button sizing on mobile
+    - options page decrease text size, increase button sizes
     - add headers to the help/options page
     - change progression, should be 3 levels per grid size, same difficulty.
     - level numbers
