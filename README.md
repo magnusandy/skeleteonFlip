@@ -21,6 +21,7 @@ Card Types:
 # Development list
 Todo List:
 First Iteration (basic functionality): 
+    - add headers to the help/options page
     - change progression, should be 3 levels per grid size, same difficulty.
     - level numbers
     - Options:
@@ -48,6 +49,7 @@ Second Iteration (upgrades):
     - upgrade level bonus
 
 Misc:
+    - consolidate exit button code
     - consolidate font
     - redraw if resize
     - refactor the scenes to initialize actions on initialize not activate
