@@ -25,7 +25,6 @@ First Iteration (basic functionality):
     - options page decrease text size, increase button sizes
     - add headers to the help/options page
     - change progression, should be 3 levels per grid size, same difficulty.
-    - level numbers
     - Options:
         - disable story/progression
             - this makes the grid size toggles available
@@ -34,7 +33,6 @@ First Iteration (basic functionality):
     - stop sound when not on game screen
     - a button noise
     - victory/game over taps should be whole screen OR buttons (contine for victory or menu for end)
-    - consider scaling menu with screen size a bit
 
 Second Iteration (upgrades):
     - track coins
@@ -53,7 +51,6 @@ Second Iteration (upgrades):
 Misc:
     - 350/675
     - consolidate exit button code
-    - consolidate font
     - redraw if resize
     - refactor the scenes to initialize actions on initialize not activate
     - maybe when you clear a row/col it disappears
