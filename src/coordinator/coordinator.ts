@@ -2,18 +2,17 @@ import { NumberCoordinator } from "./numberCoordinator";
 import { Card, CardType } from "../actors/card/card";
 import { CardCallbackProvider } from "../actors/card/cardCallbackProvider"
 import { Config, Resources } from "../resources";
-import { Stream, Function, Optional } from "java8script";
+import { Stream } from "java8script";
 import { GridCoordinator } from "./gridCoordinator";
 import * as ex from "excalibur";
-import { Vector, Label } from "excalibur";
+import { Vector } from "excalibur";
 import { Scenes } from "../scenes/scenes";
 import Count from "../actors/card/count";
-import { MainMenu } from "../scenes/mainMenu";
 import ProgressionManager from "../engine/progressionManager";
-
+import MobileManager from "../engine/mobileManager";
 
 //this class will handle the building and coordinating of data between the game cards and other UI pieces
-export class GameCoordinatior implements CardCallbackProvider {
+export class GameCoordinator implements CardCallbackProvider {
     private engine: ex.Engine;
     private healthCoordinator: NumberCoordinator;
     private attackCoordinator: NumberCoordinator;
@@ -28,12 +27,12 @@ export class GameCoordinatior implements CardCallbackProvider {
         this.engine = engine;
     }
 
-    public static initialize(engine: ex.Engine): GameCoordinatior {
-        
-        const coordinator: GameCoordinatior = new GameCoordinatior(
+    public static initialize(engine: ex.Engine): GameCoordinator {
+        const mm: MobileManager = MobileManager.get();
+        const coordinator: GameCoordinator = new GameCoordinator(
             engine,
-            NumberCoordinator.create(Config.exitButtonSize/2, Config.exitButtonSize/2, Config.maxHealth, () => { engine.goToScene(Scenes.GAME_OVER) }, Resources.uiHeart, Config.maxHealth),
-            NumberCoordinator.create(Config.exitButtonSize/2, Config.exitButtonSize * 1.5, Config.maxAttack, () => { }, Resources.uiSword)           
+            NumberCoordinator.create(mm.getUIItemSize() / 2, mm.getUIItemSize() / 2, Config.maxHealth, () => { engine.goToScene(Scenes.GAME_OVER) }, Resources.uiHeart, Config.maxHealth),
+            NumberCoordinator.create(mm.getUIItemSize() / 2, mm.getUIItemSize() * 1.5, Config.maxAttack, () => { }, Resources.uiSword)
         );
         coordinator.gridCoordinator = GridCoordinator.createGrid(coordinator, ProgressionManager.get().getGridSize(), engine);
         coordinator.rowCounts = coordinator.createRowCountCards();
@@ -58,14 +57,14 @@ export class GameCoordinatior implements CardCallbackProvider {
     }
 
     private createColCountCards(): Count[] {
-        const center = new Vector(this.engine.drawWidth/2, this.engine.drawHeight/2);
+        const center = new Vector(this.engine.drawWidth / 2, this.engine.drawHeight / 2);
         return Stream.of(this.gridCoordinator.getRow(0))
             .map(card => new Count("col", card.getCol(), center, this.skeletonCountForCol(card.getCol())))
             .toArray();
     }
-    
+
     private createRowCountCards(): Count[] {
-        const center = new Vector(this.engine.drawWidth/2, this.engine.drawHeight/2);
+        const center = new Vector(this.engine.drawWidth / 2, this.engine.drawHeight / 2);
         return Stream.of(this.gridCoordinator.getCol(0))
             .map(card => new Count("row", card.getRow(), center, this.skeletonCountForRow(card.getRow())))
             .toArray();
@@ -100,12 +99,12 @@ export class GameCoordinatior implements CardCallbackProvider {
     }
 
     private checkIfCompleteGame(): void {
-       const allFlipped = Stream.of(this.getGridAsList())
+        const allFlipped = Stream.of(this.getGridAsList())
             .allMatch(card => card.isFlipped());
         if (allFlipped && this.healthCoordinator.getCurrent() > 0) {
             this.engine.goToScene(Scenes.VICTORY);
         }
-    } 
+    }
 
     public skeletonCardCallback = (): void => {
         if (this.attackCoordinator.getCurrent() > 0) {

@@ -10,6 +10,7 @@ import { MainMenu } from './mainMenu';
 import RadioButton from '../actors/bars/radioButton';
 import LabeledRadio from '../actors/bars/labeledRadio';
 import SoundManager from '../engine/soundManager';
+import MobileManager from '../engine/mobileManager';
 
 export class Options extends ex.Scene {
 
@@ -20,12 +21,10 @@ export class Options extends ex.Scene {
 
   public onInitialize(engine: ex.Engine) {
     this.engine = engine;
-    const itemSize = (this.engine.drawWidth / this.engine.drawHeight > 0.75)
-      ? 50 : 30;
 
     const bgManager = new BackgroundManager(engine);
     this.addTileMap(bgManager.getTileMap());
-
+    const itemSize = MobileManager.get().getUIItemSize();
 
     const exitT: Texture = Resources.uiX;
     const exit = new ButtonBase(

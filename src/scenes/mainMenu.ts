@@ -1,4 +1,4 @@
-import { Actor, Vector, Scene } from 'excalibur';
+import { Actor, Scene } from 'excalibur';
 import { Resources, Config } from '../resources';
 import { Scenes } from './scenes';
 import ButtonBase from '../actors/bars/buttonBase';

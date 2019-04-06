@@ -8,6 +8,7 @@ import { GameOver } from './scenes/gameOver';
 import { Victory } from './scenes/victory';
 import { Options } from './scenes/options';
 import { Help } from './scenes/help';
+import MobileManager from './engine/mobileManager';
 
 const game = new Game();
 const mainMenu = new MainMenu(game);
@@ -24,5 +25,6 @@ Object.keys(Resources)
       .forEach(k => loader.addResource(Resources[k]));
     
 game.start(loader).then(() => {
+  MobileManager.initialize(game);
   game.goToScene(Scenes.MAIN_MENU);
 });

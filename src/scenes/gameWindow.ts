@@ -1,5 +1,5 @@
 import * as ex from 'excalibur';
-import { GameCoordinatior } from '../coordinator/coordinator';
+import { GameCoordinator } from '../coordinator/coordinator';
 import { Stream } from 'java8script';
 import SoundManager from '../engine/soundManager';
 import BackgroundManager from '../engine/backgroundManager';
@@ -7,11 +7,15 @@ import { Actor, Engine, Color, Texture, Vector } from 'excalibur';
 import { Resources, Config } from '../resources';
 import ButtonBase from '../actors/bars/buttonBase';
 import { Scenes } from './scenes';
+import LevelDisplay from '../actors/bars/level';
+import ProgressionManager from '../engine/progressionManager';
+import MobileManager from '../engine/mobileManager';
 
 export class GameWindow extends ex.Scene {
 
-  private coordinator;
+  private coordinator: GameCoordinator;
   private engine: Engine;
+  private levelDisplay: LevelDisplay;
 
   public onInitialize(engine: ex.Engine) {
     this.engine = engine;
@@ -52,11 +56,16 @@ export class GameWindow extends ex.Scene {
     this.add(coins);
     */
 
+    const mm: MobileManager = MobileManager.get();
+    this.levelDisplay = new LevelDisplay(engine.drawWidth/2, mm.getMenuHeight()-mm.getUIItemSize()/2, mm.getUIItemSize(), ProgressionManager.get().getLevelNumber());
+    this.add(this.levelDisplay);
   }
 
   public onActivate() {
+    this.levelDisplay.updateLevel(ProgressionManager.get().getLevelNumber());
+
     SoundManager.get().backgroundMusicStart();
-    const coordinator: GameCoordinatior = GameCoordinatior.initialize(this.engine);
+    const coordinator: GameCoordinator = GameCoordinator.initialize(this.engine);
     this.coordinator = coordinator;
 
     coordinator.getGridAsList()

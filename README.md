@@ -51,6 +51,7 @@ Second Iteration (upgrades):
     - upgrade level bonus
 
 Misc:
+    - 350/675
     - consolidate exit button code
     - consolidate font
     - redraw if resize

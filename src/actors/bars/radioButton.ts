@@ -3,7 +3,7 @@ import { Resources } from "../../resources";
 import { Darken } from "excalibur/dist/Drawing/SpriteEffects";
 import { Supplier } from "java8script";
 
-export default class RadioButton extends Actor{
+export default class RadioButton extends Actor {
     private checked: boolean;
     private checkedSprite: Sprite;
     private uncheckedSprite: Sprite;
@@ -13,16 +13,16 @@ export default class RadioButton extends Actor{
         this.checked = defaultValue;
         this.checkedSprite = new Sprite(Resources.uiX, 0, 0, Resources.uiX.width, Resources.uiX.height);
         this.uncheckedSprite = new Sprite(Resources.uiBlank, 0, 0, Resources.uiBlank.width, Resources.uiBlank.height);
-        this.scale = new Vector(size/Resources.uiX.width, size/Resources.uiX.height);
+        this.scale = new Vector(size / Resources.uiX.width, size / Resources.uiX.height);
         this.setHeight(size);
         this.setWidth(size);
         this.x = x;
         this.y = y;
-        
+
         //get drawing ready
         this.addDrawing("checked", this.checkedSprite);
         this.addDrawing("unchecked", this.uncheckedSprite);
-        if(this.checked) {
+        if (this.checked) {
             this.setDrawing("checked");
         } else {
             this.setDrawing("unchecked");
@@ -39,7 +39,7 @@ export default class RadioButton extends Actor{
 
     private onClickWrapper(onClick: Supplier<void>) {
         return (event?: any) => {
-            if(event.ev.type === "pointerup") {
+            if (event.ev.type === "pointerup") {
                 //this is kinda nasty need to filter out the duplicate touch events, only accept the regular pointer up ones
                 this.currentSprite().clearEffects();
                 onClick();
@@ -70,7 +70,7 @@ export default class RadioButton extends Actor{
 
     private toggleButton = () => {
         this.checked = !this.checked;
-        if(this.checked) {
+        if (this.checked) {
             this.setDrawing("checked");
         } else {
             this.setDrawing("unchecked");

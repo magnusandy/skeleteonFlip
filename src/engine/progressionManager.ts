@@ -77,6 +77,10 @@ export default class ProgressionManager {
         }
     }
 
+    public getLevelNumber(): number {
+        return parseFloat(`${this.getGridSize()}.${this.getDifficulty()}`);
+    }
+
     private nextGridSize(gridSize: number): number {
        return gridSize === 9 
        ?  9

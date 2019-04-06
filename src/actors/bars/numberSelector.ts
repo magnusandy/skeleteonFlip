@@ -1,6 +1,7 @@
-import { Actor, Label, Vector, SpriteFont, TextAlign, BaseAlign } from "excalibur";
-import { Resources, uiHeart, Config } from "../../resources";
+import { Actor, Label, Vector, TextAlign, BaseAlign } from "excalibur";
+import { Resources, Config } from "../../resources";
 import ButtonBase from "./buttonBase";
+import FontManager from "../../engine/fontManager";
 
 export default class NumberSelector {
     private min: number;
@@ -20,15 +21,14 @@ export default class NumberSelector {
         this.max = max;
         this.current = current;
         this.fontSize = fontSize;
-        const font = new SpriteFont(Resources.myMono, '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ', true, 12, 4, 99, 135);
-
+        
         //top text
-        this.topLabel = new Label(this.labelText, x, y-Config.gridPadding, null, font);
+        this.topLabel = new Label(this.labelText, x, y-Config.gridPadding, null, FontManager.get().getMono());
         this.topLabel.fontSize = this.fontSize;
         this.topLabel.baseAlign = BaseAlign.Middle;
         this.topLabel.textAlign = TextAlign.Center;
         //central Number Label
-        this.numberLabel = new Label(`${current}`, x, y+fontSize, null, font);
+        this.numberLabel = new Label(`${current}`, x, y+fontSize, null, FontManager.get().getMono());
         //this.numberLabel.anchor = new Vector(1, 1);
         this.numberLabel.fontSize = this.fontSize;
         this.numberLabel.baseAlign = BaseAlign.Middle;

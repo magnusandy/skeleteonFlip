@@ -1,6 +1,7 @@
 import RadioButton from "./radioButton";
 import { Label, SpriteFont, Actor, BaseAlign, TextAlign, Engine } from "excalibur";
 import { Resources } from "../../resources";
+import FontManager from "../../engine/fontManager";
 
 export default class LabeledRadio {
 
@@ -8,9 +9,7 @@ export default class LabeledRadio {
     private label: Label;
 
     constructor(label: string, size: number, x: number, y: number, defaultVal: boolean, engine: Engine) {
-        const font = new SpriteFont(Resources.myMono, '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ ', true, 12, 4, 99, 135);
-        
-        this.label = new Label(label, x, y, null, font);//need to x adjust after
+        this.label = new Label(label, x, y, null, FontManager.get().getMono());//need to x adjust after
         this.label.fontSize = size;
         this.label.baseAlign = BaseAlign.Middle;
         this.label.textAlign = TextAlign.Center;

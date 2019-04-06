@@ -95,8 +95,7 @@ const Config = {
     backgroundColor: "#dddddd",
     exitButtonSize: 50,
     uiBigSize: 50,
-    menuHeight: 100, // 2 times item size
-    optionPadding: 50,
+    optionPadding: 20,
 };
 
 export { Resources, Config, uiHeart}
