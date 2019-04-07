@@ -21,8 +21,8 @@ export class GameOver extends ex.Scene {
     this.add(gameOverActor);
     gameOverActor.x = this.engine.drawWidth/2;
     gameOverActor.y = this.engine.drawHeight/2;
-    gameOverActor.setHeight(dims.height);
-    gameOverActor.setWidth(dims.width);
+    gameOverActor.setHeight(engine.drawHeight);
+    gameOverActor.setWidth(engine.drawWidth);
     gameOverActor.scale = dims.scale;
     gameOverActor.on('pointerup', () => {
       ProgressionManager.get().resetProgress();

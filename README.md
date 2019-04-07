@@ -32,7 +32,7 @@ First Iteration (basic functionality):
     - Help Page
     - stop sound when not on game screen
     - a button noise
-    - victory/game over taps should be whole screen OR buttons (contine for victory or menu for end)
+    - buttons for end pages (contine for victory or menu for end);
 
 Second Iteration (upgrades):
     - track coins

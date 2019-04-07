@@ -17,8 +17,8 @@ export class Victory extends ex.Scene {
     victoryActor.x = this.engine.drawWidth / 2;
     victoryActor.y = this.engine.drawHeight / 2;
     const dims = calcDimensionsSingleObjectTexture(this.engine.drawHeight, this.engine.drawWidth, Resources.victory, 0.8, 1.5)
-    victoryActor.setHeight(dims.height);
-    victoryActor.setWidth(dims.width);
+    victoryActor.setHeight(engine.drawHeight);// set height/width so you can tap anywhere on the screen
+    victoryActor.setWidth(engine.drawWidth);
     victoryActor.scale = dims.scale;
     victoryActor.on('pointerup', () => {
       ProgressionManager.get().progress();
