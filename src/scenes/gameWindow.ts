@@ -8,7 +8,7 @@ import { Resources, Config } from '../resources';
 import ButtonBase from '../actors/bars/buttonBase';
 import { Scenes } from './scenes';
 import LevelDisplay from '../actors/bars/level';
-import ProgressionManager from '../engine/progressionManager';
+import ProgressionManager from '../engine/progression/progressionManager';
 import SizingManager from '../engine/sizingManager';
 
 export class GameWindow extends ex.Scene {
@@ -57,12 +57,12 @@ export class GameWindow extends ex.Scene {
     */
 
     const mm: SizingManager = SizingManager.get();
-    this.levelDisplay = new LevelDisplay(engine.drawWidth/2, mm.getMenuHeight()-mm.getUIItemSize()/2, mm.getUIItemSize(), ProgressionManager.get().getLevelNumber());
+    this.levelDisplay = new LevelDisplay(engine.drawWidth/2, mm.getMenuHeight()-mm.getUIItemSize()/2, mm.getUIItemSize(), ProgressionManager.get().getLevelString());
     this.add(this.levelDisplay);
   }
 
   public onActivate() {
-    this.levelDisplay.updateLevel(ProgressionManager.get().getLevelNumber());
+    this.levelDisplay.updateLevel(ProgressionManager.get().getLevelString());
 
     SoundManager.get().backgroundMusicStart();
     const coordinator: GameCoordinator = GameCoordinator.initialize(this.engine);

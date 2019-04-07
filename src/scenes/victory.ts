@@ -2,7 +2,7 @@ import * as ex from 'excalibur';
 import { Resources } from '../resources';
 import { Scenes } from './scenes';
 import SoundManager from '../engine/soundManager';
-import ProgressionManager from '../engine/progressionManager';
+import ProgressionManager from '../engine/progression/progressionManager';
 import { calcDimensionsSingleObject, calcDimensionsSingleObjectTexture } from '../engine/helpers';
 import BackgroundManager from '../engine/backgroundManager';
 

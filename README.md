@@ -33,6 +33,7 @@ First Iteration (basic functionality):
     - stop sound when not on game screen
     - a button noise
     - buttons for end pages (contine for victory or menu for end);
+    - Display names of difficulty in the options
 
 Second Iteration (upgrades):
     - track coins

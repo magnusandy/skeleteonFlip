@@ -3,7 +3,7 @@ import FontManager from "../../engine/fontManager";
 
 export default class LevelDisplay extends Label {
     private static PREFIX: string = "Level";
-    public constructor(x: number, y: number, size: number, startingLevel: number) {
+    public constructor(x: number, y: number, size: number, startingLevel: string) {
         super(
             LevelDisplay.createLabelText(startingLevel),
             x,
@@ -18,11 +18,11 @@ export default class LevelDisplay extends Label {
 
     }
 
-    private static createLabelText(level: number) {
+    private static createLabelText(level: string) {
         return `${LevelDisplay.PREFIX} ${level}`;
     }
 
-    public updateLevel(newLevel: number): void {
+    public updateLevel(newLevel: string): void {
         this.text = LevelDisplay.createLabelText(newLevel);
     }
 

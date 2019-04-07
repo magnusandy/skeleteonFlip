@@ -5,7 +5,7 @@ import { Texture, Vector, Label, Color, Actor } from 'excalibur';
 import ButtonBase from '../actors/bars/buttonBase';
 import BackgroundManager from '../engine/backgroundManager';
 import NumberSelector from '../actors/bars/numberSelector';
-import ProgressionManager from '../engine/progressionManager';
+import ProgressionManager from '../engine/progression/progressionManager';
 import { MainMenu } from './mainMenu';
 import RadioButton from '../actors/bars/radioButton';
 import LabeledRadio from '../actors/bars/labeledRadio';
@@ -56,13 +56,13 @@ export class Options extends ex.Scene {
   }
 
   private addGridSize(itemSize): void {
-    this.gridSize = new NumberSelector("GRID SIZE", 2, 9, ProgressionManager.get().getGridSize(), this.engine.drawWidth / 2, this.engine.drawHeight / 2, itemSize);
+    this.gridSize = new NumberSelector("GRID SIZE", 2, 9, ProgressionManager.get().getOptionGridSize(), this.engine.drawWidth / 2, this.engine.drawHeight / 2, itemSize);
     this.gridSize.getDrawables()
       .forEach(i => this.add(i));
   }
 
   private addDifficultySize(itemSize): void {
-    this.difficulty = new NumberSelector("DIFFICULTY", 1, 5, ProgressionManager.get().getDifficulty(), this.engine.drawWidth / 2, this.engine.drawHeight / 2 + itemSize*2 + Config.optionPadding, itemSize);
+    this.difficulty = new NumberSelector("DIFFICULTY", 1, 5, ProgressionManager.get().getDifficulty().getDifficultyLevel(), this.engine.drawWidth / 2, this.engine.drawHeight / 2 + itemSize*2 + Config.optionPadding, itemSize);
     this.difficulty.getDrawables()
       .forEach(i => this.add(i));
   }
@@ -75,8 +75,8 @@ export class Options extends ex.Scene {
   }
 
   public onActivate() {
-    this.gridSize.setCurrent(ProgressionManager.get().getGridSize());
-    this.difficulty.setCurrent(ProgressionManager.get().getDifficulty()); 
+    this.gridSize.setCurrent(ProgressionManager.get().getOptionGridSize());
+    this.difficulty.setCurrent(ProgressionManager.get().getDifficulty().getDifficultyLevel()); 
   }
 
   public onDeactivate() {

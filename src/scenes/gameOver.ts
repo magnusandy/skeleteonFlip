@@ -3,7 +3,7 @@ import { Resources } from '../resources';
 import { Scenes } from './scenes';
 import SoundManager from '../engine/soundManager';
 import { Engine, Actor } from 'excalibur';
-import ProgressionManager from '../engine/progressionManager';
+import ProgressionManager from '../engine/progression/progressionManager';
 import { calcDimensionsSingleObject } from '../engine/helpers';
 import BackgroundManager from '../engine/backgroundManager';
 

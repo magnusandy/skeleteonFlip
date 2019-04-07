@@ -3,7 +3,7 @@ import { CardCallbackProvider } from "../actors/card/cardCallbackProvider";
 import { Stream, Function } from "java8script";
 import * as ex from 'excalibur';
 import { Vector } from "excalibur";
-import ProgressionManager from "../engine/progressionManager";
+import ProgressionManager from "../engine/progression/progressionManager";
 
 
 export class GridCoordinator {
