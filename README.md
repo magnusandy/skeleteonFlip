@@ -23,15 +23,11 @@ Todo List:
 First Iteration (basic functionality): 
     - better button sizing on mobile
     - options page decrease text size, increase button sizes
-    - add headers to the help/options page
-    - change progression, should be 3 levels per grid size, same difficulty.
     - Options:
         - disable story/progression
             - this makes the grid size toggles available
         - "confirm" type button on options page
     - Help Page
-    - stop sound when not on game screen
-    - a button noise
     - buttons for end pages (contine for victory or menu for end);
     - Display names of difficulty in the options
 

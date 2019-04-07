@@ -4,6 +4,7 @@ import { Scenes } from './scenes';
 import ButtonBase from '../actors/bars/buttonBase';
 import { calcDimensionsSingleObjectTexture } from '../engine/helpers';
 import BackgroundManager from '../engine/backgroundManager';
+import SoundManager from '../engine/soundManager';
 
 export class MainMenu extends Scene {
 
@@ -51,6 +52,7 @@ export class MainMenu extends Scene {
   }
 
   public onActivate() {
+    SoundManager.get().backgroundMusicEnd();
   }
 
   public sizeProperly(actor, padding, scale, resource): Actor {

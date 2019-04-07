@@ -1,6 +1,8 @@
 import { Actor, Sprite, EventTypes } from "excalibur";
 import { Supplier } from "java8script";
 import { Darken } from "excalibur/dist/Drawing/SpriteEffects";
+import SoundManager from "../../engine/soundManager";
+import { Resources } from "../../resources";
 
 export default class ButtonBase extends Actor {
     private sprite: Sprite;
@@ -21,6 +23,7 @@ export default class ButtonBase extends Actor {
             if(event.ev.type === "pointerup") {
                 //this is kinda nasty need to filter out the duplicate touch events, only accept the regular pointer up ones
                 this.sprite.clearEffects();
+                SoundManager.get().playSoundInterrupt(Resources.buttonSound);
                 onClick();
             } else {
             }

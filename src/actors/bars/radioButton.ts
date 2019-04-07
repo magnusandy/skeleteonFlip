@@ -2,6 +2,7 @@ import { Sprite, Actor, Vector, SpriteFont } from "excalibur";
 import { Resources } from "../../resources";
 import { Darken } from "excalibur/dist/Drawing/SpriteEffects";
 import { Supplier } from "java8script";
+import SoundManager from "../../engine/soundManager";
 
 export default class RadioButton extends Actor {
     private checked: boolean;
@@ -42,6 +43,7 @@ export default class RadioButton extends Actor {
             if (event.ev.type === "pointerup") {
                 //this is kinda nasty need to filter out the duplicate touch events, only accept the regular pointer up ones
                 this.currentSprite().clearEffects();
+                SoundManager.get().playSoundInterrupt(Resources.buttonSound)
                 onClick();
                 this.onEnter();
             } else {

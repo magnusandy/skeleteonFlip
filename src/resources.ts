@@ -1,5 +1,4 @@
 import * as ex from 'excalibur';
-import { Color } from 'excalibur';
 const sword = require('./images/sword.png');
 const skull = require('./images/skull.png');
 const potion = require('./images/potion.png');
@@ -28,6 +27,8 @@ const uiLeft = require('./images/ui/left.png');
 const uiRight = require('./images/ui/right.png');
 const uiX = require('./images/ui/x.png');
 const uiBlank = require('./images/ui/blank.png');
+const optionTitle = require('./images/optionTitle.png');
+const helpTitle = require('./images/helpTitle.png');
 
 const fontMono = require('./fonts/myMono.png');
 
@@ -40,6 +41,7 @@ const laughSound = require('./sounds/laugh.ogg');
 const coinSound = require('./sounds/coin.wav');
 const backgroundMusic = require('./sounds/background.wav');
 const victorySound = require('./sounds/victory.mp3');
+const buttonSound = require('./sounds/button.wav');
 
 const backgroundTile = require('./images/background.png');
 
@@ -55,6 +57,8 @@ const Resources = {
     startMenu: new ex.Texture(startMenu),
     optionMenu: new ex.Texture(optionMenu), 
     helpMenu: new ex.Texture(helpMenu),
+    optionTitle: new ex.Texture(optionTitle),
+    helpTitle: new ex.Texture(helpTitle),
     backgroundTile: new ex.Texture(backgroundTile),
 
     0: new ex.Texture(zero), 
@@ -85,6 +89,7 @@ const Resources = {
     potionSound: new ex.Sound(potionSound),
     swordSound: new ex.Sound(swordSound),
     victorySound: new ex.Sound(victorySound),
+    buttonSound: new ex.Sound(buttonSound),
     backgroundMusic: new ex.Sound(backgroundMusic),
 }
 

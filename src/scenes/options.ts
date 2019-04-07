@@ -11,6 +11,7 @@ import RadioButton from '../actors/bars/radioButton';
 import LabeledRadio from '../actors/bars/labeledRadio';
 import SoundManager from '../engine/soundManager';
 import SizingManager from '../engine/sizingManager';
+import { calcDimensionsSingleObjectTexture } from '../engine/helpers';
 
 export class Options extends ex.Scene {
 
@@ -35,6 +36,7 @@ export class Options extends ex.Scene {
     this.addGridSize(itemSize);
     this.addDifficultySize(itemSize);
     this.addSoundToggle(itemSize);
+    this.addTitle();
 
     exit.scale = new Vector(Config.exitButtonSize / exitT.width, Config.exitButtonSize / exitT.height);
     exit.setHeight(Config.exitButtonSize);
@@ -55,6 +57,19 @@ export class Options extends ex.Scene {
     this.engine.goToScene(Scenes.MAIN_MENU);
   }
 
+  private addTitle(): void {
+    const dims = calcDimensionsSingleObjectTexture(this.engine.drawHeight, this.engine.drawWidth, Resources.optionTitle, 0.6, 2);
+    const sprite = Resources.optionTitle.asSprite();
+    const title = new Actor();
+    title.addDrawing(sprite);
+    title.x = this.engine.drawWidth/2;
+    title.y = dims.height/2+ Config.gridPadding;
+    title.setHeight(dims.height);
+    title.setWidth(dims.width);
+    title.scale = dims.scale; 
+    this.add(title);
+  }
+  
   private addGridSize(itemSize): void {
     this.gridSize = new NumberSelector("GRID SIZE", 2, 9, ProgressionManager.get().getOptionGridSize(), this.engine.drawWidth / 2, this.engine.drawHeight / 2, itemSize);
     this.gridSize.getDrawables()

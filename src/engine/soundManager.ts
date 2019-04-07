@@ -35,8 +35,18 @@ export default class SoundManager {
         if (!this.disabled) {
             if (!this.backgroundSound) {
                 this.backgroundSound = Resources.backgroundMusic;
+                this.backgroundSound.volume = 0.1;
                 this.backgroundSound.loop = true;
-                this.backgroundSound.play(0.1);
+                this.backgroundSound.play();
+            }
+        }
+    }
+
+    public backgroundMusicEnd(): void {
+        if(!this.disabled) {
+            if (this.backgroundSound) {
+                this.backgroundSound.stop();
+                this.backgroundSound = null;
             }
         }
     }
