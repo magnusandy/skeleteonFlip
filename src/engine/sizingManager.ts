@@ -3,9 +3,9 @@ import { Engine } from "excalibur";
 /***
  * Deal with font and item scaling for mobile devices
  */
-export default class MobileManager {
+export default class SizingManager {
     private engine: Engine;
-    private static singleton: MobileManager;
+    private static singleton: SizingManager;
 
     private constructor(engine: Engine) {
         this.engine = engine;
@@ -13,13 +13,13 @@ export default class MobileManager {
 
     public static initialize(engine: Engine) {
         if(!this.singleton) {
-            this.singleton = new MobileManager(engine);
+            this.singleton = new SizingManager(engine);
         } else {
             console.log("Mobile Manager already initialized");
         }
     }
 
-    public static get(): MobileManager {
+    public static get(): SizingManager {
         if(this.singleton) {
             return this.singleton;
         } else {

@@ -2,7 +2,7 @@ import { Label, Texture } from "excalibur";
 import { Supplier, Stream } from "java8script";
 import StatTracker from "../actors/bars/statTracker";
 import { Config } from "../resources";
-import MobileManager from "../engine/mobileManager";
+import SizingManager from "../engine/sizingManager";
 
 export class NumberCoordinator {
     private max: number;
@@ -23,9 +23,9 @@ export class NumberCoordinator {
         const statActors = Stream.range(0, max)
                             .map(idx => {
                                 if(idx > (defaultedCurrent - 1)) {
-                                    return new StatTracker(false, x + (idx * MobileManager.get().getUIItemSize()), y, texture);
+                                    return new StatTracker(false, x + (idx * SizingManager.get().getUIItemSize()), y, texture);
                                 } else {
-                                    return new StatTracker(true, x + (idx * MobileManager.get().getUIItemSize()), y, texture);
+                                    return new StatTracker(true, x + (idx * SizingManager.get().getUIItemSize()), y, texture);
                                 }
                             })
                             .toArray();

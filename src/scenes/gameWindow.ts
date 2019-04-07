@@ -9,7 +9,7 @@ import ButtonBase from '../actors/bars/buttonBase';
 import { Scenes } from './scenes';
 import LevelDisplay from '../actors/bars/level';
 import ProgressionManager from '../engine/progressionManager';
-import MobileManager from '../engine/mobileManager';
+import SizingManager from '../engine/sizingManager';
 
 export class GameWindow extends ex.Scene {
 
@@ -56,7 +56,7 @@ export class GameWindow extends ex.Scene {
     this.add(coins);
     */
 
-    const mm: MobileManager = MobileManager.get();
+    const mm: SizingManager = SizingManager.get();
     this.levelDisplay = new LevelDisplay(engine.drawWidth/2, mm.getMenuHeight()-mm.getUIItemSize()/2, mm.getUIItemSize(), ProgressionManager.get().getLevelNumber());
     this.add(this.levelDisplay);
   }

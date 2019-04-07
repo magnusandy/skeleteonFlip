@@ -6,7 +6,7 @@ import { Darken } from 'excalibur/dist/Drawing/SpriteEffects';
 import SoundManager from '../../engine/soundManager';
 import ProgressionManager from '../../engine/progressionManager';
 import { IDimensions } from '../../engine/helpers';
-import MobileManager from '../../engine/mobileManager';
+import SizingManager from '../../engine/sizingManager';
 
 export enum CardType {
     COIN = "coin",
@@ -69,7 +69,7 @@ export class Card extends ex.Actor implements ICard {
 
     private static calcY(cardHeight: number, row: number, center: ex.Vector) {
         const top = center.y // center of screen
-            + (MobileManager.get().getMenuHeight()/2) //adjust for menu size
+            + (SizingManager.get().getMenuHeight()/2) //adjust for menu size
             - ((ProgressionManager.get().getGridSize() / 2) * cardHeight)
             - ((ProgressionManager.get().getGridSize() - 1) * Config.gridPadding) / 2;
 
@@ -78,7 +78,7 @@ export class Card extends ex.Actor implements ICard {
 
     public static calcCardDimensions(screenHeight: number, screenWidth: number): IDimensions {
         const { height, width } = Resources.card;
-        const usableHeight = screenHeight - MobileManager.get().getMenuHeight();
+        const usableHeight = screenHeight - SizingManager.get().getMenuHeight();
         const maxHeight = Card.calcMaxCardHeight(usableHeight);
         const maxWidth = Card.calcMaxCardWidth(screenWidth);
         const scaleByWidth = maxWidth / width;

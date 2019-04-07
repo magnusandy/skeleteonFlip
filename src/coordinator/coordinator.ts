@@ -9,7 +9,7 @@ import { Vector } from "excalibur";
 import { Scenes } from "../scenes/scenes";
 import Count from "../actors/card/count";
 import ProgressionManager from "../engine/progressionManager";
-import MobileManager from "../engine/mobileManager";
+import SizingManager from "../engine/sizingManager";
 
 //this class will handle the building and coordinating of data between the game cards and other UI pieces
 export class GameCoordinator implements CardCallbackProvider {
@@ -28,7 +28,7 @@ export class GameCoordinator implements CardCallbackProvider {
     }
 
     public static initialize(engine: ex.Engine): GameCoordinator {
-        const mm: MobileManager = MobileManager.get();
+        const mm: SizingManager = SizingManager.get();
         const coordinator: GameCoordinator = new GameCoordinator(
             engine,
             NumberCoordinator.create(mm.getUIItemSize() / 2, mm.getUIItemSize() / 2, Config.maxHealth, () => { engine.goToScene(Scenes.GAME_OVER) }, Resources.uiHeart, Config.maxHealth),

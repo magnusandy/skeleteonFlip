@@ -1,6 +1,6 @@
 import { Actor, Vector, Sprite, Texture } from "excalibur";
 import { Config } from "../../resources";
-import MobileManager from "../../engine/mobileManager";
+import SizingManager from "../../engine/sizingManager";
 
 export default class StatTracker extends Actor {
     private enabled: boolean;
@@ -12,7 +12,7 @@ export default class StatTracker extends Actor {
         this.x = x;
         this.y = y;
         this.sprite = new Sprite(texture, 0, 0, texture.width, texture.height );
-        this.scale = new Vector(MobileManager.get().getUIItemSize()/texture.width, MobileManager.get().getUIItemSize()/texture.height);
+        this.scale = new Vector(SizingManager.get().getUIItemSize()/texture.width, SizingManager.get().getUIItemSize()/texture.height);
         this.addDrawing(this.sprite);
         this.setEnabled(enabled);
         
