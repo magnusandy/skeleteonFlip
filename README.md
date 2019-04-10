@@ -30,6 +30,8 @@ First Iteration (basic functionality):
     - Help Page
     - buttons for end pages (contine for victory or menu for end);
     - Display names of difficulty in the options
+    - double button press error on victory, need to handle this on all buttons
+    
 
 Second Iteration (upgrades):
     - track coins
