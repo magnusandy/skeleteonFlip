@@ -3,7 +3,7 @@ import { Resources } from '../resources';
 import { Scenes } from './scenes';
 import SoundManager from '../engine/soundManager';
 import ProgressionManager from '../engine/progression/progressionManager';
-import { calcDimensionsSingleObject, calcDimensionsSingleObjectTexture } from '../engine/helpers';
+import {calcDimensionsSingleObjectTexture, safePointerUp } from '../engine/helpers';
 import BackgroundManager from '../engine/backgroundManager';
 
 export class Victory extends ex.Scene {
@@ -20,10 +20,10 @@ export class Victory extends ex.Scene {
     victoryActor.setHeight(engine.drawHeight);// set height/width so you can tap anywhere on the screen
     victoryActor.setWidth(engine.drawWidth);
     victoryActor.scale = dims.scale;
-    victoryActor.on('pointerup', () => {
+    victoryActor.on('pointerup', safePointerUp(() => {
       ProgressionManager.get().progress();
       this.engine.goToScene(Scenes.GAME_WINDOW);
-    });
+    }));
     this.add(victoryActor);
     this.add(new BackgroundManager(engine).getTileMap())
   }

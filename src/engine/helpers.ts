@@ -1,4 +1,5 @@
 import { Texture, Vector } from "excalibur";
+import { Supplier } from "java8script";
 
 interface IDimensions {
     width: number;
@@ -12,7 +13,7 @@ function calcDimensionsSingleObjectTexture(screenHeight: number, screenWidth: nu
 }
 
 function calcDimensionsSingleObject(screenHeight: number, screenWidth: number, textHeight: number, textWidth: number, paddingPercent?: number, maxScale?: number): IDimensions {
-    
+
     const paddingToUse = paddingPercent ? paddingPercent : 1;
     const maxHeight = screenHeight * paddingToUse;
     const maxWidth = screenWidth * paddingToUse;
@@ -37,8 +38,19 @@ function calcDimensionsSingleObject(screenHeight: number, screenWidth: number, t
     }
 }
 
+function safePointerUp(onClick: Supplier<void>): (event?: any) => void {
+    return (event?: any) => {
+            if (event.ev.type === "pointerup") {
+                //this is kinda nasty need to filter out the duplicate touch events, only accept the regular pointer up ones
+                onClick();
+            }
+    }
+}
+
+
 export {
     IDimensions,
     calcDimensionsSingleObject,
-    calcDimensionsSingleObjectTexture
+    calcDimensionsSingleObjectTexture,
+    safePointerUp
 }
