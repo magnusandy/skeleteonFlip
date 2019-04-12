@@ -9,15 +9,19 @@ export default class LabeledRadio {
     private label: Label;
 
     constructor(label: string, size: number, x: number, y: number, defaultVal: boolean, engine: Engine) {
+        const textSize = size - (size * 0.25)
+        const buttonSize = size + (size * 0.25);
+        
+
         this.label = new Label(label, x, y, null, FontManager.get().getMono());//need to x adjust after
-        this.label.fontSize = size;
+        this.label.fontSize = textSize;
         this.label.baseAlign = BaseAlign.Middle;
         this.label.textAlign = TextAlign.Center;
         const labelWidth = this.label.getTextWidth(engine.ctx);
         console.log(`labelwidth ${labelWidth}`)
         this.label.x = x - labelWidth/3;
         
-        this.radio = new RadioButton(size, x+labelWidth*(2/3), y, defaultVal);
+        this.radio = new RadioButton(buttonSize, x+labelWidth*(3/4), y, defaultVal);
         
     }
 

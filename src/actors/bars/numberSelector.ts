@@ -21,34 +21,36 @@ export default class NumberSelector {
         this.max = max;
         this.current = current;
         this.fontSize = fontSize;
+
+        const textSize = this.fontSize - (this.fontSize * 0.25)
+        const buttonSize = this.fontSize + (this.fontSize * 0.25);
         
         //top text
         this.topLabel = new Label(this.labelText, x, y-Config.gridPadding, null, FontManager.get().getMono());
-        this.topLabel.fontSize = this.fontSize;
+        this.topLabel.fontSize = textSize
         this.topLabel.baseAlign = BaseAlign.Middle;
         this.topLabel.textAlign = TextAlign.Center;
         //central Number Label
-        this.numberLabel = new Label(`${current}`, x, y+fontSize, null, FontManager.get().getMono());
-        //this.numberLabel.anchor = new Vector(1, 1);
-        this.numberLabel.fontSize = this.fontSize;
+        this.numberLabel = new Label(`${current}`, x, y+buttonSize, null, FontManager.get().getMono());
+        this.numberLabel.fontSize = textSize
         this.numberLabel.baseAlign = BaseAlign.Middle;
         this.numberLabel.textAlign = TextAlign.Center;
 
         //left button
         this.leftButton = new ButtonBase(Resources.uiLeft, () => this.addBy(-1));
-        this.leftButton.x = x - this.fontSize*1.5
-        this.leftButton.y = y + fontSize;
-        this.leftButton.scale = new Vector(this.fontSize/Resources.uiLeft.width, this.fontSize/Resources.uiLeft.height);
-        this.leftButton.setHeight(this.fontSize);
-        this.leftButton.setWidth(this.fontSize);
+        this.leftButton.x = x - buttonSize*1.5
+        this.leftButton.y = y + buttonSize;
+        this.leftButton.scale = new Vector(buttonSize/Resources.uiLeft.width, buttonSize/Resources.uiLeft.height);
+        this.leftButton.setHeight(buttonSize);
+        this.leftButton.setWidth(buttonSize);
         
         //right button
         this.rightButton = new ButtonBase(Resources.uiRight, () => this.addBy(1));
-        this.rightButton.x = x + this.fontSize*1.5;
-        this.rightButton.y = y + fontSize;
-        this.rightButton.scale = new Vector(this.fontSize/Resources.uiRight.width, this.fontSize/Resources.uiRight.height);
-        this.rightButton.setHeight(this.fontSize);
-        this.rightButton.setWidth(this.fontSize);
+        this.rightButton.x = x + buttonSize*1.5;
+        this.rightButton.y = y + buttonSize;
+        this.rightButton.scale = new Vector(buttonSize/Resources.uiRight.width, buttonSize/Resources.uiRight.height);
+        this.rightButton.setHeight(buttonSize);
+        this.rightButton.setWidth(buttonSize);
     }
 
     //add can be negative

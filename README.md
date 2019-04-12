@@ -21,17 +21,13 @@ Card Types:
 # Development list
 Todo List:
 First Iteration (basic functionality): 
-    - better button sizing on mobile
-    - options page decrease text size, increase button sizes
     - Options:
         - disable story/progression
             - this makes the grid size toggles available
         - "confirm" type button on options page
     - Help Page
     - buttons for end pages (contine for victory or menu for end);
-    - Display names of difficulty in the options
-    - double button press error on victory, need to handle this on all buttons
-    
+    - Display names of difficulty in the options    
 
 Second Iteration (upgrades):
     - track coins

@@ -58,7 +58,7 @@ export class Options extends ex.Scene {
   }
 
   private addTitle(): void {
-    const dims = calcDimensionsSingleObjectTexture(this.engine.drawHeight, this.engine.drawWidth, Resources.optionTitle, 0.6, 2);
+    const dims = calcDimensionsSingleObjectTexture(this.engine.drawHeight, this.engine.drawWidth, Resources.optionTitle, 0.6, 1);
     const sprite = Resources.optionTitle.asSprite();
     const title = new Actor();
     title.addDrawing(sprite);
