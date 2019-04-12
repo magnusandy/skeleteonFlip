@@ -25,12 +25,13 @@ First Iteration (basic functionality):
         - "confirm" type button on options page
     - Help Page
     - buttons for end pages (contine for victory or menu for end);
-    - Display names of difficulty in the options    
+    - Display names of difficulty in the options  
+    - saved sound settings needs to apply to sound manager after initialized  
+    - level/stage is not coming though from the save
 
 Second Iteration (upgrades):
     - track coins
     - only get coins on victory
-    - local storage
     - add a grid size level bonus when you hit your max size in progression
     - level bonus should scale with difficulty
     - upgrade to get more heart/sword storage
