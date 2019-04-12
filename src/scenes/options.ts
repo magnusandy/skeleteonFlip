@@ -13,6 +13,7 @@ import SoundManager from '../engine/soundManager';
 import SizingManager from '../engine/sizingManager';
 import { calcDimensionsSingleObjectTexture } from '../engine/helpers';
 import { Consumer } from 'java8script';
+import PlayerSettingsManager from '../engine/progression/playerSettingsManager';
 
 export class Options extends ex.Scene {
 
@@ -53,6 +54,7 @@ export class Options extends ex.Scene {
     ProgressionManager.get().setGridSize(this.gridSize.getCurrent());
     ProgressionManager.get().setDifficulty(this.difficulty.getCurrent());
     ProgressionManager.get().setProgressionDisabled(!this.progressionToggle.isChecked());
+    PlayerSettingsManager.get().setIsSoundOff(!this.sound.isChecked())
     if (this.sound.isChecked()) {
       SoundManager.get().enableSound();
     } else {
@@ -75,7 +77,7 @@ export class Options extends ex.Scene {
   }
   
   private addSoundToggle(itemSize) {
-    this.sound = new LabeledRadio("Sound", itemSize, this.engine.drawWidth/2, this.engine.drawHeight/2 - itemSize*2.5 - Config.optionPadding, true, this.engine);
+    this.sound = new LabeledRadio("Sound", itemSize, this.engine.drawWidth/2, this.engine.drawHeight/2 - itemSize*2.5 - Config.optionPadding, !PlayerSettingsManager.get().isSoundOff(), this.engine);
 
     this.sound.getDrawables()
     .forEach(e => this.add(e));
@@ -88,7 +90,7 @@ export class Options extends ex.Scene {
   }
 
   private addProgressionToggle(itemSize, toggleCallback: Consumer<boolean>) {
-    this.progressionToggle = new LabeledRadio("Story Mode", itemSize, this.engine.drawWidth/2, this.engine.drawHeight/2 + itemSize*1 + Config.optionPadding, true, this.engine, toggleCallback);
+    this.progressionToggle = new LabeledRadio("Story Mode", itemSize, this.engine.drawWidth/2, this.engine.drawHeight/2 + itemSize*1 + Config.optionPadding, !ProgressionManager.get().isProgressionDisabled(), this.engine, toggleCallback);
 
     this.progressionToggle.getDrawables()
     .forEach(e => this.add(e));
@@ -106,8 +108,6 @@ export class Options extends ex.Scene {
   public onActivate() {
     this.gridSize.setCurrent(ProgressionManager.get().getOptionGridSize());
     this.difficulty.setCurrent(ProgressionManager.get().getDifficulty().getDifficultyLevel());
-    //todo update sound based on player settings
-    //todo update story mode based on toggle
   }
 
   public onDeactivate() {

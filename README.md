@@ -45,7 +45,6 @@ Second Iteration (upgrades):
 Misc:
     - decide how to deal with what happens to current progression if difficulty changes
     - 350/675
-    - player settings as a singleton
     - consolidate exit button code
     - redraw if resize
     - refactor the scenes to initialize actions on initialize not activate

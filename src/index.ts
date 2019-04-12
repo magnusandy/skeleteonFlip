@@ -9,6 +9,7 @@ import { Victory } from './scenes/victory';
 import { Options } from './scenes/options';
 import { Help } from './scenes/help';
 import SizingManager from './engine/sizingManager';
+import PlayerSettingsManager from './engine/progression/playerSettingsManager';
 
 const game = new Game();
 const mainMenu = new MainMenu(game);
@@ -26,5 +27,6 @@ Object.keys(Resources)
     
 game.start(loader).then(() => {
   SizingManager.initialize(game);
+  PlayerSettingsManager.initialize();
   game.goToScene(Scenes.MAIN_MENU);
 });
