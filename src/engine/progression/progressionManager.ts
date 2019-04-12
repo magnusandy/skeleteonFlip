@@ -1,30 +1,25 @@
 import { Difficulty } from "./difficulty";
-import PlayerSettings from "./playerSettings";
+import PlayerSettingsManager from "./playerSettingsManager";
 
 export default class ProgressionManager {
     private static stagesPerNormalLevel = 3;
 
     private static singleton: ProgressionManager;
     
-    private playerSettings: PlayerSettings;
-
-    private constructor(playerSettings: PlayerSettings) {
-        this.playerSettings = playerSettings;
+    private constructor() {
     }
 
     public static get(): ProgressionManager {
         if (this.singleton) {
             return this.singleton;
         } else {
-            this.singleton = new ProgressionManager(
-                PlayerSettings.DEFAULT
-            );
+            this.singleton = new ProgressionManager();
             return this.singleton;
         }
     }
 
     public getGameGridSize(): number {
-        const ps = this.playerSettings;
+        const ps = PlayerSettingsManager.get();
         if(ps.isProgressionDisabled()) {
             return ps.getChosenGridSize();
         } else {
@@ -34,11 +29,11 @@ export default class ProgressionManager {
     }
 
     public getOptionGridSize(): number {
-        return this.playerSettings.getChosenGridSize();
+        return PlayerSettingsManager.get().getChosenGridSize();
     }
 
     public getDifficulty(): Difficulty {
-        return this.playerSettings.getChosenDifficulty();
+        return PlayerSettingsManager.get().getChosenDifficulty();
     }
 
     public getSkullFactor(): number {
@@ -50,45 +45,44 @@ export default class ProgressionManager {
     }
 
     public isProgressionDisabled() {
-        return this.playerSettings.isProgressionDisabled();
+        return PlayerSettingsManager.get().isProgressionDisabled();
     }
 
     public progress(): void {
-        if(!this.playerSettings.isProgressionDisabled()) {
-            const currentLevel = this.playerSettings.getCurrentLevel();
-            const currentStage = this.playerSettings.getCurrentStage();
+        if(!PlayerSettingsManager.get().isProgressionDisabled()) {
+            const currentLevel = PlayerSettingsManager.get().getCurrentLevel();
+            const currentStage = PlayerSettingsManager.get().getCurrentStage();
     
             if(currentStage >= ProgressionManager.stagesPerNormalLevel) {
                 //on the last stage of the level, need to find out if we can move on or just move up stages
-                if(currentLevel === this.playerSettings.maxLevel) {
+                if(currentLevel === PlayerSettingsManager.get().maxLevel) {
                     // on the max upgraded level just increase stage
-                    this.playerSettings.setCurrentStage(currentStage + 1);
+                    PlayerSettingsManager.get().setCurrentStage(currentStage + 1);
                 } else {
-                    this.playerSettings.setCurrentStage(1);
-                    this.playerSettings.setCurrentLevel(currentLevel + 1);
+                    PlayerSettingsManager.get().setCurrentStage(1);
+                    PlayerSettingsManager.get().setCurrentLevel(currentLevel + 1);
                 }
             } else {
                 //move on to the next stage, no extra logic
-                this.playerSettings.setCurrentStage(currentStage + 1);
+                PlayerSettingsManager.get().setCurrentStage(currentStage + 1);
             }  
         }
     }
 
-
     public setGridSize(newSize: number) {
-        this.playerSettings.setChosenGridSize(newSize);
+        PlayerSettingsManager.get().setChosenGridSize(newSize);
     }
 
     public setDifficulty(difficulty: number) {
-        this.playerSettings.setChosenDifficulty(Difficulty.getByDifficultyLevel(difficulty));
+        PlayerSettingsManager.get().setChosenDifficulty(Difficulty.getByDifficultyLevel(difficulty));
     }
 
     public setProgressionDisabled(isProgressDisabled: boolean) {
-        return this.playerSettings.setProgressionDisabled(isProgressDisabled);
+        return PlayerSettingsManager.get().setProgressionDisabled(isProgressDisabled);
     }
 
     public resetProgress(): void {
-        const ps = this.playerSettings;
+        const ps = PlayerSettingsManager.get();
         if (!ps.isProgressionDisabled()) {
             ps.setCurrentLevel(1);
             ps.setCurrentStage(1);
@@ -96,10 +90,10 @@ export default class ProgressionManager {
     }
 
     public getLevelString(): string {
-        if (this.playerSettings.getCurrentStage() > ProgressionManager.stagesPerNormalLevel) {
+        if (PlayerSettingsManager.get().getCurrentStage() > ProgressionManager.stagesPerNormalLevel) {
             return "MAXED";
         } else {
-            return `${this.playerSettings.getCurrentLevel()}.${this.playerSettings.getCurrentStage()}`;
+            return `${PlayerSettingsManager.get().getCurrentLevel()}.${PlayerSettingsManager.get().getCurrentStage()}`;
         }
     }
 }

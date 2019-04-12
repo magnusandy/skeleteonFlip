@@ -4,10 +4,11 @@ import ProgressionManager from "./progressionManager";
 
 //this class will encompase the save state of the player
 //all the things they can update or should be tracked
-export default class PlayerSettings {
-    public static DEFAULT: PlayerSettings = new PlayerSettings(false, false, Difficulty.VERY_EASY, 3, 3, Difficulty.NORMAL, 1, 1);
+export default class PlayerSettingsManager {
+    public static singleton: PlayerSettingsManager;
+    private static DEFAULT: PlayerSettingsManager = new PlayerSettingsManager(false, false, Difficulty.VERY_EASY, 3, 3, Difficulty.NORMAL, 1, 1);
     //Settings
-    public readonly soundOff: boolean;
+    private soundOff: boolean;
     private progressionDisabled: boolean;
     private chosenDifficulty: Difficulty;
     private chosenGridSize: number;
@@ -30,6 +31,15 @@ export default class PlayerSettings {
         this.currentLevel = currentLevel;
         this.currentStage = currentStage;
     }    
+
+    public static get(): PlayerSettingsManager {
+        if(this.singleton) {
+            return this.singleton;
+        } else {
+            this.singleton = PlayerSettingsManager.DEFAULT;
+            return this.singleton;
+        }
+    }
 
     public setCurrentLevel(newCurrent: number): void {
         this.currentLevel = newCurrent;
