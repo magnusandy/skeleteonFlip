@@ -27,7 +27,6 @@ First Iteration (basic functionality):
     - buttons for end pages (contine for victory or menu for end);
     - Display names of difficulty in the options  
     - saved sound settings needs to apply to sound manager after initialized  
-    - level/stage is not coming though from the save
 
 Second Iteration (upgrades):
     - track coins

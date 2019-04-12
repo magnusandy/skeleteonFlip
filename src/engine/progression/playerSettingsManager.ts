@@ -48,6 +48,7 @@ export default class PlayerSettingsManager {
     }
 
     public static get(): PlayerSettingsManager {
+        console.log(this.singleton.serializeV1());
         return this.singleton;
     }
 
@@ -152,7 +153,7 @@ export default class PlayerSettingsManager {
             save.maxLevel,
             Difficulty.getByDifficultyLevel(save.maxDifficulty),
             save.currentLevel,
-            save.currentLevel);
+            save.currentStage);
     }
 
     private saveToStorage() {
