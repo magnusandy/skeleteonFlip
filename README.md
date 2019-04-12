@@ -40,6 +40,7 @@ Second Iteration (upgrades):
     - upgrade sword kills give a coin
     - upgrade to switch grid counts between card types
     - upgrade level bonus
+    - extra lives to protect from game over
     - button to clear saves
 
 Misc:
