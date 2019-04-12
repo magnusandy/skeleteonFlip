@@ -25,7 +25,7 @@ export default class ProgressionManager {
 
     public getGameGridSize(): number {
         const ps = this.playerSettings;
-        if(ps.progressionDisabled) {
+        if(ps.isProgressionDisabled()) {
             return ps.getChosenGridSize();
         } else {
             //add 2 to handle the offset from the base grid size i.e. level 1 is grid size 3
@@ -49,23 +49,29 @@ export default class ProgressionManager {
         return this.getDifficulty().getBuffFactor();
     }
 
-    public progress(): void {
-        const currentLevel = this.playerSettings.getCurrentLevel();
-        const currentStage = this.playerSettings.getCurrentStage();
+    public isProgressionDisabled() {
+        return this.playerSettings.isProgressionDisabled();
+    }
 
-        if(currentStage >= ProgressionManager.stagesPerNormalLevel) {
-            //on the last stage of the level, need to find out if we can move on or just move up stages
-            if(currentLevel === this.playerSettings.maxLevel) {
-                // on the max upgraded level just increase stage
-                this.playerSettings.setCurrentStage(currentStage + 1);
+    public progress(): void {
+        if(!this.playerSettings.isProgressionDisabled()) {
+            const currentLevel = this.playerSettings.getCurrentLevel();
+            const currentStage = this.playerSettings.getCurrentStage();
+    
+            if(currentStage >= ProgressionManager.stagesPerNormalLevel) {
+                //on the last stage of the level, need to find out if we can move on or just move up stages
+                if(currentLevel === this.playerSettings.maxLevel) {
+                    // on the max upgraded level just increase stage
+                    this.playerSettings.setCurrentStage(currentStage + 1);
+                } else {
+                    this.playerSettings.setCurrentStage(1);
+                    this.playerSettings.setCurrentLevel(currentLevel + 1);
+                }
             } else {
-                this.playerSettings.setCurrentStage(1);
-                this.playerSettings.setCurrentLevel(currentLevel + 1);
-            }
-        } else {
-            //move on to the next stage, no extra logic
-            this.playerSettings.setCurrentStage(currentStage + 1);
-        }  
+                //move on to the next stage, no extra logic
+                this.playerSettings.setCurrentStage(currentStage + 1);
+            }  
+        }
     }
 
 
@@ -77,9 +83,13 @@ export default class ProgressionManager {
         this.playerSettings.setChosenDifficulty(Difficulty.getByDifficultyLevel(difficulty));
     }
 
+    public setProgressionDisabled(isProgressDisabled: boolean) {
+        return this.playerSettings.setProgressionDisabled(isProgressDisabled);
+    }
+
     public resetProgress(): void {
         const ps = this.playerSettings;
-        if (!ps.progressionDisabled) {
+        if (!ps.isProgressionDisabled()) {
             ps.setCurrentLevel(1);
             ps.setCurrentStage(1);
         }

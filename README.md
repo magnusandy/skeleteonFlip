@@ -22,8 +22,6 @@ Card Types:
 Todo List:
 First Iteration (basic functionality): 
     - Options:
-        - disable story/progression
-            - this makes the grid size toggles available
         - "confirm" type button on options page
     - Help Page
     - buttons for end pages (contine for victory or menu for end);
@@ -45,6 +43,7 @@ Second Iteration (upgrades):
 
 Misc:
     - 350/675
+    - player settings as a singleton
     - consolidate exit button code
     - redraw if resize
     - refactor the scenes to initialize actions on initialize not activate

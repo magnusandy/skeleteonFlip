@@ -1,5 +1,4 @@
 import { Actor, Vector, Sprite, Texture } from "excalibur";
-import { Config } from "../../resources";
 import SizingManager from "../../engine/sizingManager";
 
 export default class StatTracker extends Actor {

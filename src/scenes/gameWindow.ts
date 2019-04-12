@@ -57,8 +57,9 @@ export class GameWindow extends ex.Scene {
     */
 
     const mm: SizingManager = SizingManager.get();
-    this.levelDisplay = new LevelDisplay(engine.drawWidth/2, mm.getMenuHeight()-mm.getUIItemSize()/2, mm.getUIItemSize(), ProgressionManager.get().getLevelString());
+    this.levelDisplay = new LevelDisplay(engine.drawWidth / 2, mm.getMenuHeight() - mm.getUIItemSize() / 2, mm.getUIItemSize(), ProgressionManager.get().getLevelString());
     this.add(this.levelDisplay);
+
   }
 
   public onActivate() {

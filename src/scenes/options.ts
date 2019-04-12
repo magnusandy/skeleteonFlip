@@ -12,6 +12,7 @@ import LabeledRadio from '../actors/bars/labeledRadio';
 import SoundManager from '../engine/soundManager';
 import SizingManager from '../engine/sizingManager';
 import { calcDimensionsSingleObjectTexture } from '../engine/helpers';
+import { Consumer } from 'java8script';
 
 export class Options extends ex.Scene {
 
@@ -19,6 +20,7 @@ export class Options extends ex.Scene {
   private gridSize: NumberSelector;
   private difficulty: NumberSelector;
   private sound: LabeledRadio;
+  private progressionToggle: LabeledRadio;
 
   public onInitialize(engine: ex.Engine) {
     this.engine = engine;
@@ -33,10 +35,11 @@ export class Options extends ex.Scene {
       this.onExit
     );
 
-    this.addGridSize(itemSize);
+    const callbackForEnabling = this.addGridSize(itemSize);
     this.addDifficultySize(itemSize);
     this.addSoundToggle(itemSize);
     this.addTitle();
+    this.addProgressionToggle(itemSize, callbackForEnabling)
 
     exit.scale = new Vector(Config.exitButtonSize / exitT.width, Config.exitButtonSize / exitT.height);
     exit.setHeight(Config.exitButtonSize);
@@ -49,6 +52,7 @@ export class Options extends ex.Scene {
   private onExit = () => {
     ProgressionManager.get().setGridSize(this.gridSize.getCurrent());
     ProgressionManager.get().setDifficulty(this.difficulty.getCurrent());
+    ProgressionManager.get().setProgressionDisabled(!this.progressionToggle.isChecked());
     if (this.sound.isChecked()) {
       SoundManager.get().enableSound();
     } else {
@@ -70,28 +74,40 @@ export class Options extends ex.Scene {
     this.add(title);
   }
   
-  private addGridSize(itemSize): void {
-    this.gridSize = new NumberSelector("GRID SIZE", 2, 9, ProgressionManager.get().getOptionGridSize(), this.engine.drawWidth / 2, this.engine.drawHeight / 2, itemSize);
-    this.gridSize.getDrawables()
-      .forEach(i => this.add(i));
-  }
-
-  private addDifficultySize(itemSize): void {
-    this.difficulty = new NumberSelector("DIFFICULTY", 1, 5, ProgressionManager.get().getDifficulty().getDifficultyLevel(), this.engine.drawWidth / 2, this.engine.drawHeight / 2 + itemSize*2 + Config.optionPadding, itemSize);
-    this.difficulty.getDrawables()
-      .forEach(i => this.add(i));
-  }
-
   private addSoundToggle(itemSize) {
-    this.sound = new LabeledRadio("Sound", itemSize, this.engine.drawWidth/2, this.engine.drawHeight/2 - itemSize - Config.optionPadding, true, this.engine);
+    this.sound = new LabeledRadio("Sound", itemSize, this.engine.drawWidth/2, this.engine.drawHeight/2 - itemSize*2.5 - Config.optionPadding, true, this.engine);
 
     this.sound.getDrawables()
     .forEach(e => this.add(e));
   }
 
+  private addDifficultySize(itemSize): void {
+    this.difficulty = new NumberSelector("DIFFICULTY", 1, 5, ProgressionManager.get().getDifficulty().getDifficultyLevel(), this.engine.drawWidth / 2, this.engine.drawHeight / 2 - itemSize*0.5 - Config.optionPadding, itemSize, false);
+    this.difficulty.getDrawables()
+      .forEach(i => this.add(i));
+  }
+
+  private addProgressionToggle(itemSize, toggleCallback: Consumer<boolean>) {
+    this.progressionToggle = new LabeledRadio("Story Mode", itemSize, this.engine.drawWidth/2, this.engine.drawHeight/2 + itemSize*1 + Config.optionPadding, true, this.engine, toggleCallback);
+
+    this.progressionToggle.getDrawables()
+    .forEach(e => this.add(e));
+  }
+
+  //returns callback for toggling the objects
+  private addGridSize(itemSize): Consumer<boolean> {
+    this.gridSize = new NumberSelector("GRID SIZE", 2, 9, ProgressionManager.get().getOptionGridSize(), this.engine.drawWidth / 2, this.engine.drawHeight / 2 + itemSize*3 + Config.optionPadding, itemSize, true);
+    this.gridSize.getDrawables()
+      .forEach(i => this.add(i));
+
+      return this.gridSize.updateDisabled;
+  }
+
   public onActivate() {
     this.gridSize.setCurrent(ProgressionManager.get().getOptionGridSize());
-    this.difficulty.setCurrent(ProgressionManager.get().getDifficulty().getDifficultyLevel()); 
+    this.difficulty.setCurrent(ProgressionManager.get().getDifficulty().getDifficultyLevel());
+    //todo update sound based on player settings
+    //todo update story mode based on toggle
   }
 
   public onDeactivate() {

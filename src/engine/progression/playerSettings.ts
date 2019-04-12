@@ -8,7 +8,7 @@ export default class PlayerSettings {
     public static DEFAULT: PlayerSettings = new PlayerSettings(false, false, Difficulty.VERY_EASY, 3, 3, Difficulty.NORMAL, 1, 1);
     //Settings
     public readonly soundOff: boolean;
-    public readonly progressionDisabled: boolean;
+    private progressionDisabled: boolean;
     private chosenDifficulty: Difficulty;
     private chosenGridSize: number;
 
@@ -61,5 +61,13 @@ export default class PlayerSettings {
 
     public getChosenGridSize(): number {
         return this.chosenGridSize;
+    }
+
+    public setProgressionDisabled(isProgDisabled: boolean) {
+        this.progressionDisabled = isProgDisabled;
+    }
+
+    public isProgressionDisabled(): boolean {
+        return this.progressionDisabled;
     }
 }

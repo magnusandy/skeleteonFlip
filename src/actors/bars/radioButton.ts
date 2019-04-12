@@ -1,15 +1,16 @@
 import { Sprite, Actor, Vector, SpriteFont } from "excalibur";
 import { Resources } from "../../resources";
 import { Darken } from "excalibur/dist/Drawing/SpriteEffects";
-import { Supplier } from "java8script";
+import { Supplier, Function, Optional, Consumer } from "java8script";
 import SoundManager from "../../engine/soundManager";
 
 export default class RadioButton extends Actor {
     private checked: boolean;
     private checkedSprite: Sprite;
     private uncheckedSprite: Sprite;
+    private onToggle: Optional<Consumer<boolean>>
 
-    constructor(size: number, x: number, y: number, defaultValue: boolean) {
+    constructor(size: number, x: number, y: number, defaultValue: boolean, onToggle?: Consumer<boolean>) {
         super();
         this.checked = defaultValue;
         this.checkedSprite = new Sprite(Resources.uiX, 0, 0, Resources.uiX.width, Resources.uiX.height);
@@ -19,6 +20,7 @@ export default class RadioButton extends Actor {
         this.setWidth(size);
         this.x = x;
         this.y = y;
+        this.onToggle = Optional.ofNullable(onToggle);
 
         //get drawing ready
         this.addDrawing("checked", this.checkedSprite);
@@ -77,6 +79,7 @@ export default class RadioButton extends Actor {
         } else {
             this.setDrawing("unchecked");
         }
+        this.onToggle.ifPresent(func => func(this.checked));
     }
 
 }

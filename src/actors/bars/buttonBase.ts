@@ -8,9 +8,11 @@ import { safePointerUp } from "../../engine/helpers";
 export default class ButtonBase extends Actor {
     private sprite: Sprite;
     public drawHeight: number;
+    private disabled: boolean;
 
-    public constructor(texture: ex.Texture, onClick: Supplier<void>) {
+    public constructor(texture: ex.Texture, onClick: Supplier<void>, disabled?: boolean) {
         super();
+        this.disabled = disabled ? disabled : false;
         this.sprite = new Sprite(texture, 0, 0, texture.width, texture.height);
         this.addDrawing(this.sprite);
         this.on("pointerdown", this.onDown);
@@ -19,26 +21,44 @@ export default class ButtonBase extends Actor {
         this.on("pointerleave", this.onExit);
     }
 
+    public getSprite():Sprite {
+        return this.sprite;
+    }
+
     private onClickWrapper(onClick: Supplier<void>) {
-        return  safePointerUp(() => {
-            this.sprite.clearEffects();
-            SoundManager.get().playSoundInterrupt(Resources.buttonSound);
-            onClick();
+        return safePointerUp(() => {
+            if (!this.disabled) {
+                this.sprite.clearEffects();
+                SoundManager.get().playSoundInterrupt(Resources.buttonSound);
+                onClick();
+            }
         });
     }
 
     private onDown: () => void = () => {
-        this.sprite.clearEffects();
-        this.sprite.addEffect(new Darken(0.2))
+        if (!this.disabled) {
+            this.sprite.clearEffects();
+            this.sprite.addEffect(new Darken(0.2))
+        }
+
     }
 
     private onEnter: () => void = () => {
-        this.sprite.clearEffects();
-        this.sprite.addEffect(new Darken(0.1))
+        if (!this.disabled) {
+            this.sprite.clearEffects();
+            this.sprite.addEffect(new Darken(0.1))
+        }
+
     }
 
     private onExit: () => void = () => {
-        this.sprite.clearEffects();
+        if (!this.disabled) {
+            this.sprite.clearEffects();
+        }
+    }
+
+    public setDisabled(disabled: boolean) {
+        this.disabled = disabled;
     }
 
 }
