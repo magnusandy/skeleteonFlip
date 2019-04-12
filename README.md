@@ -40,8 +40,10 @@ Second Iteration (upgrades):
     - upgrade sword kills give a coin
     - upgrade to switch grid counts between card types
     - upgrade level bonus
+    - button to clear saves
 
 Misc:
+    - decide how to deal with what happens to current progression if difficulty changes
     - 350/675
     - player settings as a singleton
     - consolidate exit button code
