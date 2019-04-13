@@ -11,7 +11,9 @@ export class GridGameWindow extends GameWindowBase {
 
   //Override
   public onActivate(): void {
-    if(this.currentOptionGridSize != ProgressionManager.get().getOptionGridSize()) {
+    const newSize = ProgressionManager.get().getOptionGridSize()
+    if(this.currentOptionGridSize != newSize) {
+      this.currentOptionGridSize = newSize;
       this.coordinator.resetGame();
     }
     super.onActivate();
