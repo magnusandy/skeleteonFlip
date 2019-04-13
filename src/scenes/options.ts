@@ -14,6 +14,7 @@ import SizingManager from '../engine/sizingManager';
 import { calcDimensionsSingleObjectTexture } from '../engine/helpers';
 import { Consumer } from 'java8script';
 import PlayerSettingsManager from '../engine/progression/playerSettingsManager';
+import { ExitButton } from '../actors/bars/exitButton';
 
 export class Options extends ex.Scene {
 
@@ -30,24 +31,14 @@ export class Options extends ex.Scene {
     this.addTileMap(bgManager.getTileMap());
     const itemSize = SizingManager.get().getUIItemSize();
 
-    const exitT: Texture = Resources.uiX;
-    const exit = new ButtonBase(
-      exitT,
-      this.onExit
-    );
-
     const callbackForEnabling = this.addGridSize(itemSize);
     this.addDifficultySize(itemSize);
     this.addSoundToggle(itemSize);
     this.addTitle();
     this.addProgressionToggle(itemSize, callbackForEnabling)
 
-    exit.scale = new Vector(Config.exitButtonSize / exitT.width, Config.exitButtonSize / exitT.height);
-    exit.setHeight(Config.exitButtonSize);
-    exit.setWidth(Config.exitButtonSize);
-    exit.x = engine.drawWidth - Config.exitButtonSize / 2 - Config.gridPadding;
-    exit.y = Config.exitButtonSize / 2 + Config.gridPadding;
-    this.add(exit);
+
+    this.add(new ExitButton(engine, this.onExit));
   }
 
   private onExit = () => {

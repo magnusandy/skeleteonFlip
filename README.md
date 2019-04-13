@@ -47,7 +47,6 @@ Misc:
     - shouldnt be able to restart a stage exiting and coming back into a stage shouldn't restart/clear
     - decide how to deal with what happens to current progression if difficulty changes
     - 350/675
-    - consolidate exit button code
     - redraw if resize
     - refactor the scenes to initialize actions on initialize not activate
     - maybe when you clear a row/col it disappears

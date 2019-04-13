@@ -1,4 +1,4 @@
-import { GameWindow } from './scenes/gameWindow';
+import { GameWindowBase } from './scenes/gameWindows/gameWindowBase';
 import { Resources } from './resources';
 import { Scenes } from './scenes/scenes';
 import { MainMenu } from './scenes/mainMenu';
@@ -15,7 +15,7 @@ const game = new Game();
 const mainMenu = new MainMenu(game);
 game.add(Scenes.MAIN_MENU, mainMenu);
 game.add(Scenes.GAME_OVER, new GameOver(game));
-game.add(Scenes.GAME_WINDOW, new GameWindow(game));
+game.add(Scenes.GAME_WINDOW, new GameWindowBase(game));
 game.add(Scenes.VICTORY, new Victory(game));
 game.add(Scenes.OPTIONS, new Options(game));
 game.add(Scenes.HELP, new Help(game));
