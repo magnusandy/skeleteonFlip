@@ -26,7 +26,7 @@ First Iteration (basic functionality):
     - Help Page
     - buttons for end pages (contine for victory or menu for end);
     - Display names of difficulty in the options  
-    - saved sound settings needs to apply to sound manager after initialized  
+    - saved sound settings needs to apply to sound manager after initialized
 
 Second Iteration (upgrades):
     - track coins
@@ -44,7 +44,8 @@ Second Iteration (upgrades):
     - button to clear saves
 
 Misc:
-    - shouldnt be able to restart a stage exiting and coming back into a stage shouldn't restart/clear
+    - grid size being hidden when boots up as story disabled
+    - persist current game states so restart of app doesnt reset level
     - decide how to deal with what happens to current progression if difficulty changes
     - 350/675
     - redraw if resize

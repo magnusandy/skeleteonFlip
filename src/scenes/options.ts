@@ -89,7 +89,7 @@ export class Options extends ex.Scene {
 
   //returns callback for toggling the objects
   private addGridSize(itemSize): Consumer<boolean> {
-    this.gridSize = new NumberSelector("GRID SIZE", 2, 9, ProgressionManager.get().getOptionGridSize(), this.engine.drawWidth / 2, this.engine.drawHeight / 2 + itemSize*3 + Config.optionPadding, itemSize, true);
+    this.gridSize = new NumberSelector("GRID SIZE", 2, 9, ProgressionManager.get().getOptionGridSize(), this.engine.drawWidth / 2, this.engine.drawHeight / 2 + itemSize*3 + Config.optionPadding, itemSize, !ProgressionManager.get().isProgressionDisabled());
     this.gridSize.getDrawables()
       .forEach(i => this.add(i));
 
@@ -97,8 +97,9 @@ export class Options extends ex.Scene {
   }
 
   public onActivate() {
-    this.gridSize.setCurrent(ProgressionManager.get().getOptionGridSize());
-    this.difficulty.setCurrent(ProgressionManager.get().getDifficulty().getDifficultyLevel());
+    //todo pretty sure don't need these
+    //this.gridSize.setCurrent(ProgressionManager.get().getOptionGridSize());
+    //this.difficulty.setCurrent(ProgressionManager.get().getDifficulty().getDifficultyLevel());
   }
 
   public onDeactivate() {

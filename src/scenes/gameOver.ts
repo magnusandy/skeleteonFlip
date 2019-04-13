@@ -2,11 +2,10 @@ import * as ex from 'excalibur';
 import { Resources } from '../resources';
 import { Scenes } from './scenes';
 import SoundManager from '../engine/soundManager';
-import { Engine, Actor } from 'excalibur';
+import { Engine } from 'excalibur';
 import ProgressionManager from '../engine/progression/progressionManager';
 import { calcDimensionsSingleObject, safePointerUp } from '../engine/helpers';
 import BackgroundManager from '../engine/backgroundManager';
-import ButtonBase from '../actors/bars/buttonBase';
 
 export class GameOver extends ex.Scene {
 
@@ -14,8 +13,7 @@ export class GameOver extends ex.Scene {
 
   public onInitialize(engine: ex.Engine) {
     this.engine = engine;
-
-
+    this.add(new BackgroundManager(engine).getTileMap())
 
     const gameOverActor = new ex.Actor();
     const spritesheet = new ex.SpriteSheet(Resources.gameOver, 3, 1 ,360, 360);
@@ -29,11 +27,8 @@ export class GameOver extends ex.Scene {
     gameOverActor.setWidth(engine.drawWidth);
     gameOverActor.scale = dims.scale;
     gameOverActor.on('pointerup', safePointerUp(() => {
-      ProgressionManager.get().resetProgress();
       this.engine.goToScene(Scenes.MAIN_MENU);
     }));
-    this.add(new BackgroundManager(engine).getTileMap())
-
   }
 
   public onActivate() {

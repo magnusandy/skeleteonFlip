@@ -1,7 +1,6 @@
-import { Label, Texture } from "excalibur";
+import { Texture } from "excalibur";
 import { Supplier, Stream } from "java8script";
 import StatTracker from "../actors/bars/statTracker";
-import { Config } from "../resources";
 import SizingManager from "../engine/sizingManager";
 
 export class NumberCoordinator {

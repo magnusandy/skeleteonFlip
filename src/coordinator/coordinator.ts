@@ -5,7 +5,7 @@ import { Config, Resources } from "../resources";
 import { Stream } from "java8script";
 import { GridCoordinator } from "./gridCoordinator";
 import * as ex from "excalibur";
-import { Vector } from "excalibur";
+import { Vector, Actor, Scene } from "excalibur";
 import { Scenes } from "../scenes/scenes";
 import Count from "../actors/card/count";
 import ProgressionManager from "../engine/progression/progressionManager";
@@ -21,38 +21,37 @@ export class GameCoordinator implements CardCallbackProvider {
     private rowCounts: Count[];
     private columnCounts: Count[];
 
-    private constructor(engine: ex.Engine, healthCoordinator: NumberCoordinator, attackCoordinator: NumberCoordinator) {
-        this.healthCoordinator = healthCoordinator;
-        this.attackCoordinator = attackCoordinator;
+    private constructor(engine: ex.Engine) {
         this.engine = engine;
+        this.resetGame();
     }
 
     public static initialize(engine: ex.Engine): GameCoordinator {
-        const mm: SizingManager = SizingManager.get();
-        const coordinator: GameCoordinator = new GameCoordinator(
-            engine,
-            NumberCoordinator.create(mm.getUIItemSize() / 2, mm.getUIItemSize() / 2, Config.maxHealth, () => { engine.goToScene(Scenes.GAME_OVER) }, Resources.uiHeart, Config.maxHealth),
-            NumberCoordinator.create(mm.getUIItemSize() / 2, mm.getUIItemSize() * 1.5, Config.maxAttack, () => { }, Resources.uiSword)
-        );
-        coordinator.gridCoordinator = GridCoordinator.createGrid(coordinator, ProgressionManager.get().getGameGridSize(), engine);
-        coordinator.rowCounts = coordinator.createRowCountCards();
-        coordinator.columnCounts = coordinator.createColCountCards();
-
+        const coordinator: GameCoordinator = new GameCoordinator(engine);
         return coordinator;
     }
 
-    public getStatTrackers(): ex.Actor[] {
+    public resetGame(): void {
+        const mm: SizingManager = SizingManager.get();
+        this.healthCoordinator = NumberCoordinator.create(mm.getUIItemSize() / 2, mm.getUIItemSize() / 2, Config.maxHealth, () => { }, Resources.uiHeart, Config.maxHealth);
+        this.attackCoordinator = NumberCoordinator.create(mm.getUIItemSize() / 2, mm.getUIItemSize() * 1.5, Config.maxAttack, () => { }, Resources.uiSword);
+        this.gridCoordinator = GridCoordinator.createGrid(this, ProgressionManager.get().getGameGridSize(), this.engine);
+        this.rowCounts = this.createRowCountCards();
+        this.columnCounts = this.createColCountCards();
+    }
+
+    private getStatTrackers(): ex.Actor[] {
         return [
             ...this.healthCoordinator.getStatActors(),
             ...this.attackCoordinator.getStatActors()
         ]
     }
 
-    public getRowCountCards(): Count[] {
+    private getRowCountCards(): Count[] {
         return this.rowCounts;
     }
 
-    public getColCountCards(): Count[] {
+    private getColCountCards(): Count[] {
         return this.columnCounts;
     }
 
@@ -84,16 +83,29 @@ export class GameCoordinator implements CardCallbackProvider {
             .count();
     }
 
-    public getGridAsList(): Card[] {
+    private getGridAsList(): Card[] {
         return this.gridCoordinator.getGridAsList();
     }
 
-    private updateLabels() {
+    public getAllActors(): Actor[] {
+        return Stream.ofValues<Actor[]>(
+            this.gridCoordinator.getGridAsList(),
+            this.getColCountCards(),
+            this.getRowCountCards(),
+            this.getStatTrackers()
+        ).flatMap(a => Stream.ofValues(...a))
+            .toArray();
+    }
+
+    private updateLabels = () => {
+        console.log("doing counts");
         this.rowCounts.forEach((count, idx) => {
+            console.log("row " + this.skeletonCountForRow(idx))
             count.setCount(this.skeletonCountForRow(idx));
         });
 
         this.columnCounts.forEach((count, idx) => {
+            console.log("col " + this.skeletonCountForCol(idx))
             count.setCount(this.skeletonCountForCol(idx));
         });
     }
@@ -101,8 +113,14 @@ export class GameCoordinator implements CardCallbackProvider {
     private checkIfCompleteGame(): void {
         const allFlipped = Stream.of(this.getGridAsList())
             .allMatch(card => card.isFlipped());
-        if (allFlipped && this.healthCoordinator.getCurrent() > 0) {
+        if (this.healthCoordinator.getCurrent() === 0) {
+            this.engine.goToScene(Scenes.GAME_OVER);
+            ProgressionManager.get().resetProgress();
+            this.resetGame();
+        } else if (allFlipped && this.healthCoordinator.getCurrent() > 0) {
             this.engine.goToScene(Scenes.VICTORY);
+            ProgressionManager.get().progress();
+            this.resetGame();
         }
     }
 

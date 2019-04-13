@@ -1,6 +1,6 @@
 import { Actor, Scene } from 'excalibur';
 import { Resources, Config } from '../resources';
-import { Scenes } from './scenes';
+import { Scenes, getGameWindow } from './scenes';
 import ButtonBase from '../actors/bars/buttonBase';
 import { calcDimensionsSingleObjectTexture } from '../engine/helpers';
 import BackgroundManager from '../engine/backgroundManager';
@@ -25,7 +25,7 @@ export class MainMenu extends Scene {
     this.addTileMap(bgManager.getTileMap());
 
     this.start = new ButtonBase(
-      Resources.startMenu, () => this.game.goToScene(Scenes.GAME_WINDOW),
+      Resources.startMenu, () => this.game.goToScene(getGameWindow()),
     );
     this.sizeProperly(this.start, 0.4, 0.5, Resources.startMenu);
     this.add(this.start)

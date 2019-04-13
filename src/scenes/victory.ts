@@ -1,6 +1,6 @@
 import * as ex from 'excalibur';
 import { Resources } from '../resources';
-import { Scenes } from './scenes';
+import { Scenes, getGameWindow } from './scenes';
 import SoundManager from '../engine/soundManager';
 import ProgressionManager from '../engine/progression/progressionManager';
 import {calcDimensionsSingleObjectTexture, safePointerUp } from '../engine/helpers';
@@ -12,6 +12,8 @@ export class Victory extends ex.Scene {
 
   public onInitialize(engine: ex.Engine) {
     this.engine = engine;
+    this.add(new BackgroundManager(engine).getTileMap())
+
     const victoryActor = new ex.Actor();
     victoryActor.addDrawing(Resources.victory.asSprite());
     victoryActor.x = this.engine.drawWidth / 2;
@@ -21,11 +23,9 @@ export class Victory extends ex.Scene {
     victoryActor.setWidth(engine.drawWidth);
     victoryActor.scale = dims.scale;
     victoryActor.on('pointerup', safePointerUp(() => {
-      ProgressionManager.get().progress();
-      this.engine.goToScene(Scenes.GAME_WINDOW);
+      this.engine.goToScene(getGameWindow());
     }));
     this.add(victoryActor);
-    this.add(new BackgroundManager(engine).getTileMap())
   }
   public onActivate() {
     SoundManager.get().playSoundInterrupt(Resources.victorySound);
