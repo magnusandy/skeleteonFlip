@@ -10,7 +10,7 @@ const modeConfig = env => require(`./build-utils/webpack.${env}`)(env);
 
 module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
   return webpackMerge({
-    entry: './src/index.ts',
+    entry: './src/index.tsx',
     mode,
     devtool: 'source-map',
     module: {
@@ -24,7 +24,7 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
           enforce: "pre",
         },
         {
-          test: /\.ts?$/,
+          test: /\.tsx?$/,
           use: 'ts-loader',
           exclude: /node_modules/
         },

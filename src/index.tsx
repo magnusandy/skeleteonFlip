@@ -12,6 +12,15 @@ import SizingManager from './engine/sizingManager';
 import PlayerSettingsManager from './engine/progression/playerSettingsManager';
 import { StoryGameWindow } from './scenes/gameWindows/storyGameWindow';
 import { GridGameWindow } from './scenes/gameWindows/gridGameWindow';
+/*import * as ReactDOM from 'react-dom';
+import * as React from 'react';
+
+const Greeting = () => <h1>Hello World today!</h1>;
+
+ReactDOM.render(
+  <Greeting />,
+    document.getElementById('root')
+);*/
 
 const game = new Game();
 const mainMenu = new MainMenu(game);
