@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "excalibur": "0.22.0",
+    "html-webpack-root-plugin": "^0.10.0",
     "java8script": "^1.1.1",
     "localforage": "^1.7.3"
   }
