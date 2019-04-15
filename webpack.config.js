@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const HtmlWebPackRootPlugin = require('html-webpack-root-plugin');
 const webpackMerge = require("webpack-merge");
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 
@@ -9,7 +10,7 @@ const modeConfig = env => require(`./build-utils/webpack.${env}`)(env);
 
 module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
   return webpackMerge({
-    entry: './src/index.ts',
+    entry: './src/index.tsx',
     mode,
     devtool: 'source-map',
     module: {
@@ -23,7 +24,7 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
           enforce: "pre",
         },
         {
-          test: /\.ts?$/,
+          test: /\.tsx?$/,
           use: 'ts-loader',
           exclude: /node_modules/
         },
@@ -56,6 +57,8 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
       new HtmlWebPackPlugin({
         title: 'Skeleton Flip'
       }),
+      new HtmlWebPackRootPlugin(),
+      new HtmlWebPackRootPlugin('modal'),
       new WebpackPwaManifest({
         filename: "manifest.json",
         name: 'Skeleton Flip',

@@ -24,6 +24,7 @@ First Iteration (basic functionality):
     - Options:
         - "confirm" type button on options page
     - Help Page
+        - help page exit button not working on mobile
     - buttons for end pages (contine for victory or menu for end);
     - Display names of difficulty in the options  
     - saved sound settings needs to apply to sound manager after initialized
