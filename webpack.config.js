@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
-const HtmlWebpackRootPlugin = require('html-webpack-root-plugin');
 const webpackMerge = require("webpack-merge");
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 
@@ -57,7 +56,6 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
       new HtmlWebPackPlugin({
         title: 'Skeleton Flip'
       }),
-      new HtmlWebpackRootPlugin(),
       new WebpackPwaManifest({
         filename: "manifest.json",
         name: 'Skeleton Flip',
