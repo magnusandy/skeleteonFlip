@@ -25,9 +25,8 @@ export class ModalRenderer {
     }
 
     private render = () => {
-        render(React.createElement(E, { text: this.text, open: this.isOpen, closeFunc: () => this.setOpenAndRerender(false) }), document.getElementById('root'));
+        render(React.createElement(E, { text: this.text, open: this.isOpen, closeFunc: () => this.setOpenAndRerender(false) }), document.getElementById('modal'));
     }
-
 }
 
 interface Props {
@@ -38,6 +37,7 @@ interface Props {
 
 interface State {
 }
+
 export default class E extends React.Component<Props, State> {
 
     constructor(props) {
@@ -49,20 +49,25 @@ export default class E extends React.Component<Props, State> {
             <ReactModal
                 style={{
                     content: {
-                        backgroundColor: 'lightGrey',
-                        borderWidth: 0,
+                        borderRadius: "0px",
+                        backgroundColor: '#a77600',
+                        borderWidth: 8,
+                        borderColor: "#402f08",
+                        padding: "16px",
                     }
                 }}
-                appElement={document.getElementById('root')}
+                appElement={document.getElementById('modal')}
                 isOpen={this.props.open}>
-                <div style={{width: "100%", height:Config.exitButtonSize}}>
-                    <a style={{ float: "right" }}>
-                        <img height={Config.exitButtonSize} width={Config.exitButtonSize} src={xButton} alt="my image" onClick={this.props.closeFunc} />
-                    </a>
-                </div>
-                <p>
-                    {this.props.text}
-                </p>
+                <div style={{ float: "right", height: Config.exitButtonSize, position: "fixed", right:"24px", top: "24px" }}>
+                            <a style={{ }}>
+                                <img height={Config.exitButtonSize} width={Config.exitButtonSize} src={xButton} alt="my image" onPointerUp={this.props.closeFunc} />
+                            </a>
+                        </div>
+                    <div style={{ borderRadius: "16px", borderStyle: "solid", borderWidth: "4px", minHeight: "95%", backgroundColor: "#896000", borderColor: "#402f08", display: "flex"}}>
+                        <p style={{padding: "16px", margin: "0px", fontSize: 20, flex:1}}>
+                            {this.props.text}
+                        </p>
+                    </div>
             </ReactModal>
         );
     }

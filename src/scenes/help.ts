@@ -24,14 +24,17 @@ export class Help extends ex.Scene {
     this.addTitle();
     this.modalRenderer = new ModalRenderer(false, "BIG TEXET");
 
+    const dims = calcDimensionsSingleObjectTexture(this.engine.drawHeight, this.engine.drawWidth, Resources.helpMenu, 0.4, 0.5);
+
     this.button = new ButtonBase(Resources.helpMenu, () => {
-      this.modalRenderer.setText("The goal if this game is to flip all the cards on the board without losing all of your hearts. Skeletons will hurt you, but finding swords and potions will keep you alive!");
+      this.modalRenderer.setText("The goal of this game is to flip all the cards on the board without running out of your hearts.Finding a skeleton will remove a heart, but finding swords and potions will keep you alive! The numbers on the edge of the board represent how many unflipped skeletons are in that row or column. Collecting swords will protect you from the next skeleton you find, collecting potions will restore a lost heart.");
       this.modalRenderer.setOpenAndRerender(true);
     });
     this.button.x = engine.drawWidth/2
     this.button.y = engine.drawHeight/2;
-    this.button.setHeight(Resources.helpMenu.height);
-    this.button.setWidth(Resources.helpMenu.width);
+    this.button.setHeight(dims.height);
+    this.button.setWidth(dims.width);
+    this.button.scale = dims.scale;
     this.add(this.button);
     
   }
