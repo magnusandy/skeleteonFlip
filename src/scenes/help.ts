@@ -27,10 +27,10 @@ export class Help extends ex.Scene {
     const dims = calcDimensionsSingleObjectTexture(engine.drawHeight, engine.drawWidth, Resources.introMenu, 0.4, 0.5);
 
 
-    this.add(this.createButton(dims, centerx, centery - dims.height*1.5 - Config.gridPadding*1.5, Resources.introMenu , () => this.modalRenderer.introModal()));
-    this.add(this.createButton(dims, centerx, centery - dims.height*0.5 - Config.gridPadding*0.5, Resources.playingMenu, () => this.modalRenderer.howToPlayModal()));
-    this.add(this.createButton(dims, centerx, centery + dims.height*0.5 + Config.gridPadding*0.5, Resources.cardMenu, () => this.modalRenderer.cardModal()));
-    this.add(this.createButton(dims, centerx, centery + dims.height*1.5 + Config.gridPadding*1.5, Resources.creditsMenu, () => this.modalRenderer.textModal("Credits", "Made by Andrew")));
+    this.add(this.createButton(dims, centerx, centery - dims.height * 1.5 - Config.gridPadding * 1.5, Resources.introMenu, () => this.modalRenderer.introModal()));
+    this.add(this.createButton(dims, centerx, centery - dims.height * 0.5 - Config.gridPadding * 0.5, Resources.playingMenu, () => this.modalRenderer.howToPlayModal()));
+    this.add(this.createButton(dims, centerx, centery + dims.height * 0.5 + Config.gridPadding * 0.5, Resources.cardMenu, () => this.modalRenderer.cardModal()));
+    this.add(this.createButton(dims, centerx, centery + dims.height * 1.5 + Config.gridPadding * 1.5, Resources.creditsMenu, () => this.modalRenderer.textModal("Credits", "Made by Andrew")));
 
   }
 

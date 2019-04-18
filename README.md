@@ -23,11 +23,10 @@ Todo List:
 First Iteration (basic functionality): 
     - Options:
         - "confirm" type button on options page
-    - Help Page
-        - help page exit button not working on mobile
     - buttons for end pages (contine for victory or menu for end);
     - Display names of difficulty in the options  
     - saved sound settings needs to apply to sound manager after initialized
+    - when switching between grid and story, the number cards take on different sizes
 
 Second Iteration (upgrades):
     - track coins
@@ -54,6 +53,7 @@ Misc:
     - maybe when you clear a row/col it disappears
     - unlimited mode, clearing a row or column will delete and add a new on the end
     - al bhed mode
+    - get on the app store banner for web
 
 Tools and Resources used: 
 - Excalibur JS (https://excaliburjs.com/)
