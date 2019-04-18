@@ -4,17 +4,15 @@ import { Scenes } from './scenes';
 import { Texture, Vector, Actor, Engine } from 'excalibur';
 import ButtonBase from '../actors/bars/buttonBase';
 import BackgroundManager from '../engine/backgroundManager';
-import { calcDimensionsSingleObjectTexture } from '../engine/helpers';
+import { calcDimensionsSingleObjectTexture, IDimensions } from '../engine/helpers';
 import { ExitButton } from '../actors/bars/exitButton';
-import { render } from 'react-dom';
-import E, { ModalRenderer } from '../modal/modal';
-import { createElement } from 'react';
+import { ModalRenderer } from '../modal/modal';
 
 export class Help extends ex.Scene {
 
   private engine: Engine;
   private modalRenderer: ModalRenderer;
-  private button: Actor;
+  //private button: Actor;
 
   public onInitialize(engine: ex.Engine) {
     this.engine = engine;
@@ -22,27 +20,34 @@ export class Help extends ex.Scene {
     this.addTileMap(bgManager.getTileMap());
     this.add(new ExitButton(engine, () => engine.goToScene(Scenes.MAIN_MENU)));
     this.addTitle();
-    this.modalRenderer = new ModalRenderer(false, "BIG TEXET");
+    this.modalRenderer = new ModalRenderer(false);
 
-    const dims = calcDimensionsSingleObjectTexture(this.engine.drawHeight, this.engine.drawWidth, Resources.helpMenu, 0.4, 0.5);
+    const centerx = engine.drawWidth / 2;
+    const centery = engine.drawHeight / 2;
+    const dims = calcDimensionsSingleObjectTexture(engine.drawHeight, engine.drawWidth, Resources.introMenu, 0.4, 0.5);
 
-    this.button = new ButtonBase(Resources.helpMenu, () => {
-      this.modalRenderer.setText("The goal of this game is to flip all the cards on the board without running out of your hearts.Finding a skeleton will remove a heart, but finding swords and potions will keep you alive! The numbers on the edge of the board represent how many unflipped skeletons are in that row or column. Collecting swords will protect you from the next skeleton you find, collecting potions will restore a lost heart.");
-      this.modalRenderer.setOpenAndRerender(true);
-    });
-    this.button.x = engine.drawWidth/2
-    this.button.y = engine.drawHeight/2;
-    this.button.setHeight(dims.height);
-    this.button.setWidth(dims.width);
-    this.button.scale = dims.scale;
-    this.add(this.button);
-    
+
+    this.add(this.createButton(dims, centerx, centery - dims.height*1.5 - Config.gridPadding*1.5, Resources.introMenu , () => this.modalRenderer.introModal()));
+    this.add(this.createButton(dims, centerx, centery - dims.height*0.5 - Config.gridPadding*0.5, Resources.playingMenu, () => this.modalRenderer.howToPlayModal()));
+    this.add(this.createButton(dims, centerx, centery + dims.height*0.5 + Config.gridPadding*0.5, Resources.cardMenu, () => this.modalRenderer.cardModal()));
+    this.add(this.createButton(dims, centerx, centery + dims.height*1.5 + Config.gridPadding*1.5, Resources.creditsMenu, () => this.modalRenderer.textModal("Credits", "Made by Andrew")));
+
   }
-  
+
+  public createButton(dims: IDimensions, x: number, y: number, texture: Texture, onClick: () => void): ButtonBase {
+    const button = new ButtonBase(texture, onClick);
+    button.x = x
+    button.y = y
+    button.scale = dims.scale;
+    button.setHeight(dims.height);
+    button.setWidth(dims.width);
+    return button;
+  }
+
   public onActivate() {
     //this.modalRenderer.setOpenAndRerender(true);
   }
-  
+
   public onDeactivate() {
   }
 
@@ -51,11 +56,11 @@ export class Help extends ex.Scene {
     const sprite = Resources.helpTitle.asSprite();
     const title = new Actor();
     title.addDrawing(sprite);
-    title.x = this.engine.drawWidth/2;
-    title.y = dims.height/2+ Config.gridPadding;
+    title.x = this.engine.drawWidth / 2;
+    title.y = dims.height / 2 + Config.gridPadding;
     title.setHeight(dims.height);
     title.setWidth(dims.width);
-    title.scale = dims.scale; 
+    title.scale = dims.scale;
     this.add(title);
   }
 } 

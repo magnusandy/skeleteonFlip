@@ -4,9 +4,13 @@ const skull = require('./images/skull.png');
 const potion = require('./images/potion.png');
 const coin = require('./images/coin.png');
 const card = require('./images/card.png');
-const startMenu = require('./images/startMenu.png');
-const optionMenu = require('./images/optionsMenu.png');
-const helpMenu = require('./images/helpMenu.png');
+const startMenu = require('./images/menu/start.png');
+const optionMenu = require('./images/menu/options.png');
+const helpMenu = require('./images/menu/help.png');
+const cardsMenu = require('./images/menu/cards.png');
+const introMenu = require('./images/menu/intro.png');
+const creditsMenu = require('./images/menu/credits.png');
+const playingMenu = require('./images/menu/playing.png');
 const title = require('./images/title.png');
 const gameOverImg = require('./images/gameOver.png');
 const zero = require('./images/numbers/0.png');
@@ -54,9 +58,15 @@ const Resources = {
     potion: new ex.Texture(potion),
     coin: new ex.Texture(coin),
     card: new ex.Texture(card),
+
     startMenu: new ex.Texture(startMenu),
     optionMenu: new ex.Texture(optionMenu), 
     helpMenu: new ex.Texture(helpMenu),
+    cardMenu: new ex.Texture(cardsMenu),
+    introMenu: new ex.Texture(introMenu),
+    creditsMenu: new ex.Texture(creditsMenu),
+    playingMenu: new ex.Texture(playingMenu),
+
     optionTitle: new ex.Texture(optionTitle),
     helpTitle: new ex.Texture(helpTitle),
     backgroundTile: new ex.Texture(backgroundTile),
