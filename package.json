@@ -38,6 +38,7 @@
     "@types/react": "^16.8.13",
     "@types/react-dom": "^16.8.4",
     "@types/react-modal": "^3.8.2",
+    "bowser": "^2.3.0",
     "excalibur": "0.22.0",
     "html-webpack-root-plugin": "^0.10.0",
     "install": "^0.12.2",

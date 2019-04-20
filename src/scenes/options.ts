@@ -1,24 +1,21 @@
-import * as ex from 'excalibur';
 import { Resources, Config } from '../resources';
 import { Scenes } from './scenes';
-import { Texture, Vector, Label, Color, Actor } from 'excalibur';
-import ButtonBase from '../actors/bars/buttonBase';
+import { Actor, Scene, Engine, Texture } from 'excalibur';
 import BackgroundManager from '../engine/backgroundManager';
 import NumberSelector from '../actors/bars/numberSelector';
 import ProgressionManager from '../engine/progression/progressionManager';
-import { MainMenu } from './mainMenu';
-import RadioButton from '../actors/bars/radioButton';
 import LabeledRadio from '../actors/bars/labeledRadio';
 import SoundManager from '../engine/soundManager';
 import SizingManager from '../engine/sizingManager';
-import { calcDimensionsSingleObjectTexture } from '../engine/helpers';
+import { calcDimensionsSingleObjectTexture, IDimensions } from '../engine/helpers';
 import { Consumer } from 'java8script';
 import PlayerSettingsManager from '../engine/progression/playerSettingsManager';
 import { ExitButton } from '../actors/bars/exitButton';
+import ButtonBase from '../actors/bars/buttonBase';
 
-export class Options extends ex.Scene {
+export class Options extends Scene {
 
-  private engine;
+  private engine: Engine;
   private gridSize: NumberSelector;
   private difficulty: NumberSelector;
   private sound: LabeledRadio;
@@ -36,12 +33,32 @@ export class Options extends ex.Scene {
     this.addSoundToggle(itemSize);
     this.addTitle();
     this.addProgressionToggle(itemSize, callbackForEnabling)
+    this.add(new ExitButton(engine, () => engine.goToScene(Scenes.MAIN_MENU)));
 
+    const sizing = SizingManager.get().getUIButtonSizing();
+    const createbuttonDims = calcDimensionsSingleObjectTexture(engine.drawHeight, engine.drawWidth, Resources.confirmMenu, sizing.padding, sizing.maxScale);
 
-    this.add(new ExitButton(engine, this.onExit));
+    this.add(this.createButton(
+      createbuttonDims,
+      engine.drawWidth/2,
+      engine.drawHeight - createbuttonDims.height/2 - Config.gridPadding,
+      Resources.confirmMenu,
+      () => this.onConfirm()
+    ));
+    
   }
 
-  private onExit = () => {
+  private createButton(dims: IDimensions, x: number, y: number, texture: Texture, onClick: () => void): ButtonBase {
+    const button = new ButtonBase(texture, onClick);
+    button.x = x
+    button.y = y
+    button.scale = dims.scale;
+    button.setHeight(dims.height);
+    button.setWidth(dims.width);
+    return button;
+  }
+
+  private onConfirm = () => {
     ProgressionManager.get().setGridSize(this.gridSize.getCurrent());
     ProgressionManager.get().setDifficulty(this.difficulty.getCurrent());
     ProgressionManager.get().setProgressionDisabled(!this.progressionToggle.isChecked());
@@ -97,9 +114,10 @@ export class Options extends ex.Scene {
   }
 
   public onActivate() {
-    //todo pretty sure don't need these
-    //this.gridSize.setCurrent(ProgressionManager.get().getOptionGridSize());
-    //this.difficulty.setCurrent(ProgressionManager.get().getDifficulty().getDifficultyLevel());
+    this.sound.setChecked(!PlayerSettingsManager.get().isSoundOff());
+    this.gridSize.setCurrent(ProgressionManager.get().getOptionGridSize());
+    this.difficulty.setCurrent(ProgressionManager.get().getDifficulty().getDifficultyLevel());
+    this.progressionToggle.setChecked(!ProgressionManager.get().isProgressionDisabled())
   }
 
   public onDeactivate() {

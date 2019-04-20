@@ -22,6 +22,10 @@ export default class LabeledRadio {
         this.radio = new RadioButton(buttonSize, x+labelWidth*(3/4), y, defaultVal, onToggle);
         
     }
+    
+    public setChecked(isChecked: boolean): void {
+        this.radio.setChecked(isChecked);
+    }
 
     public isChecked(): boolean {
         return this.radio.isChecked();

@@ -1,12 +1,14 @@
 import * as ex from 'excalibur';
+import * as Bowser from 'bowser';
 
 export default class Game extends ex.Engine {
+
   constructor() {
     super({ 
       suppressConsoleBootMessage: true,
       displayMode: ex.DisplayMode.FullScreen,
       pointerScope: ex.Input.PointerScope.Canvas, //make it so clicks don't go "through" the help modals
-      suppressPlayButton: true //todo think about customizing the button
+      suppressPlayButton: true, //todo think about customizing the button
     });
   }
 

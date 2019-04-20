@@ -5,6 +5,7 @@ import ButtonBase from '../actors/bars/buttonBase';
 import { calcDimensionsSingleObjectTexture } from '../engine/helpers';
 import BackgroundManager from '../engine/backgroundManager';
 import SoundManager from '../engine/soundManager';
+import SizingManager, { IButtonSizing } from '../engine/sizingManager';
 
 export class MainMenu extends Scene {
 
@@ -27,21 +28,22 @@ export class MainMenu extends Scene {
     this.start = new ButtonBase(
       Resources.startMenu, () => this.game.goToScene(getGameWindow()),
     );
-    this.sizeProperly(this.start, 0.4, 0.5, Resources.startMenu);
+    const sizing :IButtonSizing = SizingManager.get().getUIButtonSizing();
+    this.sizeProperly(this.start, sizing.padding, sizing.maxScale, Resources.startMenu);
     this.add(this.start)
 
     this.options = new ButtonBase(
       Resources.optionMenu,
       () => this.game.goToScene(Scenes.OPTIONS),
     );
-    this.sizeProperly(this.options, 0.4, 0.5, Resources.optionMenu);
+    this.sizeProperly(this.options, sizing.padding, sizing.maxScale, Resources.optionMenu);
     this.add(this.options);
 
     this.help = new ButtonBase(
       Resources.helpMenu,
       () => this.game.goToScene(Scenes.HELP),
     );
-    this.sizeProperly(this.help, 0.4, 0.5, Resources.helpMenu);
+    this.sizeProperly(this.help, sizing.padding, sizing.maxScale, Resources.helpMenu);
     this.add(this.help);
 
     this.title = this.sizeProperly(new Actor(), 0.9, 1, Resources.title);

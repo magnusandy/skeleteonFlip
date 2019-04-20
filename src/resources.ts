@@ -1,4 +1,6 @@
 import * as ex from 'excalibur';
+import { AudioContextFactory } from 'excalibur';
+
 const sword = require('./images/sword.png');
 const skull = require('./images/skull.png');
 const potion = require('./images/potion.png');
@@ -11,6 +13,8 @@ const cardsMenu = require('./images/menu/cards.png');
 const introMenu = require('./images/menu/intro.png');
 const creditsMenu = require('./images/menu/credits.png');
 const playingMenu = require('./images/menu/playing.png');
+const confirmMenu = require('./images/menu/confirm.png');
+
 const title = require('./images/title.png');
 const gameOverImg = require('./images/gameOver.png');
 const zero = require('./images/numbers/0.png');
@@ -66,6 +70,7 @@ const Resources = {
     introMenu: new ex.Texture(introMenu),
     creditsMenu: new ex.Texture(creditsMenu),
     playingMenu: new ex.Texture(playingMenu),
+    confirmMenu: new ex.Texture(confirmMenu),
 
     optionTitle: new ex.Texture(optionTitle),
     helpTitle: new ex.Texture(helpTitle),

@@ -40,6 +40,11 @@ export default class RadioButton extends Actor {
         return this.checked;
     }
 
+    public setChecked(isChecked: boolean): void {
+        this.checked = isChecked;
+        this.setCheckedDrawing();
+    }
+
     private onClickWrapper(onClick: Supplier<void>) {
         return (event?: any) => {
             if (event.ev.type === "pointerup") {
@@ -71,14 +76,18 @@ export default class RadioButton extends Actor {
         this.currentSprite().clearEffects();
     }
 
-
-    private toggleButton = () => {
-        this.checked = !this.checked;
+    private setCheckedDrawing() {
         if (this.checked) {
             this.setDrawing("checked");
         } else {
             this.setDrawing("unchecked");
         }
+    }
+
+
+    private toggleButton = () => {
+        this.checked = !this.checked;
+        this.setCheckedDrawing();
         this.onToggle.ifPresent(func => func(this.checked));
     }
 

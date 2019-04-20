@@ -7,6 +7,7 @@ import BackgroundManager from '../engine/backgroundManager';
 import { calcDimensionsSingleObjectTexture, IDimensions } from '../engine/helpers';
 import { ExitButton } from '../actors/bars/exitButton';
 import { ModalRenderer } from '../modal/modal';
+import SizingManager from '../engine/sizingManager';
 
 export class Help extends ex.Scene {
 
@@ -24,7 +25,8 @@ export class Help extends ex.Scene {
 
     const centerx = engine.drawWidth / 2;
     const centery = engine.drawHeight / 2;
-    const dims = calcDimensionsSingleObjectTexture(engine.drawHeight, engine.drawWidth, Resources.introMenu, 0.4, 0.5);
+    const sizing = SizingManager.get().getUIButtonSizing();
+    const dims = calcDimensionsSingleObjectTexture(engine.drawHeight, engine.drawWidth, Resources.introMenu, sizing.padding, sizing.maxScale);
 
 
     this.add(this.createButton(dims, centerx, centery - dims.height * 1.5 - Config.gridPadding * 1.5, Resources.introMenu, () => this.modalRenderer.introModal()));
