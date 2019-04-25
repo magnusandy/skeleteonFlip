@@ -19,7 +19,7 @@ export default class SizingManager {
         if(!this.singleton) {
             this.singleton = new SizingManager(engine);
         } else {
-            console.log("Mobile Manager already initialized");
+            console.log("ERROR: Mobile Manager already initialized");
         }
     }
 

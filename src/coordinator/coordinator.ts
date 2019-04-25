@@ -98,14 +98,11 @@ export class GameCoordinator implements CardCallbackProvider {
     }
 
     private updateLabels = () => {
-        console.log("doing counts");
         this.rowCounts.forEach((count, idx) => {
-            console.log("row " + this.skeletonCountForRow(idx))
             count.setCount(this.skeletonCountForRow(idx));
         });
 
         this.columnCounts.forEach((count, idx) => {
-            console.log("col " + this.skeletonCountForCol(idx))
             count.setCount(this.skeletonCountForCol(idx));
         });
     }

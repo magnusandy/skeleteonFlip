@@ -3,6 +3,7 @@ import { Resources, Config } from "../../resources";
 import ButtonBase from "./buttonBase";
 import FontManager from "../../engine/fontManager";
 import { Colorize } from "excalibur/dist/Drawing/SpriteEffects";
+import { Stream } from "java8script";
 
 export default class NumberSelector {
     private min: number;
@@ -99,6 +100,12 @@ export default class NumberSelector {
         this.numberLabel.text = `${newCurrent}`;
     }
 
+    public getBottom() {
+        return Stream.ofValues<Actor>(this.leftButton, this.rightButton, this.numberLabel)
+        .map(a => a.getBottom())
+        .max()
+        .orElse(0);
+    }
     public getDrawables(): Actor[] {
         return [
             this.leftButton, 

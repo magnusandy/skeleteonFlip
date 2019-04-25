@@ -36,6 +36,9 @@ export default class RadioButton extends Actor {
         this.on("pointerup", this.onClickWrapper(this.toggleButton))
     }
 
+    public setOnToggle(onToggle: Consumer<boolean>): void {
+        this.onToggle = Optional.of(onToggle);
+    }
     public isChecked(): boolean {
         return this.checked;
     }

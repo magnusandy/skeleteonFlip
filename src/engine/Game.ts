@@ -1,5 +1,4 @@
 import * as ex from 'excalibur';
-import * as Bowser from 'bowser';
 
 export default class Game extends ex.Engine {
 

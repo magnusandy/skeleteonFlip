@@ -22,12 +22,12 @@ Card Types:
 Todo List:
 First Iteration (basic functionality): 
     - Options:
-        - "confirm" type button on options page
+         - add actual icon to the option scroller
     - buttons for end pages (contine for victory or menu for end);
     - Display names of difficulty in the options  
     - saved sound settings needs to apply to sound manager after initialized
     - when switching between grid and story, the number cards take on different sizes
-
+    - update all menu pages to base below the title 
 Second Iteration (upgrades):
     - track coins
     - only get coins on victory
@@ -42,6 +42,8 @@ Second Iteration (upgrades):
     - upgrade level bonus
     - extra lives to protect from game over
     - button to clear saves
+    - safari (and maybe IOS support) is real bad and by that I mean it doesnt work. audio contexts are broken.
+    - one fix might need changes to excaliburjs, AudioContextFactory needs to use new window.webkitAudioContext, it past that there might be some problems with pointer events.
 
 Misc:
     - grid size being hidden when boots up as story disabled

@@ -22,6 +22,10 @@ export default class LabeledRadio {
         this.radio = new RadioButton(buttonSize, x+labelWidth*(3/4), y, defaultVal, onToggle);
         
     }
+
+    public addOnToggle(onToggle: (checked:boolean) => void): void {
+        this.radio.setOnToggle(onToggle);
+    }
     
     public setChecked(isChecked: boolean): void {
         this.radio.setChecked(isChecked);
@@ -29,6 +33,10 @@ export default class LabeledRadio {
 
     public isChecked(): boolean {
         return this.radio.isChecked();
+    }
+
+    public getBottom() {
+        return Math.max(this.radio.getBottom(), this.label.getBottom());
     }
 
     public getDrawables(): Actor[] {

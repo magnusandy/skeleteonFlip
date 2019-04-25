@@ -48,7 +48,6 @@ export default class PlayerSettingsManager {
     }
 
     public static get(): PlayerSettingsManager {
-        console.log(this.singleton.serializeV1());
         return this.singleton;
     }
 
@@ -61,7 +60,7 @@ export default class PlayerSettingsManager {
             description: 'Store save data'
         });//try with no settings
         localForage.getItem(PlayerSettingsManager.STORE_KEY, (e, v) => {
-            console.log(v);
+            console.log(`retrieved from storage:`, [v]);
             if(e) {
                 console.log(`problem retrieving from store: ${e}`);
                 this.singleton = PlayerSettingsManager.DEFAULT;

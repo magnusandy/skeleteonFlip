@@ -90,7 +90,6 @@ export default class ProgressionManager {
     }
 
     public getLevelString(): string {
-        console.log("gettinglevelstring");
         if (PlayerSettingsManager.get().getCurrentStage() > ProgressionManager.stagesPerNormalLevel) {
             return "MAXED";
         } else {

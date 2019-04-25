@@ -1083,10 +1083,6 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
-bowser@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/bowser/-/bowser-2.3.0.tgz#624798388d972ec9639eb877629bca8ffd415c60"
-
 brace-expansion@^1.1.7:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.11.tgz#3c7fcbf529d87226f3d2f52b966ff5271eb441dd"
