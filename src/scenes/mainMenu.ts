@@ -22,8 +22,7 @@ export class MainMenu extends Scene {
     this.screenWidth = engine.drawWidth;
     this.screenHeight = engine.drawHeight;
     this.game = engine;
-    const bgManager = new BackgroundManager(engine);
-    this.addTileMap(bgManager.getTileMap());
+    this.addTileMap(BackgroundManager.getDefaultTileMap(engine));
 
     this.start = new ButtonBase(
       Resources.startMenu, () => this.game.goToScene(getGameWindow()),

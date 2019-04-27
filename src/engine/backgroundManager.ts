@@ -5,23 +5,31 @@ export default class BackgroundManager {
 
     private tileMap: TileMap;
 
-    constructor(engine: Engine) {
+    constructor(width: number, height: number) {
         const tile = Resources.backgroundTile;
-        const numberOfCols = Math.ceil(engine.drawWidth / tile.width); //todo might need an int
-        const numberOfRows = Math.ceil(engine.drawHeight / tile.height); 
+        const numberOfCols = Math.ceil(width / tile.width); //todo might need an int
+        const numberOfRows = Math.ceil(height / tile.height);
         const sheetId = "background";
 
         const tileMap = new TileMap(0, 0, tile.width, tile.height, numberOfRows, numberOfCols);
         tileMap.registerSpriteSheet(sheetId, new SpriteSheet(tile, 1, 1, tile.width, tile.height));
         const tileSprite = new TileSprite(sheetId, 0);
-        for (let row = 0; row < numberOfRows*numberOfCols; row++) {
+        for (let row = 0; row < numberOfRows * numberOfCols; row++) {
 
-                tileMap.getCellByIndex(row).pushSprite(tileSprite);
+            tileMap.getCellByIndex(row).pushSprite(tileSprite);
         }
         this.tileMap = tileMap;
     }
 
-    public getTileMap(): TileMap {
+    private getTileMap(): TileMap {
         return this.tileMap;
+    }
+
+    public static getDefaultTileMap(engine: Engine): TileMap {
+        return new BackgroundManager(engine.drawWidth, engine.drawHeight).getTileMap();
+    }
+
+    public static getCustomTileMap(width, height): TileMap {
+        return new BackgroundManager(width, height).getTileMap();
     }
 }

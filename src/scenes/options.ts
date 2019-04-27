@@ -1,6 +1,6 @@
 import { Resources, Config } from '../resources';
 import { Scenes } from './scenes';
-import { Actor, Scene, Engine, Texture, Camera, Color, CollisionType, Axis } from 'excalibur';
+import { Actor, Scene, Engine, Texture, Axis } from 'excalibur';
 import BackgroundManager from '../engine/backgroundManager';
 import NumberSelector from '../actors/bars/numberSelector';
 import ProgressionManager from '../engine/progression/progressionManager';
@@ -12,7 +12,6 @@ import { Consumer } from 'java8script';
 import PlayerSettingsManager from '../engine/progression/playerSettingsManager';
 import { ExitButton } from '../actors/bars/exitButton';
 import ButtonBase from '../actors/bars/buttonBase';
-import ex = require('excalibur');
 import ScrollBar from '../actors/bars/scrollBar';
 
 export class Options extends Scene {
@@ -31,11 +30,8 @@ export class Options extends Scene {
     this.add(this.scrollBar);//for some reason adding in the initialize makes the drag stop working
   }
 
-  public onInitialize(engine: ex.Engine) {
+  public onInitialize(engine: Engine) {
     this.engine = engine;
-
-    const bgManager = new BackgroundManager(engine);
-    this.addTileMap(bgManager.getTileMap());
     const itemSize = SizingManager.get().getUIItemSize();
     this.add(new ExitButton(engine, () => engine.goToScene(Scenes.MAIN_MENU)));
 
@@ -52,7 +48,7 @@ export class Options extends Scene {
 
     const createButtonY = 
     this.gridSize.getBottom() < engine.drawHeight - createbuttonDims.height 
-      ? engine.drawHeight - createbuttonDims.height / 2 - Config.gridPadding //grid size and confirm dont overelap so all good, draw at the bottom of screen 
+      ? engine.drawHeight - createbuttonDims.height / 2 - Config.optionPadding //grid size and confirm dont overelap so all good, draw at the bottom of screen 
       : this.gridSize.getBottom() + Config.optionPadding + createbuttonDims.height/2;
     const createButton = this.createButton(
       createbuttonDims,
@@ -65,6 +61,8 @@ export class Options extends Scene {
 
     this.scrollBar.setScrollBottom(engine.drawHeight/2 + (createButton.getBottom() - engine.drawHeight) + Config.gridPadding)
     this.camera.strategy.lockToActorAxis(this.scrollBar, Axis.Y)
+
+    this.addTileMap(BackgroundManager.getCustomTileMap(engine.drawWidth, createButton.getBottom() + 100));//need to draw to fit the whole canvas rather than just the screen
   }
 
   private createButton(dims: IDimensions, x: number, y: number, texture: Texture, onClick: () => void): ButtonBase {
@@ -108,7 +106,7 @@ export class Options extends Scene {
   private addSoundToggle(itemSize) {
     this.sound = new LabeledRadio("Sound",
       itemSize, this.engine.drawWidth / 2,
-      this.title.getBottom() + Config.optionPadding,
+      this.title.getBottom() + Config.optionPadding*2,
       !PlayerSettingsManager.get().isSoundOff(),
       this.engine
     );

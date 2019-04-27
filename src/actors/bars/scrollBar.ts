@@ -1,4 +1,5 @@
-import { Actor, Color, Engine } from "excalibur";
+import { Actor, Color, Engine, Vector } from "excalibur";
+import { Resources } from "../../resources";
 
 export default class ScrollBar extends Actor {
 
@@ -10,12 +11,16 @@ export default class ScrollBar extends Actor {
         super();
         this.scrollBarBotton = engine.drawHeight / 2;
         this.scrollBarTop = engine.drawHeight / 2; // dont want to be able to go past the top of the screen
-
+        const sprite = Resources.uiScroll.asSprite();
+        const scrollItemSize = 50;
         this.x = engine.drawWidth - 25;
         this.y = engine.drawHeight / 2;
-        this.setWidth(50);
-        this.setHeight(50);
-        this.color = Color.Red;
+        this.addDrawing(Resources.uiScroll.asSprite());
+        this.setWidth(scrollItemSize);
+        this.setHeight(scrollItemSize);
+        console.log(sprite)
+        this.scale = new Vector(scrollItemSize/192, scrollItemSize/192); // 192 is the sprite original width/height
+
         
         this.on('pointerdragstart', (pe: ex.Input.PointerEvent) => {
             this.isDragging = true;

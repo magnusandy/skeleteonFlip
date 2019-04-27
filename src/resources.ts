@@ -14,6 +14,8 @@ const introMenu = require('./images/menu/intro.png');
 const creditsMenu = require('./images/menu/credits.png');
 const playingMenu = require('./images/menu/playing.png');
 const confirmMenu = require('./images/menu/confirm.png');
+const nextMenu = require('./images/menu/next.png');
+const menuMenu = require('./images/menu/menu.png');
 
 const title = require('./images/title.png');
 const gameOverImg = require('./images/gameOver.png');
@@ -35,6 +37,8 @@ const uiLeft = require('./images/ui/left.png');
 const uiRight = require('./images/ui/right.png');
 const uiX = require('./images/ui/x.png');
 const uiBlank = require('./images/ui/blank.png');
+const uiScroll = require('./images/ui/scroll.png');
+
 const optionTitle = require('./images/optionTitle.png');
 const helpTitle = require('./images/helpTitle.png');
 
@@ -71,6 +75,8 @@ const Resources = {
     creditsMenu: new ex.Texture(creditsMenu),
     playingMenu: new ex.Texture(playingMenu),
     confirmMenu: new ex.Texture(confirmMenu),
+    nextMenu: new ex.Texture(nextMenu),
+    menuMenu: new ex.Texture(menuMenu),
 
     optionTitle: new ex.Texture(optionTitle),
     helpTitle: new ex.Texture(helpTitle),
@@ -94,6 +100,7 @@ const Resources = {
     uiX: new ex.Texture(uiX),
     uiBlank: new ex.Texture(uiBlank),
     uiCoins: new ex.Texture(uiCoins),
+    uiScroll: new ex.Texture(uiScroll),
 
     myMono: new ex.Texture(fontMono),
 

@@ -17,8 +17,7 @@ export class Help extends ex.Scene {
 
   public onInitialize(engine: ex.Engine) {
     this.engine = engine;
-    const bgManager = new BackgroundManager(engine);
-    this.addTileMap(bgManager.getTileMap());
+    this.addTileMap(BackgroundManager.getDefaultTileMap(engine));
     this.add(new ExitButton(engine, () => engine.goToScene(Scenes.MAIN_MENU)));
     this.addTitle();
     this.modalRenderer = new ModalRenderer(false);
