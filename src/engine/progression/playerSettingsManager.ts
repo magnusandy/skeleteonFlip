@@ -51,7 +51,7 @@ export default class PlayerSettingsManager {
         return this.singleton;
     }
 
-    public static initialize(): void {
+    public static initialize(): Promise<any> {
         localForage.config({
             name: 'skeletonFlip',
             version: 1.0,
@@ -59,7 +59,7 @@ export default class PlayerSettingsManager {
             storeName: 'playerSettings',
             description: 'Store save data'
         });//try with no settings
-        localForage.getItem(PlayerSettingsManager.STORE_KEY, (e, v) => {
+        return localForage.getItem(PlayerSettingsManager.STORE_KEY, (e, v) => {
             console.log(`retrieved from storage:`, [v]);
             if(e) {
                 console.log(`problem retrieving from store: ${e}`);
@@ -72,7 +72,7 @@ export default class PlayerSettingsManager {
                     this.singleton = PlayerSettingsManager.deserializeV1(saveData);
                 }
             }
-        })
+        });
     }
 
     public setCurrentLevel(newCurrent: number): void {

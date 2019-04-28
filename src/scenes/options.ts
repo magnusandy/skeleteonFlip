@@ -80,11 +80,6 @@ export class Options extends Scene {
     ProgressionManager.get().setDifficulty(this.difficulty.getCurrent());
     ProgressionManager.get().setProgressionDisabled(!this.progressionToggle.isChecked());
     PlayerSettingsManager.get().setIsSoundOff(!this.sound.isChecked())
-    if (this.sound.isChecked()) {
-      SoundManager.get().enableSound();
-    } else {
-      SoundManager.get().disableSound();
-    }
     this.engine.goToScene(Scenes.MAIN_MENU);
   }
 

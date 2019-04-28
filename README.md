@@ -21,9 +21,6 @@ Card Types:
 # Development list
 Todo List:
 First Iteration (basic functionality): 
-    - Options:
-         - add actual icon to the option scroller
-    - buttons for end pages (contine for victory or menu for end);
     - Display names of difficulty in the options  
     - saved sound settings needs to apply to sound manager after initialized
     - when switching between grid and story, the number cards take on different sizes

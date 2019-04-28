@@ -1,11 +1,11 @@
 import { Sound } from "excalibur";
 import { Resources } from "../resources";
+import PlayerSettingsManager from "./progression/playerSettingsManager";
 
 export default class SoundManager {
     private static soundManager: SoundManager;
     private currentSound: Sound;
     private backgroundSound: Sound;
-    private disabled: boolean = false;
 
     /**
      * returns a singleton instance of the sound manager
@@ -20,19 +20,14 @@ export default class SoundManager {
     }
 
     public disableSound() {
-        this.disabled = true;
         if (this.backgroundSound) {
             this.backgroundSound.stop();
             this.backgroundSound = null;
         }
     }
 
-    public enableSound() {
-        this.disabled = false;
-    }
-
     public backgroundMusicStart(): void {
-        if (!this.disabled) {
+        if (!PlayerSettingsManager.get().isSoundOff()) {
             if (!this.backgroundSound) {
                 this.backgroundSound = Resources.backgroundMusic;
                 this.backgroundSound.volume = 0.1;
@@ -43,7 +38,7 @@ export default class SoundManager {
     }
 
     public backgroundMusicEnd(): void {
-        if(!this.disabled) {
+        if(PlayerSettingsManager.get().isSoundOff()) {
             if (this.backgroundSound) {
                 this.backgroundSound.stop();
                 this.backgroundSound = null;
@@ -62,7 +57,7 @@ export default class SoundManager {
     }
 
     private playSoundWithAfter(sound: Sound, after?: () => void) {
-        if (!this.disabled) {
+        if (!PlayerSettingsManager.get().isSoundOff()) {
             this.currentSound = sound;
             if (after) {
                 sound.play().then(after);

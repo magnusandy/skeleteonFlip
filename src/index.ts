@@ -1,4 +1,3 @@
-import { GameWindowBase } from './scenes/gameWindows/gameWindowBase';
 import { Resources } from './resources';
 import { Scenes } from './scenes/scenes';
 import { MainMenu } from './scenes/mainMenu';
@@ -12,8 +11,6 @@ import SizingManager from './engine/sizingManager';
 import PlayerSettingsManager from './engine/progression/playerSettingsManager';
 import { StoryGameWindow } from './scenes/gameWindows/storyGameWindow';
 import { GridGameWindow } from './scenes/gameWindows/gridGameWindow';
-import { Actor, Color, Axis } from 'excalibur';
-import ScrollBar from './actors/bars/scrollBar';
 
 const game = new Game();
 const mainMenu = new MainMenu(game);
@@ -28,10 +25,12 @@ game.add(Scenes.HELP, new Help(game));
 
 let loader = new GameLoader();
 Object.keys(Resources)
-      .forEach(k => loader.addResource(Resources[k]));
-    
+  .forEach(k => loader.addResource(Resources[k]));
+
 game.start(loader).then(() => {
-  SizingManager.initialize(game);
-  PlayerSettingsManager.initialize();
-  game.goToScene(Scenes.MAIN_MENU);
+  PlayerSettingsManager.initialize()
+    .then(() => {
+      SizingManager.initialize(game);
+      game.goToScene(Scenes.MAIN_MENU);
+    });
 });
