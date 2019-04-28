@@ -1,38 +1,52 @@
 import * as ex from 'excalibur';
 import { Resources, Config } from '../resources';
 import { Scenes } from './scenes';
-import { Texture, Vector, Actor, Engine } from 'excalibur';
+import { Texture, Vector, Actor, Engine, Axis } from 'excalibur';
 import ButtonBase from '../actors/bars/buttonBase';
-import BackgroundManager from '../engine/backgroundManager';
 import { calcDimensionsSingleObjectTexture, IDimensions } from '../engine/helpers';
 import { ExitButton } from '../actors/bars/exitButton';
 import { ModalRenderer } from '../modal/modal';
 import SizingManager from '../engine/sizingManager';
+import BaseScene from './BaseScene';
 
-export class Help extends ex.Scene {
+export class Help extends BaseScene {
 
-  private engine: Engine;
   private modalRenderer: ModalRenderer;
-  //private button: Actor;
 
   public onInitialize(engine: ex.Engine) {
-    this.engine = engine;
-    this.addTileMap(BackgroundManager.getDefaultTileMap(engine));
+
     this.add(new ExitButton(engine, () => engine.goToScene(Scenes.MAIN_MENU)));
-    this.addTitle();
+
+    const titleDims = calcDimensionsSingleObjectTexture(engine.drawHeight, engine.drawWidth, Resources.helpTitle, 0.6, 1);
+    const title = new Actor(
+      engine.drawWidth / 2,
+      titleDims.height / 2 + Config.gridPadding,
+      titleDims.width,
+      titleDims.height
+    );
+    title.addDrawing(Resources.helpTitle);
+    title.scale = titleDims.scale;
+    this.add(title);
+
     this.modalRenderer = new ModalRenderer(false);
 
     const centerx = engine.drawWidth / 2;
-    const centery = engine.drawHeight / 2;
     const sizing = SizingManager.get().getUIButtonSizing();
     const dims = calcDimensionsSingleObjectTexture(engine.drawHeight, engine.drawWidth, Resources.introMenu, sizing.padding, sizing.maxScale);
 
+    const intro = this.createButton(dims, centerx, title.getBottom() + dims.height / 2 + Config.optionPadding, Resources.introMenu, () => this.modalRenderer.introModal());
+    const playing = this.createButton(dims, centerx, intro.getBottom() + Config.gridPadding + dims.height / 2, Resources.playingMenu, () => this.modalRenderer.howToPlayModal());
+    const cards = this.createButton(dims, centerx, playing.getBottom() + Config.gridPadding + dims.height / 2, Resources.cardMenu, () => this.modalRenderer.cardModal());
+    const credits = this.createButton(dims, centerx, cards.getBottom() + Config.gridPadding + dims.height / 2, Resources.creditsMenu, () => this.modalRenderer.textModal("Credits", "Made by Andrew"));
 
-    this.add(this.createButton(dims, centerx, centery - dims.height * 1.5 - Config.gridPadding * 1.5, Resources.introMenu, () => this.modalRenderer.introModal()));
-    this.add(this.createButton(dims, centerx, centery - dims.height * 0.5 - Config.gridPadding * 0.5, Resources.playingMenu, () => this.modalRenderer.howToPlayModal()));
-    this.add(this.createButton(dims, centerx, centery + dims.height * 0.5 + Config.gridPadding * 0.5, Resources.cardMenu, () => this.modalRenderer.cardModal()));
-    this.add(this.createButton(dims, centerx, centery + dims.height * 1.5 + Config.gridPadding * 1.5, Resources.creditsMenu, () => this.modalRenderer.textModal("Credits", "Made by Andrew")));
+    this.add(intro);
+    this.add(playing);
+    this.add(cards);
+    this.add(credits);
 
+
+    this.initScroll(credits.getBottom());
+    this.setBackround(credits.getBottom());
   }
 
   public createButton(dims: IDimensions, x: number, y: number, texture: Texture, onClick: () => void): ButtonBase {
@@ -46,22 +60,8 @@ export class Help extends ex.Scene {
   }
 
   public onActivate() {
-    //this.modalRenderer.setOpenAndRerender(true);
   }
 
   public onDeactivate() {
-  }
-
-  private addTitle(): void {
-    const dims = calcDimensionsSingleObjectTexture(this.engine.drawHeight, this.engine.drawWidth, Resources.helpTitle, 0.6, 1);
-    const sprite = Resources.helpTitle.asSprite();
-    const title = new Actor();
-    title.addDrawing(sprite);
-    title.x = this.engine.drawWidth / 2;
-    title.y = dims.height / 2 + Config.gridPadding;
-    title.setHeight(dims.height);
-    title.setWidth(dims.width);
-    title.scale = dims.scale;
-    this.add(title);
   }
 } 

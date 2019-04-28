@@ -22,9 +22,7 @@ Card Types:
 Todo List:
 First Iteration (basic functionality): 
     - Display names of difficulty in the options  
-    - saved sound settings needs to apply to sound manager after initialized
     - when switching between grid and story, the number cards take on different sizes
-    - update all menu pages to base below the title 
 Second Iteration (upgrades):
     - track coins
     - only get coins on victory

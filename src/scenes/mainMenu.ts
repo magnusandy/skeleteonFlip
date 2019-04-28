@@ -1,81 +1,39 @@
-import { Actor, Scene } from 'excalibur';
+import { Actor } from 'excalibur';
 import { Resources, Config } from '../resources';
 import { Scenes, getGameWindow } from './scenes';
-import ButtonBase from '../actors/bars/buttonBase';
 import { calcDimensionsSingleObjectTexture } from '../engine/helpers';
-import BackgroundManager from '../engine/backgroundManager';
 import SoundManager from '../engine/soundManager';
 import SizingManager, { IButtonSizing } from '../engine/sizingManager';
+import BaseScene from './BaseScene';
 
-export class MainMenu extends Scene {
-
-  private screenWidth: number;
-  private screenHeight: number;
-  private game: ex.Engine;
-
-  private title: Actor;
-  private start: Actor;
-  private help: Actor;
-  private options: Actor;
-
+export class MainMenu extends BaseScene {
   public onInitialize(engine: ex.Engine) {
-    this.screenWidth = engine.drawWidth;
-    this.screenHeight = engine.drawHeight;
-    this.game = engine;
-    this.addTileMap(BackgroundManager.getDefaultTileMap(engine));
+    const centerX = engine.drawWidth / 2;
 
-    this.start = new ButtonBase(
-      Resources.startMenu, () => this.game.goToScene(getGameWindow()),
-    );
-    const sizing :IButtonSizing = SizingManager.get().getUIButtonSizing();
-    this.sizeProperly(this.start, sizing.padding, sizing.maxScale, Resources.startMenu);
-    this.add(this.start)
 
-    this.options = new ButtonBase(
-      Resources.optionMenu,
-      () => this.game.goToScene(Scenes.OPTIONS),
-    );
-    this.sizeProperly(this.options, sizing.padding, sizing.maxScale, Resources.optionMenu);
-    this.add(this.options);
+    const dims = calcDimensionsSingleObjectTexture(engine.drawHeight, engine.drawWidth, Resources.title, 0.9, 0.8);
+    const title = new Actor(centerX, dims.height/2 + Config.gridPadding, dims.width, dims.height);
+    title.scale = dims.scale;
+    title.addDrawing(Resources.title);
+    this.add(title);
 
-    this.help = new ButtonBase(
-      Resources.helpMenu,
-      () => this.game.goToScene(Scenes.HELP),
-    );
-    this.sizeProperly(this.help, sizing.padding, sizing.maxScale, Resources.helpMenu);
-    this.add(this.help);
+    const {padding, maxScale} :IButtonSizing = SizingManager.get().getUIButtonSizing();
+    const buttonDims = calcDimensionsSingleObjectTexture(engine.drawHeight, engine.drawWidth, Resources.startMenu, padding, maxScale );
 
-    this.title = this.sizeProperly(new Actor(), 0.9, 1, Resources.title);
-    this.title.addDrawing(Resources.title);
-    this.add(this.title);
+    const start = this.createButton(buttonDims, centerX,  title.getBottom() + Config.optionPadding + buttonDims.height/2, Resources.startMenu, () => engine.goToScene(getGameWindow()));
+    const options = this.createButton(buttonDims, centerX, start.getBottom() + Config.gridPadding + buttonDims.height/2, Resources.optionMenu, () => engine.goToScene(Scenes.OPTIONS));
+    const help = this.createButton(buttonDims, centerX, options.getBottom() + Config.gridPadding+ buttonDims.height/2, Resources.helpMenu, () => engine.goToScene(Scenes.HELP));
+    
+    this.add(start);
+    this.add(options);
+    this.add(help);
 
-    this.placeActors();
+    this.setBackround(help.getBottom());
+    this.initScroll(help.getBottom());
   }
 
   public onActivate() {
     SoundManager.get().backgroundMusicEnd();
-  }
-
-  public sizeProperly(actor, padding, scale, resource): Actor {
-    const dims = calcDimensionsSingleObjectTexture(this.screenHeight, this.screenWidth, resource, padding, scale);
-    actor.scale = dims.scale;
-    actor.setHeight(dims.height);
-    actor.setWidth(dims.width);
-    return actor;
-  }
-
-  public placeActors() {
-    this.start.x = this.screenWidth / 2;
-    this.start.y = this.screenHeight / 2 - this.start.getHeight() - Config.gridPadding;
-
-    this.options.x = this.screenWidth / 2;
-    this.options.y = this.screenHeight / 2;
-
-    this.help.x = this.screenWidth / 2;
-    this.help.y = this.screenHeight / 2 + this.help.getHeight() + Config.gridPadding;
-
-    this.title.x = this.screenWidth / 2;
-    this.title.y = this.title.getHeight()/2 + Config.gridPadding;
   }
 
   public onDeactivate() { }

@@ -1,55 +1,42 @@
 import { Resources, Config } from '../resources';
 import { Scenes } from './scenes';
-import { Actor, Scene, Engine, Texture, Axis } from 'excalibur';
-import BackgroundManager from '../engine/backgroundManager';
+import { Actor, Engine } from 'excalibur';
 import NumberSelector from '../actors/bars/numberSelector';
 import ProgressionManager from '../engine/progression/progressionManager';
 import LabeledRadio from '../actors/bars/labeledRadio';
-import SoundManager from '../engine/soundManager';
 import SizingManager from '../engine/sizingManager';
-import { calcDimensionsSingleObjectTexture, IDimensions } from '../engine/helpers';
+import { calcDimensionsSingleObjectTexture } from '../engine/helpers';
 import { Consumer } from 'java8script';
 import PlayerSettingsManager from '../engine/progression/playerSettingsManager';
 import { ExitButton } from '../actors/bars/exitButton';
-import ButtonBase from '../actors/bars/buttonBase';
-import ScrollBar from '../actors/bars/scrollBar';
+import BaseScene from './BaseScene';
 
-export class Options extends Scene {
+export class Options extends BaseScene {
 
-  private engine: Engine;
   private gridSize: NumberSelector;
   private difficulty: NumberSelector;
   private sound: LabeledRadio;
   private progressionToggle: LabeledRadio;
   private title: Actor;
-  private scrollBar: ScrollBar;
-
-  constructor(engine: Engine) {
-    super(engine);
-    this.scrollBar = new ScrollBar(engine);
-    this.add(this.scrollBar);//for some reason adding in the initialize makes the drag stop working
-  }
 
   public onInitialize(engine: Engine) {
-    this.engine = engine;
     const itemSize = SizingManager.get().getUIItemSize();
     this.add(new ExitButton(engine, () => engine.goToScene(Scenes.MAIN_MENU)));
-
 
     this.addTitle();
     this.addSoundToggle(itemSize);
     this.addDifficultySize(itemSize);
     this.addProgressionToggle(itemSize)
     const callbackForEnabling = this.addGridSize(itemSize);
-    this.progressionToggle.addOnToggle(callbackForEnabling); 
+    this.progressionToggle.addOnToggle(callbackForEnabling);
 
     const sizing = SizingManager.get().getUIButtonSizing();
     const createbuttonDims = calcDimensionsSingleObjectTexture(engine.drawHeight, engine.drawWidth, Resources.confirmMenu, sizing.padding, sizing.maxScale);
 
-    const createButtonY = 
-    this.gridSize.getBottom() < engine.drawHeight - createbuttonDims.height 
-      ? engine.drawHeight - createbuttonDims.height / 2 - Config.optionPadding //grid size and confirm dont overelap so all good, draw at the bottom of screen 
-      : this.gridSize.getBottom() + Config.optionPadding + createbuttonDims.height/2;
+    const createButtonY =
+      this.gridSize.getBottom() < engine.drawHeight - createbuttonDims.height
+        ? engine.drawHeight - createbuttonDims.height / 2 - Config.optionPadding //grid size and confirm dont overelap so all good, draw at the bottom of screen 
+        : this.gridSize.getBottom() + Config.optionPadding + createbuttonDims.height / 2;
     const createButton = this.createButton(
       createbuttonDims,
       engine.drawWidth / 2,
@@ -59,20 +46,8 @@ export class Options extends Scene {
     );
     this.add(createButton);
 
-    this.scrollBar.setScrollBottom(engine.drawHeight/2 + (createButton.getBottom() - engine.drawHeight) + Config.gridPadding)
-    this.camera.strategy.lockToActorAxis(this.scrollBar, Axis.Y)
-
-    this.addTileMap(BackgroundManager.getCustomTileMap(engine.drawWidth, createButton.getBottom() + 100));//need to draw to fit the whole canvas rather than just the screen
-  }
-
-  private createButton(dims: IDimensions, x: number, y: number, texture: Texture, onClick: () => void): ButtonBase {
-    const button = new ButtonBase(texture, onClick);
-    button.x = x
-    button.y = y
-    button.scale = dims.scale;
-    button.setHeight(dims.height);
-    button.setWidth(dims.width);
-    return button;
+    this.initScroll(createButton.getBottom());
+    this.setBackround(createButton.getBottom())
   }
 
   private onConfirm = () => {
@@ -101,7 +76,7 @@ export class Options extends Scene {
   private addSoundToggle(itemSize) {
     this.sound = new LabeledRadio("Sound",
       itemSize, this.engine.drawWidth / 2,
-      this.title.getBottom() + Config.optionPadding*2,
+      this.title.getBottom() + Config.optionPadding * 2,
       !PlayerSettingsManager.get().isSoundOff(),
       this.engine
     );
@@ -130,8 +105,8 @@ export class Options extends Scene {
   //returns callback for toggling the objects
   private addGridSize(itemSize): Consumer<boolean> {
     this.gridSize = new NumberSelector("GRID SIZE", 2, 9, ProgressionManager.get().getOptionGridSize(), this.engine.drawWidth / 2,
-    this.progressionToggle.getBottom() + itemSize * 0.5 + Config.optionPadding, itemSize,
-    !ProgressionManager.get().isProgressionDisabled());
+      this.progressionToggle.getBottom() + itemSize * 0.5 + Config.optionPadding, itemSize,
+      !ProgressionManager.get().isProgressionDisabled());
     this.gridSize.getDrawables()
       .forEach(i => this.add(i));
 
