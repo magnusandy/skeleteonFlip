@@ -43,6 +43,7 @@ Second Iteration (upgrades):
     - one fix might need changes to excaliburjs, AudioContextFactory needs to use new window.webkitAudioContext, it past that there might be some problems with pointer events.
 
 Misc:
+    - don't love the current menu setup, needs to be more centered
     - blue screen flash on boot, think its cause the background manager is now at the end
     - game state is persisted, now need to persist current health and swords
     - decide how to deal with what happens to current progression if difficulty changes
