@@ -39,7 +39,6 @@ export class Victory extends ex.Scene {
     nextButton.scale = buttonDims.scale;
     nextButton.x = engine.drawWidth/2;
     nextButton.y = engine.drawHeight - offset;
-    console.log(nextButton);
     this.add(nextButton);
   }
 

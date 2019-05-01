@@ -4,6 +4,8 @@ import { Stream, Function } from "java8script";
 import * as ex from 'excalibur';
 import { Vector } from "excalibur";
 import ProgressionManager from "../engine/progression/progressionManager";
+import PlayerSettingsManager from "../engine/progression/playerSettingsManager";
+import { GridState, CardState } from "../engine/progression/gridState";
 
 
 export class GridCoordinator {
@@ -26,6 +28,17 @@ export class GridCoordinator {
         this.grid = GridCoordinator.blankGrid(gridSize, callbackProvider, this.screenCenter);
     }
 
+    public saveCurrentGrid() {
+        const cardStates: CardState[][] = Stream.ofValues(...this.grid)
+            .map(row => Stream.ofValues(...row)
+                .map(card => new CardState(card.type(), card.isFlipped()))
+                .toArray())
+            .toArray();
+
+        const state: GridState = new GridState(this.gridSize, cardStates);
+        PlayerSettingsManager.get().saveGridState(state);
+    }
+
     public getGridAsList(): Card[] {
         const list = Stream.of(this.grid)
             .map(a => Stream.ofValues(...a))
@@ -35,24 +48,20 @@ export class GridCoordinator {
         return list;
     }
 
-    public getCard(rowIndex: number, colIndex: number): Card {
-        return this.grid[rowIndex][colIndex];
-    }
-
     public getRow(rowIndex: number): Card[] {
         return Stream.of(this.grid)
-        .map(a => Stream.ofValues(...a))
-        .flatMap(l => l)
-        .filter(card => card.getRow() == rowIndex)
-        .toArray();
+            .map(a => Stream.ofValues(...a))
+            .flatMap(l => l)
+            .filter(card => card.getRow() == rowIndex)
+            .toArray();
     }
 
     public getCol(colIndex: number): Card[] {
         return Stream.of(this.grid)
-        .map(a => Stream.ofValues(...a))
-        .flatMap(l => l)
-        .filter(card => card.getCol() == colIndex)
-        .toArray(); 
+            .map(a => Stream.ofValues(...a))
+            .flatMap(l => l)
+            .filter(card => card.getCol() == colIndex)
+            .toArray();
     }
 
     private static blankGrid(gridSize: number, callbackProvider: CardCallbackProvider, screenCenter: ex.Vector): Card[][] {
@@ -71,29 +80,39 @@ export class GridCoordinator {
         while (this.needMoreSkeletons()) {
             const row: number = this.randomCoord();
             const col: number = this.randomCoord();
-            if(this.isCoin(row, col)) {
+            if (this.isCoin(row, col)) {
                 this.insertCard(row, col, Card.skeleton(this.screenCenter, row, col, this.callbackProvider.skeletonCardCallback));
-            }  
+            }
         }
     }
 
     private initializeBuffs(): void {
-        while(this.needMoreBuffs()) {
+        while (this.needMoreBuffs()) {
             const row: number = this.randomCoord();
             const col: number = this.randomCoord();
-            if(this.isCoin(row, col)) {
+            if (this.isCoin(row, col)) {
                 this.insertCard(row, col, this.generateBuffCard(row, col))
             }
         }
     }
 
-    private generateBuffCard(row: number, col:number): Card {
-        return Math.random() < 0.5
-        ? Card.attack(this.screenCenter, row, col, this.callbackProvider.attackCardCallback)
-        : Card.potion(this.screenCenter, row, col, this.callbackProvider.potionCardCallback)  
+    private initializeFromState(state: GridState): void {
+        this.gridSize = state.getGridSize();
+        state.getGridState().forEach((row: CardState[], rowIndex:number) => {
+            row.forEach((card: CardState, colIndex: number) => {
+                const createdCard = Card.create(this.screenCenter, rowIndex, colIndex, this.callbackProvider, card.getType(), card.isFlipped());
+                this.insertCard(rowIndex, colIndex, createdCard);
+            });
+        });
     }
 
-    private insertCard(row: number, col: number, card: Card ): void {
+    private generateBuffCard(row: number, col: number): Card {
+        return Math.random() < 0.5
+            ? Card.attack(this.screenCenter, row, col, this.callbackProvider.attackCardCallback)
+            : Card.potion(this.screenCenter, row, col, this.callbackProvider.potionCardCallback)
+    }
+
+    private insertCard(row: number, col: number, card: Card): void {
         if (card.type() == CardType.SKELETON) {
             this.skeletonCount++;
         } else if (card.type() == CardType.ATTACK) {
@@ -104,9 +123,9 @@ export class GridCoordinator {
         this.grid[row][col] = card;
     }
 
-    private isCoin(row:number, col:number): boolean {
+    private isCoin(row: number, col: number): boolean {
         return this.grid[row][col].type() == CardType.COIN;
-    } 
+    }
 
     private needMoreSkeletons(): boolean {
         return this.skeletonCount < Math.ceil(((this.gridSize * this.gridSize)) / ProgressionManager.get().getSkullFactor());
@@ -122,11 +141,24 @@ export class GridCoordinator {
     }
 
     public static createGrid(callbackProvider: CardCallbackProvider, gridSize: number, engine: ex.Engine): GridCoordinator {
-        const screenCenter = new Vector(engine.drawWidth/2, engine.drawHeight/2);
+        return PlayerSettingsManager.get().getGridState()
+        .map(state => GridCoordinator.loadSavedGrid(callbackProvider, engine, state))
+        .orElseGet(() => GridCoordinator.createNewGrid(callbackProvider, gridSize, engine))
+    }
+
+    private static loadSavedGrid(callbackProvider: CardCallbackProvider, engine: ex.Engine, gridState: GridState): GridCoordinator {
+        const screenCenter = new Vector(engine.drawWidth / 2, engine.drawHeight / 2);
+        const coord: GridCoordinator = new GridCoordinator(callbackProvider, gridState.getGridSize(), screenCenter);
+        coord.initializeFromState(gridState);
+        return coord;
+    }
+
+    public static createNewGrid(callbackProvider: CardCallbackProvider, gridSize: number, engine: ex.Engine): GridCoordinator {
+        const screenCenter = new Vector(engine.drawWidth / 2, engine.drawHeight / 2);
         const coord: GridCoordinator = new GridCoordinator(callbackProvider, gridSize, screenCenter);
         coord.initializeSkeletons();
         coord.initializeBuffs();
+        coord.saveCurrentGrid();
         return coord;
-
     }
 }

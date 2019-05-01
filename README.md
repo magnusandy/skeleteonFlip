@@ -34,14 +34,17 @@ Second Iteration (upgrades):
     - upgrade sword kills give a coin
     - upgrade to switch grid counts between card types
     - upgrade level bonus
+    - upgrade toggle to maintain health across levels
+    - upgrade maintain swords across levels ( advanced level for always keeping at least the base)
+
     - extra lives to protect from game over
     - button to clear saves
     - safari (and maybe IOS support) is real bad and by that I mean it doesnt work. audio contexts are broken.
     - one fix might need changes to excaliburjs, AudioContextFactory needs to use new window.webkitAudioContext, it past that there might be some problems with pointer events.
 
 Misc:
-    - grid size being hidden when boots up as story disabled
-    - persist current game states so restart of app doesnt reset level
+    - blue screen flash on boot, think its cause the background manager is now at the end
+    - game state is persisted, now need to persist current health and swords
     - decide how to deal with what happens to current progression if difficulty changes
     - 350/675
     - redraw if resize

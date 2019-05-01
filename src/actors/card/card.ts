@@ -7,6 +7,7 @@ import SoundManager from '../../engine/soundManager';
 import ProgressionManager from '../../engine/progression/progressionManager';
 import { IDimensions } from '../../engine/helpers';
 import SizingManager from '../../engine/sizingManager';
+import { CardCallbackProvider } from './cardCallbackProvider';
 
 export enum CardType {
     COIN = "coin",
@@ -118,14 +119,18 @@ export class Card extends ex.Actor implements ICard {
 
     private fullOnClick(): void {
         if (!this.flipped) {
-            this.flipped = true;
-            this.setDrawing("flip");
+            this.silentSetFlipped();
             SoundManager.get().playSoundInterrupt(
                 Resources.cardSound,
                 this.playSound
             );
             this.passedInOnClick();
         }
+    }
+
+    public silentSetFlipped() {
+        this.flipped = true;
+        this.setDrawing("flip");
     }
     public type(): CardType {
         return this.cardType;
@@ -171,6 +176,24 @@ export class Card extends ex.Actor implements ICard {
 
     public static coin(screenCenter: ex.Vector, row: number, col: number, onClick: Supplier<void>): Card {
         return new Card(screenCenter, col, row, onClick, ex.Color.Yellow, CardType.COIN, Resources.coin);
+    }
+
+    public static create(screenCenter: ex.Vector, row: number, col: number, callbackProvider: CardCallbackProvider, type: CardType, flipped:boolean): Card {
+        let card: Card;
+        if (type === CardType.SKELETON) {
+            card = Card.skeleton(screenCenter, row, col, callbackProvider.skeletonCardCallback);    
+        } else if (type === CardType.ATTACK) {
+            card = Card.attack(screenCenter, row, col, callbackProvider.attackCardCallback);    
+        } else if (type === CardType.COIN) {
+            card = Card.coin(screenCenter, row, col, callbackProvider.coinCardCallback);    
+        } else if (type === CardType.POTION) {
+            card = Card.potion(screenCenter, row, col, callbackProvider.potionCardCallback);    
+        }
+        
+        if (flipped) {
+            card.silentSetFlipped();
+        }
+        return card;
     }
 }
 

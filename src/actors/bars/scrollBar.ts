@@ -18,10 +18,8 @@ export default class ScrollBar extends Actor {
         this.addDrawing(Resources.uiScroll.asSprite());
         this.setWidth(scrollItemSize);
         this.setHeight(scrollItemSize);
-        console.log(sprite)
         this.scale = new Vector(scrollItemSize/192, scrollItemSize/192); // 192 is the sprite original width/height
 
-        
         this.on('pointerdragstart', (pe: ex.Input.PointerEvent) => {
             this.isDragging = true;
         });

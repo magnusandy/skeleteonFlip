@@ -43,7 +43,6 @@ export class GameOver extends ex.Scene {
     menuButton.scale = buttonDims.scale;
     menuButton.x = engine.drawWidth/2;
     menuButton.y = engine.drawHeight - offset;
-    console.log(menuButton);
     this.add(menuButton)
   }
 
