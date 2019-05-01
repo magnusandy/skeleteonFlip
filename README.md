@@ -22,7 +22,6 @@ Card Types:
 Todo List:
 First Iteration (basic functionality): 
     - Display names of difficulty in the options  
-    - when switching between grid and story, the number cards take on different sizes
 Second Iteration (upgrades):
     - track coins
     - only get coins on victory

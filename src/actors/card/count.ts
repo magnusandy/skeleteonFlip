@@ -30,8 +30,6 @@ export default class Count extends ex.Actor {
         this.addDrawing("7", Count.sprite(Resources[7], dims.scale));
         this.addDrawing("8", Count.sprite(Resources[8], dims.scale));
         this.addDrawing("9", Count.sprite(Resources[9], dims.scale));
-
-
         this.setWidth(dims.width);
         this.setHeight(dims.height);
         this.x = Count.calcX(type, index, screenCenter, dims.width) + dims.width;
@@ -67,7 +65,7 @@ export default class Count extends ex.Actor {
     }
 
     private static sprite(texture: ex.Texture, scale: Vector): ex.Sprite {
-        const sprite: ex.Sprite = texture.asSprite();
+        const sprite: ex.Sprite = texture.asSprite().clone();
         sprite.scale = scale;
         return sprite;
     }
