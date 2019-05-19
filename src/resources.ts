@@ -1,5 +1,4 @@
 import * as ex from 'excalibur';
-import { AudioContextFactory } from 'excalibur';
 
 const sword = require('./images/sword.png');
 const skull = require('./images/skull.png');

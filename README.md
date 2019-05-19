@@ -44,7 +44,6 @@ Second Iteration (upgrades):
 
 Misc:
     - don't love the current menu setup, needs to be more centered
-    - blue screen flash on boot, think its cause the background manager is now at the end
     - game state is persisted, now need to persist current health and swords
     - decide how to deal with what happens to current progression if difficulty changes
     - 350/675
@@ -54,6 +53,7 @@ Misc:
     - unlimited mode, clearing a row or column will delete and add a new on the end
     - al bhed mode
     - get on the app store banner for web
+    - still an issue with the backgrounds, "fixed" by changing the default colors so its less noticable
 
 Tools and Resources used: 
 - Excalibur JS (https://excaliburjs.com/)
