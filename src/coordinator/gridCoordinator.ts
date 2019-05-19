@@ -1,11 +1,12 @@
 import { Card, CardType } from "../actors/card/card";
 import { CardCallbackProvider } from "../actors/card/cardCallbackProvider";
-import { Stream, Function } from "java8script";
+import { Stream, Function, Optional } from "java8script";
 import * as ex from 'excalibur';
 import { Vector } from "excalibur";
 import ProgressionManager from "../engine/progression/progressionManager";
 import PlayerSettingsManager from "../engine/progression/playerSettingsManager";
 import { GridState, CardState } from "../engine/progression/gridState";
+import { Config } from "../resources";
 
 
 export class GridCoordinator {
@@ -28,15 +29,16 @@ export class GridCoordinator {
         this.grid = GridCoordinator.blankGrid(gridSize, callbackProvider, this.screenCenter);
     }
 
-    public saveCurrentGrid() {
+    public currentGridState(): {gridSize: number, cardState: CardState[][]} {
         const cardStates: CardState[][] = Stream.ofValues(...this.grid)
             .map(row => Stream.ofValues(...row)
                 .map(card => new CardState(card.type(), card.isFlipped()))
                 .toArray())
             .toArray();
-
-        const state: GridState = new GridState(this.gridSize, cardStates);
-        PlayerSettingsManager.get().saveGridState(state);
+        return {
+            gridSize: this.gridSize,
+            cardState: cardStates
+        };
     }
 
     public getGridAsList(): Card[] {
@@ -140,9 +142,9 @@ export class GridCoordinator {
         return Math.floor(Math.random() * this.gridSize);
     }
 
-    public static createGrid(callbackProvider: CardCallbackProvider, gridSize: number, engine: ex.Engine): GridCoordinator {
-        return PlayerSettingsManager.get().getGridState()
-        .map(state => GridCoordinator.loadSavedGrid(callbackProvider, engine, state))
+    public static createGrid(callbackProvider: CardCallbackProvider, gridSize: number, state: Optional<GridState>, engine: ex.Engine): GridCoordinator {
+        return state
+        .map(s => GridCoordinator.loadSavedGrid(callbackProvider, engine, s))
         .orElseGet(() => GridCoordinator.createNewGrid(callbackProvider, gridSize, engine))
     }
 
@@ -158,7 +160,6 @@ export class GridCoordinator {
         const coord: GridCoordinator = new GridCoordinator(callbackProvider, gridSize, screenCenter);
         coord.initializeSkeletons();
         coord.initializeBuffs();
-        coord.saveCurrentGrid();
         return coord;
     }
 }

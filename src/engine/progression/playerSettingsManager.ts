@@ -22,6 +22,8 @@ interface SaveDataV1 {
 }
 
 export interface SaveDataGrid {
+    hearts: number;
+    swords: number;
     gridSize: number;
     grid: SaveCellData[][]; 
 };

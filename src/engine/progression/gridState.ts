@@ -3,12 +3,16 @@ import { SaveDataGrid, SaveCellData } from "./playerSettingsManager";
 import { Stream } from "java8script";
 
 export class GridState {
+    private hearts: number;
+    private swords: number;
     private gridSize: number;
     private grid: CardState[][];
 
-    constructor(gridSize: number, grid: CardState[][]) {
+    constructor(gridSize: number, grid: CardState[][], hearts: number, swords: number) {
         this.gridSize = gridSize;
         this.grid = grid;
+        this.hearts = hearts;
+        this.swords = swords;
     }
 
     public getGridSize(): number {
@@ -19,6 +23,14 @@ export class GridState {
         return this.grid;
     }
 
+    public getHearts(): number {
+        return this.hearts;
+    }
+
+    public getSwords(): number {
+        return this.swords;
+    }
+
     public toSaveState(): SaveDataGrid {
         const saveGridState: SaveCellData[][] = Stream.ofValues(...this.grid)
             .map(row => Stream.ofValues(...row)
@@ -26,7 +38,9 @@ export class GridState {
                 .toArray())
             .toArray();
         return {
-            gridSize: this.gridSize,
+            hearts: this.getHearts(),
+            swords: this.getSwords(),
+            gridSize: this.getGridSize(),
             grid: saveGridState,
         };
     }
@@ -37,7 +51,7 @@ export class GridState {
                 .map(cardState => CardState.fromSaveState(cardState))
                 .toArray())
             .toArray();
-        return new GridState(save.gridSize, saveGridState);
+        return new GridState(save.gridSize, saveGridState, save.hearts, save.swords);
     }
 }
 

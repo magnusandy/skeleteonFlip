@@ -2,7 +2,7 @@ import { NumberCoordinator } from "./numberCoordinator";
 import { Card, CardType } from "../actors/card/card";
 import { CardCallbackProvider } from "../actors/card/cardCallbackProvider"
 import { Config, Resources } from "../resources";
-import { Stream } from "java8script";
+import { Stream, Optional } from "java8script";
 import { GridCoordinator } from "./gridCoordinator";
 import * as ex from "excalibur";
 import { Vector, Actor, Scene } from "excalibur";
@@ -11,6 +11,7 @@ import Count from "../actors/card/count";
 import ProgressionManager from "../engine/progression/progressionManager";
 import SizingManager from "../engine/sizingManager";
 import PlayerSettingsManager from "../engine/progression/playerSettingsManager";
+import { GridState } from "../engine/progression/gridState";
 
 //this class will handle the building and coordinating of data between the game cards and other UI pieces
 export class GameCoordinator implements CardCallbackProvider {
@@ -34,11 +35,12 @@ export class GameCoordinator implements CardCallbackProvider {
 
     public resetGame(shouldCreateFresh: boolean): void {
         const mm: SizingManager = SizingManager.get();
-        this.healthCoordinator = NumberCoordinator.create(mm.getUIItemSize() / 2, mm.getUIItemSize() / 2, Config.maxHealth, () => { }, Resources.uiHeart, Config.maxHealth);
-        this.attackCoordinator = NumberCoordinator.create(mm.getUIItemSize() / 2, mm.getUIItemSize() * 1.5, Config.maxAttack, () => { }, Resources.uiSword);
+        const saveState: Optional<GridState> = PlayerSettingsManager.get().getGridState();
+        this.healthCoordinator = NumberCoordinator.create(mm.getUIItemSize() / 2, mm.getUIItemSize() / 2, Config.maxHealth, () => { }, Resources.uiHeart, saveState.map(s => s.getHearts()).orElse(Config.maxHealth));
+        this.attackCoordinator = NumberCoordinator.create(mm.getUIItemSize() / 2, mm.getUIItemSize() * 1.5, Config.maxAttack, () => { }, Resources.uiSword, saveState.map(s => s.getSwords()).orElse(0));
         this.gridCoordinator = shouldCreateFresh
             ? GridCoordinator.createNewGrid(this, ProgressionManager.get().getGameGridSize(), this.engine)
-            : GridCoordinator.createGrid(this, ProgressionManager.get().getGameGridSize(), this.engine);
+            : GridCoordinator.createGrid(this, ProgressionManager.get().getGameGridSize(), saveState, this.engine);
         this.rowCounts = this.createRowCountCards();
         this.columnCounts = this.createColCountCards();
     }
@@ -116,10 +118,13 @@ export class GameCoordinator implements CardCallbackProvider {
         if (this.healthCoordinator.getCurrent() === 0) {
             this.engine.goToScene(Scenes.GAME_OVER);
             ProgressionManager.get().resetProgress();
+            PlayerSettingsManager.get().saveGridState();
             this.resetGame(true);
         } else if (allFlipped && this.healthCoordinator.getCurrent() > 0) {
             this.engine.goToScene(Scenes.VICTORY);
             ProgressionManager.get().progress();
+            PlayerSettingsManager.get().saveGridState();
+
             this.resetGame(true);
         }
     }
@@ -131,24 +136,34 @@ export class GameCoordinator implements CardCallbackProvider {
             this.healthCoordinator.subtract(1);
         }
         this.updateLabels();
-        this.gridCoordinator.saveCurrentGrid();
+        this.saveGridProgress();
         this.checkIfCompleteGame();
     }
 
     public coinCardCallback = (): void => {
-        this.gridCoordinator.saveCurrentGrid();
+        this.saveGridProgress();
         this.checkIfCompleteGame();
     }
 
     public attackCardCallback = (): void => {
         this.attackCoordinator.add(1);
-        this.gridCoordinator.saveCurrentGrid();
+        this.saveGridProgress();
         this.checkIfCompleteGame();
     }
 
     public potionCardCallback = (): void => {
         this.healthCoordinator.add(1);
-        this.gridCoordinator.saveCurrentGrid();
+        this.saveGridProgress();
         this.checkIfCompleteGame();
+    }
+
+    private saveGridProgress(): void {
+        const grid = this.gridCoordinator.currentGridState();
+        PlayerSettingsManager.get().saveGridState(new GridState(
+            grid.gridSize,
+            grid.cardState,
+            this.healthCoordinator.getCurrent(),
+            this.attackCoordinator.getCurrent(),
+        ));
     }
 }

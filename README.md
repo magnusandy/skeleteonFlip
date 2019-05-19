@@ -48,7 +48,6 @@ Misc:
     - decide how to deal with what happens to current progression if difficulty changes
     - 350/675
     - redraw if resize
-    - refactor the scenes to initialize actions on initialize not activate
     - maybe when you clear a row/col it disappears
     - unlimited mode, clearing a row or column will delete and add a new on the end
     - al bhed mode
