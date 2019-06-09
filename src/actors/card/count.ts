@@ -3,7 +3,7 @@ import { Resources, Config } from '../../resources';
 import { Card } from './card';
 import { Vector } from 'excalibur';
 import ProgressionManager from '../../engine/progression/progressionManager';
-import SizingManager from '../../engine/sizingManager';
+import SizingManager from '../../engine/managers/sizingManager';
 
 type CountType = 'col' | 'row';
 
@@ -18,7 +18,7 @@ export default class Count extends ex.Actor {
         this.type = type;
         this.index = index;
         this.screenCenter = screenCenter;
-        const dims = Card.calcCardDimensions(screenCenter.y*2, screenCenter.x*2)
+        const dims = Card.calcCardDimensions(screenCenter.y * 2, screenCenter.x * 2)
 
         this.addDrawing("0", Count.sprite(Resources[0], dims.scale));
         this.addDrawing("1", Count.sprite(Resources[1], dims.scale));
@@ -41,27 +41,27 @@ export default class Count extends ex.Actor {
         const leftSide = center.x
             - ((ProgressionManager.get().getGameGridSize() / 2) * cardWidth)
             - cardWidth
-            - ((ProgressionManager.get().getGameGridSize()+1) * Config.gridPadding) / 2;
+            - ((ProgressionManager.get().getGameGridSize() + 1) * Config.gridPadding) / 2;
 
         if (type === "row") {
             return leftSide;
         } else {
-            return leftSide + cardWidth + (cardWidth * index) + (Config.gridPadding * (index+1));
+            return leftSide + cardWidth + (cardWidth * index) + (Config.gridPadding * (index + 1));
         }
     }
 
     private static calcY(type: CountType, index: number, center: ex.Vector, cardHeight: number): number {
         const top = center.y
             + SizingManager.get().getMenuHeight() / 2
-            - ((ProgressionManager.get().getGameGridSize()/2)* cardHeight)
+            - ((ProgressionManager.get().getGameGridSize() / 2) * cardHeight)
             - cardHeight
-            - ((ProgressionManager.get().getGameGridSize()+1) * Config.gridPadding)/2;
+            - ((ProgressionManager.get().getGameGridSize() + 1) * Config.gridPadding) / 2;
 
-            if(type === "col") {
-                return top;
-            } else {
-                return top + cardHeight + (cardHeight * index) + (Config.gridPadding * (index + 1))
-            }
+        if (type === "col") {
+            return top;
+        } else {
+            return top + cardHeight + (cardHeight * index) + (Config.gridPadding * (index + 1))
+        }
     }
 
     private static sprite(texture: ex.Texture, scale: Vector): ex.Sprite {

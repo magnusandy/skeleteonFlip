@@ -5,5 +5,5 @@ export interface CardCallbackProvider {
     coinCardCallback: Supplier<void>;
     potionCardCallback: Supplier<void>;
     attackCardCallback: Supplier<void>;
-    
+
 }

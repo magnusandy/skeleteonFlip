@@ -2,7 +2,7 @@ import { Sprite, Actor, Vector, SpriteFont } from "excalibur";
 import { Resources } from "../../resources";
 import { Darken } from "excalibur/dist/Drawing/SpriteEffects";
 import { Supplier, Function, Optional, Consumer } from "java8script";
-import SoundManager from "../../engine/soundManager";
+import SoundManager from "../../engine/managers/soundManager";
 
 export default class RadioButton extends Actor {
     private checked: boolean;

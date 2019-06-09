@@ -1,13 +1,12 @@
 import { Texture } from "excalibur";
 import { Supplier, Stream } from "java8script";
 import StatTracker from "../actors/bars/statTracker";
-import SizingManager from "../engine/sizingManager";
+import SizingManager from "../engine/managers/sizingManager";
 
 export class NumberCoordinator {
     private max: number;
     private current: number;
     private onZero: Supplier<void>;
-
     private statActors: StatTracker[];
 
     private constructor(max, current, onZeroCallback: Supplier<void>, statActors: StatTracker[]) {
@@ -17,18 +16,18 @@ export class NumberCoordinator {
         this.statActors = statActors;
     }
 
-    public static create(x, y, max:number, onZeroCallback: Supplier<void>, texture: Texture, current?: number): NumberCoordinator {
+    public static create(x, y, max: number, onZeroCallback: Supplier<void>, texture: Texture, current?: number): NumberCoordinator {
         const defaultedCurrent: number = current ? current : 0;
         const statActors = Stream.range(0, max)
-                            .map(idx => {
-                                if(idx > (defaultedCurrent - 1)) {
-                                    return new StatTracker(false, x + (idx * SizingManager.get().getUIItemSize()), y, texture);
-                                } else {
-                                    return new StatTracker(true, x + (idx * SizingManager.get().getUIItemSize()), y, texture);
-                                }
-                            })
-                            .toArray();
-    
+            .map(idx => {
+                if (idx > (defaultedCurrent - 1)) {
+                    return new StatTracker(false, x + (idx * SizingManager.get().getUIItemSize()), y, texture);
+                } else {
+                    return new StatTracker(true, x + (idx * SizingManager.get().getUIItemSize()), y, texture);
+                }
+            })
+            .toArray();
+
         return new NumberCoordinator(
             max,
             defaultedCurrent,
@@ -40,18 +39,18 @@ export class NumberCoordinator {
     //adds value to the current, respecting the maximum.
     //returns the current value after the update
     public add(value: number): number {
-        if((this.current + value) > this.max) {
+        if ((this.current + value) > this.max) {
             this.current = this.max;
         } else {
             this.current = this.current + value;
         }
-       this.statActors[this.current - 1].setEnabled(true);
+        this.statActors[this.current - 1].setEnabled(true);
         return this.current;
     }
 
     //subtracts the value from the current, respecting 0 as the lower bound.
     public subtract(value: number): number {
-        if(this.current - value <= 0) {
+        if (this.current - value <= 0) {
             this.current = 0;
             this.onZero();
         } else {
@@ -69,4 +68,4 @@ export class NumberCoordinator {
     public getStatActors(): StatTracker[] {
         return this.statActors;
     }
- }
+}

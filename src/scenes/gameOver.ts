@@ -1,13 +1,13 @@
 import * as ex from 'excalibur';
 import { Resources, Config } from '../resources';
 import { Scenes } from './scenes';
-import SoundManager from '../engine/soundManager';
+import SoundManager from '../engine/managers/soundManager';
 import { Engine } from 'excalibur';
 import ProgressionManager from '../engine/progression/progressionManager';
 import { calcDimensionsSingleObject, safePointerUp, calcDimensionsSingleObjectTexture } from '../engine/helpers';
-import BackgroundManager from '../engine/backgroundManager';
+import BackgroundManager from '../engine/managers/backgroundManager';
 import ButtonBase from '../actors/bars/buttonBase';
-import SizingManager, { IButtonSizing } from '../engine/sizingManager';
+import SizingManager, { IButtonSizing } from '../engine/managers/sizingManager';
 
 export class GameOver extends ex.Scene {
 

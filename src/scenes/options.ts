@@ -4,7 +4,7 @@ import { Actor, Engine } from 'excalibur';
 import NumberSelector from '../actors/bars/numberSelector';
 import ProgressionManager from '../engine/progression/progressionManager';
 import LabeledRadio from '../actors/bars/labeledRadio';
-import SizingManager from '../engine/sizingManager';
+import SizingManager from '../engine/managers/sizingManager';
 import { calcDimensionsSingleObjectTexture } from '../engine/helpers';
 import { Consumer } from 'java8script';
 import PlayerSettingsManager from '../engine/progression/playerSettingsManager';

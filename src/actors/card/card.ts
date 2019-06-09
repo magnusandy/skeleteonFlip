@@ -3,10 +3,10 @@ import { Config, Resources } from '../../resources';
 import { Supplier } from 'java8script'
 import { Vector, Sprite } from 'excalibur';
 import { Darken } from 'excalibur/dist/Drawing/SpriteEffects';
-import SoundManager from '../../engine/soundManager';
+import SoundManager from '../../engine/managers/soundManager';
 import ProgressionManager from '../../engine/progression/progressionManager';
 import { IDimensions } from '../../engine/helpers';
-import SizingManager from '../../engine/sizingManager';
+import SizingManager from '../../engine/managers/sizingManager';
 import { CardCallbackProvider } from './cardCallbackProvider';
 
 export enum CardType {
@@ -70,7 +70,7 @@ export class Card extends ex.Actor implements ICard {
 
     private static calcY(cardHeight: number, row: number, center: ex.Vector) {
         const top = center.y // center of screen
-            + (SizingManager.get().getMenuHeight()/2) //adjust for menu size
+            + (SizingManager.get().getMenuHeight() / 2) //adjust for menu size
             - ((ProgressionManager.get().getGameGridSize() / 2) * cardHeight)
             - ((ProgressionManager.get().getGameGridSize() - 1) * Config.gridPadding) / 2;
 
@@ -178,18 +178,18 @@ export class Card extends ex.Actor implements ICard {
         return new Card(screenCenter, col, row, onClick, ex.Color.Yellow, CardType.COIN, Resources.coin);
     }
 
-    public static create(screenCenter: ex.Vector, row: number, col: number, callbackProvider: CardCallbackProvider, type: CardType, flipped:boolean): Card {
+    public static create(screenCenter: ex.Vector, row: number, col: number, callbackProvider: CardCallbackProvider, type: CardType, flipped: boolean): Card {
         let card: Card;
         if (type === CardType.SKELETON) {
-            card = Card.skeleton(screenCenter, row, col, callbackProvider.skeletonCardCallback);    
+            card = Card.skeleton(screenCenter, row, col, callbackProvider.skeletonCardCallback);
         } else if (type === CardType.ATTACK) {
-            card = Card.attack(screenCenter, row, col, callbackProvider.attackCardCallback);    
+            card = Card.attack(screenCenter, row, col, callbackProvider.attackCardCallback);
         } else if (type === CardType.COIN) {
-            card = Card.coin(screenCenter, row, col, callbackProvider.coinCardCallback);    
+            card = Card.coin(screenCenter, row, col, callbackProvider.coinCardCallback);
         } else if (type === CardType.POTION) {
-            card = Card.potion(screenCenter, row, col, callbackProvider.potionCardCallback);    
+            card = Card.potion(screenCenter, row, col, callbackProvider.potionCardCallback);
         }
-        
+
         if (flipped) {
             card.silentSetFlipped();
         }

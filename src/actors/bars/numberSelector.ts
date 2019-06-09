@@ -1,7 +1,7 @@
 import { Actor, Label, Vector, TextAlign, BaseAlign, Color, Sprite } from "excalibur";
 import { Resources, Config } from "../../resources";
 import ButtonBase from "./buttonBase";
-import FontManager from "../../engine/fontManager";
+import FontManager from "../../engine/managers/fontManager";
 import { Colorize } from "excalibur/dist/Drawing/SpriteEffects";
 import { Stream } from "java8script";
 

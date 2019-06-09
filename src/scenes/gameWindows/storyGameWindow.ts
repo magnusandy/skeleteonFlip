@@ -1,7 +1,7 @@
 import * as ex from 'excalibur';
 import LevelDisplay from '../../actors/bars/level';
 import ProgressionManager from '../../engine/progression/progressionManager';
-import SizingManager from '../../engine/sizingManager';
+import SizingManager from '../../engine/managers/sizingManager';
 import { GameWindowBase } from './gameWindowBase';
 
 export class StoryGameWindow extends GameWindowBase {

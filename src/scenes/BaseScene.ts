@@ -1,5 +1,5 @@
 import { Scene, Engine, Axis, Texture } from "excalibur";
-import BackgroundManager from "../engine/backgroundManager";
+import BackgroundManager from "../engine/managers/backgroundManager";
 import { Config } from "../resources";
 import ScrollBar from "../actors/bars/scrollBar";
 import { IDimensions } from "../engine/helpers";

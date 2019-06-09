@@ -6,7 +6,7 @@ import ButtonBase from '../actors/bars/buttonBase';
 import { calcDimensionsSingleObjectTexture, IDimensions } from '../engine/helpers';
 import { ExitButton } from '../actors/bars/exitButton';
 import { ModalRenderer } from '../modal/modal';
-import SizingManager from '../engine/sizingManager';
+import SizingManager from '../engine/managers/sizingManager';
 import BaseScene from './BaseScene';
 
 export class Help extends BaseScene {

@@ -2,8 +2,8 @@ import { Actor } from 'excalibur';
 import { Resources, Config } from '../resources';
 import { Scenes, getGameWindow } from './scenes';
 import { calcDimensionsSingleObjectTexture } from '../engine/helpers';
-import SoundManager from '../engine/soundManager';
-import SizingManager, { IButtonSizing } from '../engine/sizingManager';
+import SoundManager from '../engine/managers/soundManager';
+import SizingManager, { IButtonSizing } from '../engine/managers/sizingManager';
 import BaseScene from './BaseScene';
 
 export class MainMenu extends BaseScene {

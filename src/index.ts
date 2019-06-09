@@ -1,13 +1,13 @@
 import { Resources } from './resources';
 import { Scenes } from './scenes/scenes';
 import { MainMenu } from './scenes/mainMenu';
-import Game from './engine/game';
-import { GameLoader } from './engine/gameLoader';
+import Game from './engine/game/Game';
+import { GameLoader } from './engine/game/GameLoader';
 import { GameOver } from './scenes/gameOver';
 import { Victory } from './scenes/victory';
 import { Options } from './scenes/options';
 import { Help } from './scenes/help';
-import SizingManager from './engine/sizingManager';
+import SizingManager from './engine/managers/sizingManager';
 import PlayerSettingsManager from './engine/progression/playerSettingsManager';
 import { StoryGameWindow } from './scenes/gameWindows/storyGameWindow';
 import { GridGameWindow } from './scenes/gameWindows/gridGameWindow';

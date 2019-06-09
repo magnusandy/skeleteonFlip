@@ -1,7 +1,7 @@
 import { Actor, Sprite, EventTypes } from "excalibur";
 import { Supplier } from "java8script";
 import { Darken } from "excalibur/dist/Drawing/SpriteEffects";
-import SoundManager from "../../engine/soundManager";
+import SoundManager from "../../engine/managers/soundManager";
 import { Resources } from "../../resources";
 import { safePointerUp } from "../../engine/helpers";
 

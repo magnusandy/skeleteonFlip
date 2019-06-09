@@ -1,5 +1,5 @@
 import { Label, BaseAlign, TextAlign } from "excalibur";
-import FontManager from "../../engine/fontManager";
+import FontManager from "../../engine/managers/fontManager";
 import ProgressionManager from "../../engine/progression/progressionManager";
 
 export default class LevelDisplay extends Label {

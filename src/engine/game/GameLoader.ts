@@ -1,8 +1,8 @@
-import * as ex from 'excalibur';
-import { Config } from '../resources';
-const logoImg = require('../images/title.png');
+import { Config } from '../../resources';
+import { Loader } from 'excalibur';
+const logoImg = require('../../images/title.png');
 
-export class GameLoader extends ex.Loader {
+export class GameLoader extends Loader {
 
     public constructor() {
         super();

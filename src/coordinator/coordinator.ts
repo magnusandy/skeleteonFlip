@@ -4,18 +4,18 @@ import { CardCallbackProvider } from "../actors/card/cardCallbackProvider"
 import { Config, Resources } from "../resources";
 import { Stream, Optional } from "java8script";
 import { GridCoordinator } from "./gridCoordinator";
-import * as ex from "excalibur";
-import { Vector, Actor, Scene } from "excalibur";
+import { Vector, Actor } from "excalibur";
 import { Scenes } from "../scenes/scenes";
 import Count from "../actors/card/count";
 import ProgressionManager from "../engine/progression/progressionManager";
-import SizingManager from "../engine/sizingManager";
+import SizingManager from "../engine/managers/sizingManager";
 import PlayerSettingsManager from "../engine/progression/playerSettingsManager";
 import { GridState } from "../engine/progression/gridState";
 
 //this class will handle the building and coordinating of data between the game cards and other UI pieces
 export class GameCoordinator implements CardCallbackProvider {
     private engine: ex.Engine;
+
     private healthCoordinator: NumberCoordinator;
     private attackCoordinator: NumberCoordinator;
     private gridCoordinator: GridCoordinator;

@@ -1,6 +1,6 @@
 import { Sound } from "excalibur";
-import { Resources } from "../resources";
-import PlayerSettingsManager from "./progression/playerSettingsManager";
+import { Resources } from "../../resources";
+import PlayerSettingsManager from "../progression/playerSettingsManager";
 
 export default class SoundManager {
     private static soundManager: SoundManager;

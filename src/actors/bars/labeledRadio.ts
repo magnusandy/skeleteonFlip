@@ -1,6 +1,6 @@
 import RadioButton from "./radioButton";
 import { Label, Actor, BaseAlign, TextAlign, Engine } from "excalibur";
-import FontManager from "../../engine/fontManager";
+import FontManager from "../../engine/managers/fontManager";
 
 export default class LabeledRadio {
 

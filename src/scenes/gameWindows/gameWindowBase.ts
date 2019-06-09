@@ -1,6 +1,6 @@
 import { GameCoordinator } from '../../coordinator/coordinator';
-import SoundManager from '../../engine/soundManager';
-import BackgroundManager from '../../engine/backgroundManager';
+import SoundManager from '../../engine/managers/soundManager';
+import BackgroundManager from '../../engine/managers/backgroundManager';
 import { Engine, Scene } from 'excalibur';
 import { Scenes } from '../scenes';
 import { ExitButton } from '../../actors/bars/exitButton';

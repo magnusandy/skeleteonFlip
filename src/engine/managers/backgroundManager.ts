@@ -1,5 +1,5 @@
 import { TileMap, SpriteSheet, TileSprite, Engine } from "excalibur";
-import { Resources } from "../resources";
+import { Resources } from "../../resources";
 
 export default class BackgroundManager {
 
