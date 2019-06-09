@@ -43,8 +43,8 @@ Second Iteration (upgrades):
     - one fix might need changes to excaliburjs, AudioContextFactory needs to use new window.webkitAudioContext, it past that there might be some problems with pointer events.
 
 Misc:
+    - menu and next buttons on victory/game over page aren't fully clickable
     - don't love the current menu setup, needs to be more centered
-    - game state is persisted, now need to persist current health and swords
     - decide how to deal with what happens to current progression if difficulty changes
     - 350/675
     - redraw if resize

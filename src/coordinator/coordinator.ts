@@ -40,7 +40,7 @@ export class GameCoordinator implements CardCallbackProvider {
         this.attackCoordinator = NumberCoordinator.create(mm.getUIItemSize() / 2, mm.getUIItemSize() * 1.5, Config.maxAttack, () => { }, Resources.uiSword, saveState.map(s => s.getSwords()).orElse(0));
         this.gridCoordinator = shouldCreateFresh
             ? GridCoordinator.createNewGrid(this, ProgressionManager.get().getGameGridSize(), this.engine)
-            : GridCoordinator.createGrid(this, ProgressionManager.get().getGameGridSize(), saveState, this.engine);
+            : GridCoordinator.createGridFromState(this, ProgressionManager.get().getGameGridSize(), saveState, this.engine);
         this.rowCounts = this.createRowCountCards();
         this.columnCounts = this.createColCountCards();
     }
@@ -124,7 +124,6 @@ export class GameCoordinator implements CardCallbackProvider {
             this.engine.goToScene(Scenes.VICTORY);
             ProgressionManager.get().progress();
             PlayerSettingsManager.get().saveGridState();
-
             this.resetGame(true);
         }
     }
