@@ -31,18 +31,20 @@ Second Iteration (upgrades):
     - upgrade to get more base hearts/swords
     - upgrade to higher difficulties
     - upgrade for higher grid sizes
-    - upgrade sword kills give a coin
+    - upgrade skeletons to drop coins (0, 1,2,3,etc)
+    - upgrade sword kills give a coin (seperate from above)
+    - upgrade drinking potions at max health will give money
     - upgrade to switch grid counts between card types
     - upgrade level bonus
     - upgrade toggle to maintain health across levels
     - upgrade maintain swords across levels ( advanced level for always keeping at least the base)
 
-    - extra lives to protect from game over
     - button to clear saves
     - safari (and maybe IOS support) is real bad and by that I mean it doesnt work. audio contexts are broken.
     - one fix might need changes to excaliburjs, AudioContextFactory needs to use new window.webkitAudioContext, it past that there might be some problems with pointer events.
 
 Misc:
+    - should you be able to get coins in practice? 
     - menu and next buttons on victory/game over page aren't fully clickable
     - don't love the current menu setup, needs to be more centered
     - decide how to deal with what happens to current progression if difficulty changes

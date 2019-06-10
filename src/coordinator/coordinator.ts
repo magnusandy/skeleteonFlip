@@ -11,6 +11,7 @@ import ProgressionManager from "../engine/progression/progressionManager";
 import SizingManager from "../engine/managers/sizingManager";
 import PlayerSettingsManager from "../engine/progression/playerSettingsManager";
 import { GridState } from "../engine/progression/gridState";
+import CoinCount from "../actors/bars/coinCount";
 
 //this class will handle the building and coordinating of data between the game cards and other UI pieces
 export class GameCoordinator implements CardCallbackProvider {
@@ -18,6 +19,7 @@ export class GameCoordinator implements CardCallbackProvider {
 
     private healthCoordinator: NumberCoordinator;
     private attackCoordinator: NumberCoordinator;
+    private coinCount: CoinCount;
     private gridCoordinator: GridCoordinator;
 
     private rowCounts: Count[];
@@ -38,6 +40,8 @@ export class GameCoordinator implements CardCallbackProvider {
         const saveState: Optional<GridState> = PlayerSettingsManager.get().getGridState();
         this.healthCoordinator = NumberCoordinator.create(mm.getUIItemSize() / 2, mm.getUIItemSize() / 2, Config.maxHealth, () => { }, Resources.uiHeart, saveState.map(s => s.getHearts()).orElse(Config.maxHealth));
         this.attackCoordinator = NumberCoordinator.create(mm.getUIItemSize() / 2, mm.getUIItemSize() * 1.5, Config.maxAttack, () => { }, Resources.uiSword, saveState.map(s => s.getSwords()).orElse(0));
+        this.coinCount = CoinCount.create(mm.getUIItemSize() / 2, mm.getUIItemSize() * 2.5, saveState.map(gs => gs.getCoins()).orElse(0));
+
         this.gridCoordinator = shouldCreateFresh
             ? GridCoordinator.createNewGrid(this, ProgressionManager.get().getGameGridSize(), this.engine)
             : GridCoordinator.createGridFromState(this, ProgressionManager.get().getGameGridSize(), saveState, this.engine);
@@ -97,7 +101,8 @@ export class GameCoordinator implements CardCallbackProvider {
             this.gridCoordinator.getGridAsList(),
             this.getColCountCards(),
             this.getRowCountCards(),
-            this.getStatTrackers()
+            this.getStatTrackers(),
+            ProgressionManager.get().isProgressionDisabled() ? [] : this.coinCount.drawables(),
         ).flatMap(a => Stream.ofValues(...a))
             .toArray();
     }
@@ -116,16 +121,30 @@ export class GameCoordinator implements CardCallbackProvider {
         const allFlipped = Stream.of(this.getGridAsList())
             .allMatch(card => card.isFlipped());
         if (this.healthCoordinator.getCurrent() === 0) {
-            this.engine.goToScene(Scenes.GAME_OVER);
-            ProgressionManager.get().resetProgress();
-            PlayerSettingsManager.get().saveGridState();
-            this.resetGame(true);
+            this.gameOver();
         } else if (allFlipped && this.healthCoordinator.getCurrent() > 0) {
-            this.engine.goToScene(Scenes.VICTORY);
-            ProgressionManager.get().progress();
-            PlayerSettingsManager.get().saveGridState();
-            this.resetGame(true);
+            this.victory();
         }
+    }
+
+    private gameOver(): void {
+        this.engine.goToScene(Scenes.GAME_OVER);
+        ProgressionManager.get().resetProgress();
+        PlayerSettingsManager.get().saveGridState();
+        this.resetGame(true);
+    }
+
+    private victory(): void {
+        const psm = PlayerSettingsManager.get();
+        const progman = ProgressionManager.get();
+        this.engine.goToScene(Scenes.VICTORY);
+        progman.progress();
+        psm.saveGridState();
+        if (!progman.isProgressionDisabled()) {
+            //don't want to add coin to total in practice mode
+            psm.setTotalCoins(psm.getTotalCoins() + this.coinCount.getCoinCount());
+        }
+        this.resetGame(true);
     }
 
     public skeletonCardCallback = (): void => {
@@ -140,6 +159,7 @@ export class GameCoordinator implements CardCallbackProvider {
     }
 
     public coinCardCallback = (): void => {
+        this.coinCount.addToCoinCount(1);
         this.saveGridProgress();
         this.checkIfCompleteGame();
     }
@@ -163,6 +183,7 @@ export class GameCoordinator implements CardCallbackProvider {
             grid.cardState,
             this.healthCoordinator.getCurrent(),
             this.attackCoordinator.getCurrent(),
+            this.coinCount.getCoinCount(),
         ));
     }
 }

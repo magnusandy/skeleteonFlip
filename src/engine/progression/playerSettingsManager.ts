@@ -19,13 +19,15 @@ interface SaveDataV1 {
     currentStage: number;
     storyGrid?: SaveDataGrid;
     practiceGrid?: SaveDataGrid;
+    totalCoins: number;
 }
 
 export interface SaveDataGrid {
     hearts: number;
     swords: number;
+    coins: number;
     gridSize: number;
-    grid: SaveCellData[][]; 
+    grid: SaveCellData[][];
 };
 
 export interface SaveCellData {
@@ -37,7 +39,9 @@ export interface SaveCellData {
 export default class PlayerSettingsManager {
     private static STORE_KEY = 'player_settings_v1';
     public static singleton: PlayerSettingsManager;
-    private static DEFAULT: PlayerSettingsManager = new PlayerSettingsManager(false, false, Difficulty.VERY_EASY, 3, 3, Difficulty.NORMAL, 1, 1, Optional.empty(), Optional.empty());
+    private static DEFAULT: PlayerSettingsManager = new PlayerSettingsManager(false, false, Difficulty.VERY_EASY, 3, 3, Difficulty.NORMAL, 1, 1, Optional.empty(), Optional.empty(), 0);
+
+
     //Settings
     private soundOff: boolean;
     private progressionDisabled: boolean;
@@ -45,19 +49,28 @@ export default class PlayerSettingsManager {
     private chosenGridSize: number;
 
     //Unlocks
-    public readonly maxLevel: number;
-    public readonly maxDifficulty: Difficulty;
+    public readonly maxLevel: number; //unused atm
+    public readonly maxDifficulty: Difficulty; //unused atm
 
     //Progression
+    private totalCoins: number; //total coins collected, outside of current games
     private currentLevel: number;
     private currentStage: number;
     private storyGrid: Optional<GridState>;
     private practiceGrid: Optional<GridState>;
 
 
-    private constructor(toggleSound, progressionDisabled, chosenDiff, chosenGridSize, maxLevel, maxDiff, currentLevel, currentStage,
+    private constructor(toggleSound: boolean,
+        progressionDisabled: boolean,
+        chosenDiff: Difficulty,
+        chosenGridSize: number,
+        maxLevel: number,
+        maxDiff: Difficulty,
+        currentLevel: number,
+        currentStage: number,
         storyGrid: Optional<GridState>,
-        practiceGrid: Optional<GridState>
+        practiceGrid: Optional<GridState>,
+        totalCoins: number,
     ) {
         this.soundOff = toggleSound;
         this.progressionDisabled = progressionDisabled;
@@ -69,6 +82,7 @@ export default class PlayerSettingsManager {
         this.currentStage = currentStage;
         this.storyGrid = storyGrid;
         this.practiceGrid = practiceGrid;
+        this.totalCoins = totalCoins;
     }
 
     public static get(): PlayerSettingsManager {
@@ -98,20 +112,25 @@ export default class PlayerSettingsManager {
             }
         });
     }
-
-    //todo not sure I like this overload scheme
+    /** 
+    * clear grid state
+    */
+    public saveGridState(): void;
+    /** 
+     * clear grid state
+     */    
+    public saveGridState(gridState: GridState);
     public saveGridState(gridState?: GridState): void {
-        if(this.isProgressionDisabled()) {
+        if (this.isProgressionDisabled()) {
             this.practiceGrid = Optional.ofNullable(gridState);
         } else {
             this.storyGrid = Optional.ofNullable(gridState);
         }
-
         this.saveToStorage();
     }
 
     public getGridState(): Optional<GridState> {
-        if(this.isProgressionDisabled()) {
+        if (this.isProgressionDisabled()) {
             return this.practiceGrid;
         } else {
             return this.storyGrid;
@@ -172,6 +191,15 @@ export default class PlayerSettingsManager {
         return this.progressionDisabled;
     }
 
+    public getTotalCoins(): number {
+        return this.totalCoins;
+    }
+
+    public setTotalCoins(newTotal: number): void {
+        this.totalCoins = newTotal;
+        this.saveToStorage();
+    }
+
     private serializeV1(): SaveDataV1 {
         return {
             version: 1,
@@ -184,12 +212,13 @@ export default class PlayerSettingsManager {
             currentLevel: this.currentLevel,
             currentStage: this.currentStage,
             storyGrid: this.storyGrid.map(g => g.toSaveState()).orElse(null),
-            practiceGrid: this.practiceGrid.map(g => g.toSaveState()).orElse(null)
+            practiceGrid: this.practiceGrid.map(g => g.toSaveState()).orElse(null),
+            totalCoins: this.totalCoins,
         }
 
     }
 
-    private static deserializeV1(save: any): PlayerSettingsManager {
+    private static deserializeV1(save: SaveDataV1): PlayerSettingsManager {
         return new PlayerSettingsManager(
             save.soundOff,
             save.progressionDisabled,
@@ -201,6 +230,7 @@ export default class PlayerSettingsManager {
             save.currentStage,
             Optional.ofNullable(save.storyGrid).map(s => GridState.fromSaveState(s)),
             Optional.ofNullable(save.practiceGrid).map(s => GridState.fromSaveState(s)),
+            save.totalCoins
         );
     }
 

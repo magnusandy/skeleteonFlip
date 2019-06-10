@@ -45,7 +45,7 @@ export default class SizingManager {
     }
 
     public getMenuHeight(): number {
-        return this.getUIItemSize() * 3;
+        return this.getUIItemSize() * 4;
     }
 
 }

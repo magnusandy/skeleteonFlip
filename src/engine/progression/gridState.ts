@@ -5,14 +5,16 @@ import { Stream } from "java8script";
 export class GridState {
     private hearts: number;
     private swords: number;
+    private coins: number;
     private gridSize: number;
     private grid: CardState[][];
 
-    constructor(gridSize: number, grid: CardState[][], hearts: number, swords: number) {
+    constructor(gridSize: number, grid: CardState[][], hearts: number, swords: number, coins: number) {
         this.gridSize = gridSize;
         this.grid = grid;
         this.hearts = hearts;
         this.swords = swords;
+        this.coins = coins;
     }
 
     public getGridSize(): number {
@@ -31,6 +33,10 @@ export class GridState {
         return this.swords;
     }
 
+    public getCoins(): number {
+        return this.coins;
+    }
+
     public toSaveState(): SaveDataGrid {
         const saveGridState: SaveCellData[][] = Stream.ofValues(...this.grid)
             .map(row => Stream.ofValues(...row)
@@ -40,6 +46,7 @@ export class GridState {
         return {
             hearts: this.getHearts(),
             swords: this.getSwords(),
+            coins: this.getCoins(),
             gridSize: this.getGridSize(),
             grid: saveGridState,
         };
@@ -51,7 +58,7 @@ export class GridState {
                 .map(cardState => CardState.fromSaveState(cardState))
                 .toArray())
             .toArray();
-        return new GridState(save.gridSize, saveGridState, save.hearts, save.swords);
+        return new GridState(save.gridSize, saveGridState, save.hearts, save.swords, save.coins);
     }
 }
 
