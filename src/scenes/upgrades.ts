@@ -8,24 +8,45 @@ import SizingManager from '../engine/managers/sizingManager';
 import { calcDimensionsSingleObject, calcDimensionsSingleObjectTexture } from '../engine/helpers';
 import { Resources, Config } from '../resources';
 import { ModalRenderer } from '../modal/modal';
+import UpgradeWidget from '../actors/upgrades/upgradeWidget';
 
 export class Upgrades extends BaseScene {
 
   private coinsLabel: Label;
-  private modalRenderer = new ModalRenderer(false);//todo singleton or properly init
-
 
   public onInitialize(engine: Engine) {
     const title = this.title();
-    this.coinsLabel = this.playercoinsLabel(engine.drawWidth / 2, title.getBottom()+Config.optionPadding);
+    this.coinsLabel = this.playercoinsLabel(engine.drawWidth / 2, title.getBottom() + Config.optionPadding);
     const sizing = SizingManager.get().getUIButtonSizing();
-    const dims = calcDimensionsSingleObjectTexture(engine.drawHeight, engine.drawWidth, Resources.introMenu, sizing.padding, sizing.maxScale);
-    const button = this.createButton(dims, engine.drawWidth/2, this.coinsLabel.getBottom() + 100, Resources.introMenu, () => this.modalRenderer.upgradeMaxGridModal(3, 100, ()=> alert("nice")))
+    const dims = calcDimensionsSingleObjectTexture(engine.drawHeight, engine.drawWidth, Resources.gridTile, sizing.padding, sizing.maxScale);
     
+    const gridButton = new UpgradeWidget(
+      engine.drawWidth / 3,
+      this.coinsLabel.getBottom() + 100,
+      dims,
+      Resources.gridTile,
+      "Grid Size",
+      <any>{},//todo
+      () => alert("nice"),
+    );
+
+    const difficulty = new UpgradeWidget(
+      engine.drawWidth / 3,
+      gridButton.getBottom() + Config.optionPadding*2,
+      dims,
+      Resources.difficultyTile,
+      "Difficulty",
+      <any>{},//todo
+      () => alert("diff"),
+    );
+
     this.add(new ExitButton(engine, () => engine.goToScene(Scenes.MAIN_MENU)));
     this.add(title)
     this.add(this.coinsLabel);
-    this.add(button);
+    gridButton.getDrawables()
+    .forEach(d => this.add(d));
+    difficulty.getDrawables()
+    .forEach(d => this.add(d));
 
     this.initScroll(0);
     this.setBackround(engine.drawHeight);

@@ -25,13 +25,13 @@ function calcDimensionsSingleObject(screenHeight: number, screenWidth: number, t
         const scaleToUse = maxScale < scaleByHeight ? maxScale : scaleByHeight;
         return {
             width: textWidth * scaleToUse,
-            height: maxHeight,
+            height: maxHeight * scaleToUse,
             scale: new Vector(scaleToUse, scaleToUse)
         }
     } else {
         const scaleToUse = maxScale < scaleByWidth ? maxScale : scaleByWidth;
         return {
-            width: maxWidth,
+            width: maxWidth * scaleToUse,
             height: textHeight * scaleToUse,
             scale: new Vector(scaleToUse, scaleToUse)
         }

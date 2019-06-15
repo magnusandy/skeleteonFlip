@@ -55,8 +55,16 @@ const styles: Styles = {
 export class ModalRenderer {
 
     private isOpen: boolean;
+    private static singleton;
 
-    constructor(isOpen: boolean) {
+    public static get(): ModalRenderer {
+        if(!this.singleton) {
+            this.singleton = new ModalRenderer(false);
+        }
+        return this.singleton;
+    }
+
+    private constructor(isOpen: boolean) {
         this.isOpen = isOpen;
     }
 

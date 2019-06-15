@@ -11,7 +11,7 @@ import BaseScene from './BaseScene';
 
 export class Help extends BaseScene {
 
-  private modalRenderer: ModalRenderer;
+  private modalRenderer: ModalRenderer = ModalRenderer.get();
 
   public onInitialize(engine: ex.Engine) {
 
@@ -27,8 +27,6 @@ export class Help extends BaseScene {
     title.addDrawing(Resources.helpTitle);
     title.scale = titleDims.scale;
     this.add(title);
-
-    this.modalRenderer = new ModalRenderer(false);
 
     const centerx = engine.drawWidth / 2;
     const sizing = SizingManager.get().getUIButtonSizing();
