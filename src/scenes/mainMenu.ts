@@ -21,12 +21,14 @@ export class MainMenu extends BaseScene {
     const buttonDims = calcDimensionsSingleObjectTexture(engine.drawHeight, engine.drawWidth, Resources.startMenu, padding, maxScale );
 
     const start = this.createButton(buttonDims, centerX,  title.getBottom() + Config.optionPadding + buttonDims.height/2, Resources.startMenu, () => engine.goToScene(getGameWindow()));
-    const options = this.createButton(buttonDims, centerX, start.getBottom() + Config.gridPadding + buttonDims.height/2, Resources.optionMenu, () => engine.goToScene(Scenes.OPTIONS));
+    const upgrades = this.createButton(buttonDims, centerX,  start.getBottom() + Config.gridPadding + buttonDims.height/2, Resources.upgradeMenu, () => engine.goToScene(Scenes.UPGRADES));
+    const options = this.createButton(buttonDims, centerX, upgrades.getBottom() + Config.gridPadding + buttonDims.height/2, Resources.optionMenu, () => engine.goToScene(Scenes.OPTIONS));
     const help = this.createButton(buttonDims, centerX, options.getBottom() + Config.gridPadding+ buttonDims.height/2, Resources.helpMenu, () => engine.goToScene(Scenes.HELP));
     
     this.add(start);
     this.add(options);
     this.add(help);
+    this.add(upgrades)
 
     this.setBackround(help.getBottom());
     this.initScroll(help.getBottom());

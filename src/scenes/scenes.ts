@@ -8,6 +8,7 @@ export enum Scenes {
     VICTORY = "victory",
     OPTIONS = "options",
     HELP = "help",
+    UPGRADES = "upgrades"
 }
 
 export function getGameWindow(): Scenes {

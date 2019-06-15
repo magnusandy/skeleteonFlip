@@ -4,6 +4,7 @@ import ReactModal = require('react-modal');
 import { render } from 'react-dom';
 import { Config } from '../resources';
 import { TextAlignProperty } from 'csstype';
+import { Supplier } from 'java8script';
 const xButton = require('../images/ui/x.png');
 const skullImage = require('../images/skull.png');
 const swordImage = require('../images/sword.png');
@@ -59,8 +60,28 @@ export class ModalRenderer {
         this.isOpen = isOpen;
     }
 
+    public upgradeMaxGridModal(currentMax: number, price: number, onClick: Supplier<void>) {
+        const innerStuff = (<div style={styles.holder}>
+            <h1 style={styles.h1}>Increase Max Grid</h1>
+            <h2 style={styles.h1}>Price to Upgrade: {price}</h2>
+            <h2 style={styles.h1}>Current Max: {currentMax}</h2>
+            <p style={styles.p}>Progress to a harder challenge, increase the max grid size you can reach, both in story mode or set to practice in the options.</p>
+            <div style={styles.h1}>            
+                <button onClick={this.onClickAndClose(onClick)}>BUY</button>
+            </div>
+        </div>);
+        this.setOpenAndRerender(true, innerStuff);
+    }
+
+    private onClickAndClose(onclick: Supplier<void>): Supplier<void> {
+        return () => {
+            onclick();
+            this.setOpenAndRerender(false);
+        }
+    }
+
     public introModal() {
-        const innerStuff = (<div>
+        const innerStuff = (<div >
             <h1 style={styles.h1}>Introduction</h1>
             <p style={styles.p}>Welcome to Skeleton Flip!</p>
             <p style={styles.p}>Flip cards, find coins, drink potions and kill skeletons. The goal of the game is to flip all the cards on the board without running out of hearts.</p>

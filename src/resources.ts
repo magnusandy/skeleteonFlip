@@ -1,49 +1,56 @@
-import * as ex from 'excalibur';
+import { Texture, Sound } from "excalibur";
 
-const sword = require('./images/sword.png');
-const skull = require('./images/skull.png');
-const potion = require('./images/potion.png');
-const coin = require('./images/coin.png');
-const card = require('./images/card.png');
-const startMenu = require('./images/menu/start.png');
-const optionMenu = require('./images/menu/options.png');
-const helpMenu = require('./images/menu/help.png');
-const cardsMenu = require('./images/menu/cards.png');
-const introMenu = require('./images/menu/intro.png');
-const creditsMenu = require('./images/menu/credits.png');
-const playingMenu = require('./images/menu/playing.png');
-const confirmMenu = require('./images/menu/confirm.png');
-const nextMenu = require('./images/menu/next.png');
-const menuMenu = require('./images/menu/menu.png');
+const reqImg = (imgpath: string) => require(`./images/${imgpath}`);
 
-const title = require('./images/title.png');
-const gameOverImg = require('./images/gameOver.png');
-const zero = require('./images/numbers/0.png');
-const one = require('./images/numbers/1.png');
-const two = require('./images/numbers/2.png');
-const three = require('./images/numbers/3.png');
-const four = require('./images/numbers/4.png');
-const five = require('./images/numbers/5.png');
-const six = require('./images/numbers/6.png');
-const seven = require('./images/numbers/7.png');
-const eight = require('./images/numbers/8.png');
-const nine = require('./images/numbers/9.png');
+const sword = reqImg('sword.png');
+const skull = reqImg('skull.png');
+const potion = reqImg('potion.png');
+const coin = reqImg('coin.png');
+const card = reqImg('card.png');
+const startMenu = reqImg('menu/start.png');
+const optionMenu = reqImg('menu/options.png');
+const helpMenu = reqImg('menu/help.png');
+const cardsMenu = reqImg('menu/cards.png');
+const introMenu = reqImg('menu/intro.png');
+const creditsMenu = reqImg('menu/credits.png');
+const playingMenu = reqImg('menu/playing.png');
+const confirmMenu = reqImg('menu/confirm.png');
+const nextMenu = reqImg('menu/next.png');
+const menuMenu = reqImg('menu/menu.png');
+const upgradeMenu = reqImg('menu/upgrade.png');
 
-const uiSword = require('./images/ui/sword.png');
-const uiHeart = require('./images/ui/heart.png');
-const uiCoins = require('./images/ui/coinPile.png');
-const uiLeft = require('./images/ui/left.png');
-const uiRight = require('./images/ui/right.png');
-const uiX = require('./images/ui/x.png');
-const uiBlank = require('./images/ui/blank.png');
-const uiScroll = require('./images/ui/scroll.png');
+const title = reqImg('title.png');
+const gameOverImg = reqImg('GameOver.png');
+const zero = reqImg('numbers/0.png');
+const one = reqImg('numbers/1.png');
+const two = reqImg('numbers/2.png');
+const three = reqImg('numbers/3.png');
+const four = reqImg('numbers/4.png');
+const five = reqImg('numbers/5.png');
+const six = reqImg('numbers/6.png');
+const seven = reqImg('numbers/7.png');
+const eight = reqImg('numbers/8.png');
+const nine = reqImg('numbers/9.png');
 
-const optionTitle = require('./images/optionTitle.png');
-const helpTitle = require('./images/helpTitle.png');
+const uiSword = reqImg('ui/sword.png');
+const uiHeart = reqImg('ui/heart.png');
+const uiCoins = reqImg('ui/coinPile.png');
+const uiLeft = reqImg('ui/left.png');
+const uiRight = reqImg('ui/right.png');
+const uiX = reqImg('ui/x.png');
+const uiBlank = reqImg('ui/blank.png');
+const uiScroll = reqImg('ui/scroll.png');
+
+const optionTitle = reqImg('optionTitle.png');
+const helpTitle = reqImg('helpTitle.png');
+const upgradeTitle = reqImg('upgradesTitle.png');
+
+const gridTile = reqImg('upgrades/grid.png');
+const difficultyTile = reqImg('upgrades/difficulty.png');
 
 const fontMono = require('./fonts/myMono.png');
 
-const victory = require('./images/victory.png');
+const victory = reqImg('victory.png');
 const cardSound = require('./sounds/card.wav');
 const potionSound = require('./sounds/potion.wav');
 const boneSound = require('./sounds/bone.wav');
@@ -54,64 +61,69 @@ const backgroundMusic = require('./sounds/background.wav');
 const victorySound = require('./sounds/victory.mp3');
 const buttonSound = require('./sounds/button.wav');
 
-const backgroundTile = require('./images/background.png');
+const backgroundTile = reqImg('background.png');
 
 const Resources = {
-    victory: new ex.Texture(victory),
-    gameOver: new ex.Texture(gameOverImg),
-    title: new ex.Texture(title),
-    sword: new ex.Texture(sword),
-    skull: new ex.Texture(skull),
-    potion: new ex.Texture(potion),
-    coin: new ex.Texture(coin),
-    card: new ex.Texture(card),
+    victory: new Texture(victory),
+    gameOver: new Texture(gameOverImg),
+    title: new Texture(title),
+    sword: new Texture(sword),
+    skull: new Texture(skull),
+    potion: new Texture(potion),
+    coin: new Texture(coin),
+    card: new Texture(card),
 
-    startMenu: new ex.Texture(startMenu),
-    optionMenu: new ex.Texture(optionMenu), 
-    helpMenu: new ex.Texture(helpMenu),
-    cardMenu: new ex.Texture(cardsMenu),
-    introMenu: new ex.Texture(introMenu),
-    creditsMenu: new ex.Texture(creditsMenu),
-    playingMenu: new ex.Texture(playingMenu),
-    confirmMenu: new ex.Texture(confirmMenu),
-    nextMenu: new ex.Texture(nextMenu),
-    menuMenu: new ex.Texture(menuMenu),
+    startMenu: new Texture(startMenu),
+    optionMenu: new Texture(optionMenu),
+    helpMenu: new Texture(helpMenu),
+    cardMenu: new Texture(cardsMenu),
+    introMenu: new Texture(introMenu),
+    creditsMenu: new Texture(creditsMenu),
+    playingMenu: new Texture(playingMenu),
+    confirmMenu: new Texture(confirmMenu),
+    nextMenu: new Texture(nextMenu),
+    menuMenu: new Texture(menuMenu),
+    upgradeMenu: new Texture(upgradeMenu),
 
-    optionTitle: new ex.Texture(optionTitle),
-    helpTitle: new ex.Texture(helpTitle),
-    backgroundTile: new ex.Texture(backgroundTile),
+    optionTitle: new Texture(optionTitle),
+    helpTitle: new Texture(helpTitle),
+    backgroundTile: new Texture(backgroundTile),
+    upgradeTitle: new Texture(upgradeTitle),
 
-    0: new ex.Texture(zero), 
-    1: new ex.Texture(one), 
-    2: new ex.Texture(two), 
-    3: new ex.Texture(three), 
-    4: new ex.Texture(four), 
-    5: new ex.Texture(five), 
-    6: new ex.Texture(six), 
-    7: new ex.Texture(seven), 
-    8: new ex.Texture(eight), 
-    9: new ex.Texture(nine), 
+    0: new Texture(zero),
+    1: new Texture(one),
+    2: new Texture(two),
+    3: new Texture(three),
+    4: new Texture(four),
+    5: new Texture(five),
+    6: new Texture(six),
+    7: new Texture(seven),
+    8: new Texture(eight),
+    9: new Texture(nine),
 
-    uiSword: new ex.Texture(uiSword),
-    uiHeart: new ex.Texture(uiHeart),
-    uiLeft: new ex.Texture(uiLeft),
-    uiRight: new ex.Texture(uiRight),
-    uiX: new ex.Texture(uiX),
-    uiBlank: new ex.Texture(uiBlank),
-    uiCoins: new ex.Texture(uiCoins),
-    uiScroll: new ex.Texture(uiScroll),
+    uiSword: new Texture(uiSword),
+    uiHeart: new Texture(uiHeart),
+    uiLeft: new Texture(uiLeft),
+    uiRight: new Texture(uiRight),
+    uiX: new Texture(uiX),
+    uiBlank: new Texture(uiBlank),
+    uiCoins: new Texture(uiCoins),
+    uiScroll: new Texture(uiScroll),
 
-    myMono: new ex.Texture(fontMono),
+    gridTile: new Texture(gridTile),
+    difficultyTile: new Texture(difficultyTile),
 
-    cardSound: new ex.Sound(cardSound),
-    boneSound: new ex.Sound(boneSound),
-    coinSound: new ex.Sound(coinSound),
-    laughSound: new ex.Sound(laughSound),
-    potionSound: new ex.Sound(potionSound),
-    swordSound: new ex.Sound(swordSound),
-    victorySound: new ex.Sound(victorySound),
-    buttonSound: new ex.Sound(buttonSound),
-    backgroundMusic: new ex.Sound(backgroundMusic),
+    myMono: new Texture(fontMono),
+
+    cardSound: new Sound(cardSound),
+    boneSound: new Sound(boneSound),
+    coinSound: new Sound(coinSound),
+    laughSound: new Sound(laughSound),
+    potionSound: new Sound(potionSound),
+    swordSound: new Sound(swordSound),
+    victorySound: new Sound(victorySound),
+    buttonSound: new Sound(buttonSound),
+    backgroundMusic: new Sound(backgroundMusic),
 }
 
 const Config = {
@@ -124,4 +136,4 @@ const Config = {
     optionPadding: 30,
 };
 
-export { Resources, Config, uiHeart}
+export { Resources, Config, uiHeart }

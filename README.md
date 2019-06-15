@@ -23,8 +23,7 @@ Todo List:
 First Iteration (basic functionality): 
     - Display names of difficulty in the options  
 Second Iteration (upgrades):
-    - track coins
-    - only get coins on victory
+
     - add a grid size level bonus when you hit your max size in progression
     - level bonus should scale with difficulty
     - upgrade to get more heart/sword storage
@@ -43,6 +42,9 @@ Second Iteration (upgrades):
     - safari (and maybe IOS support) is real bad and by that I mean it doesnt work. audio contexts are broken.
     - one fix might need changes to excaliburjs, AudioContextFactory needs to use new window.webkitAudioContext, it past that there might be some problems with pointer events.
 
+Images:
+    - upgrades main menu button
+    - Upgrades page header
 Misc:
     - should you be able to get coins in practice? 
     - menu and next buttons on victory/game over page aren't fully clickable
