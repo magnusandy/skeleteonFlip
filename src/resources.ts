@@ -1,4 +1,5 @@
 import { Texture, Sound } from "excalibur";
+import  Upgrade from "./actors/upgrades/upgrade";
 
 const reqImg = (imgpath: string) => require(`./images/${imgpath}`);
 
@@ -135,5 +136,34 @@ const Config = {
     uiBigSize: 50,
     optionPadding: 30,
 };
+
+export const Upgrades = {
+    gridSize: Upgrade.create({
+        title: "Grid Size",
+        description: "Unlock bigger grids to increase the challenge. This will allow story mode to go to a higher max level, as well as allow the larger sizes to be chosen for practice.",
+        prices: [
+            {level: 1, price: 10},
+            {level: 2, price: 20},
+            {level: 3, price: 30},
+            {level: 4, price: 40},
+            {level: 5, price: 50},
+            {level: 6, price: 60},
+            {level: 7, price: 70},
+            {level: 8, price: 80},
+            {level: 9, price: 90}
+        ]
+    }),
+    difficulty: Upgrade.create({
+        title: "Difficulty",
+        description: "Things getting routine? Upgrade the difficulty to increase the challenge. Higher difficulties mean less room for error, more skeletons, but more rewards!",
+        prices: [
+            {level: 1, price: 10},
+            {level: 2, price: 20},
+            {level: 3, price: 30},
+            {level: 4, price: 40},
+            {level: 5, price: 50},
+        ]
+    }),
+}
 
 export { Resources, Config, uiHeart }

@@ -23,6 +23,7 @@ Todo List:
 First Iteration (basic functionality): 
     - Display names of difficulty in the options  
 Second Iteration (upgrades):
+    - gonna clear local storage 
 
     - add a grid size level bonus when you hit your max size in progression
     - level bonus should scale with difficulty

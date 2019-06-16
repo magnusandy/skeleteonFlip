@@ -86,7 +86,7 @@ export class Options extends BaseScene {
   }
 
   private addDifficultySize(itemSize): void {
-    this.difficulty = new NumberSelector("DIFFICULTY", 1, 5, ProgressionManager.get().getDifficulty().getDifficultyLevel(), this.engine.drawWidth / 2,
+    this.difficulty = new NumberSelector("DIFFICULTY", 1, PlayerSettingsManager.get().getMaxDiff().getDifficultyLevel(), ProgressionManager.get().getDifficulty().getDifficultyLevel(), this.engine.drawWidth / 2,
       this.sound.getBottom() + itemSize * 0.5 + Config.optionPadding,
       itemSize, false);
     this.difficulty.getDrawables()
@@ -104,7 +104,7 @@ export class Options extends BaseScene {
 
   //returns callback for toggling the objects
   private addGridSize(itemSize): Consumer<boolean> {
-    this.gridSize = new NumberSelector("GRID SIZE", 2, 9, ProgressionManager.get().getOptionGridSize(), this.engine.drawWidth / 2,
+    this.gridSize = new NumberSelector("GRID SIZE", 2, PlayerSettingsManager.get().getMaxGridSize(), ProgressionManager.get().getOptionGridSize(), this.engine.drawWidth / 2,
       this.progressionToggle.getBottom() + itemSize * 0.5 + Config.optionPadding, itemSize,
       !ProgressionManager.get().isProgressionDisabled());
     this.gridSize.getDrawables()
@@ -115,8 +115,8 @@ export class Options extends BaseScene {
 
   public onActivate() {
     this.sound.setChecked(!PlayerSettingsManager.get().isSoundOff());
-    this.gridSize.setCurrent(ProgressionManager.get().getOptionGridSize());
-    this.difficulty.setCurrent(ProgressionManager.get().getDifficulty().getDifficultyLevel());
+    this.gridSize.setCurrent(ProgressionManager.get().getOptionGridSize(), PlayerSettingsManager.get().getMaxGridSize());
+    this.difficulty.setCurrent(ProgressionManager.get().getDifficulty().getDifficultyLevel(), PlayerSettingsManager.get().getMaxDiff().getDifficultyLevel());
     this.progressionToggle.setChecked(!ProgressionManager.get().isProgressionDisabled())
   }
 

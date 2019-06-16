@@ -5,14 +5,16 @@ import BaseScene from './BaseScene';
 import FontManager from '../engine/managers/fontManager';
 import PlayerSettingsManager from '../engine/progression/playerSettingsManager';
 import SizingManager from '../engine/managers/sizingManager';
-import { calcDimensionsSingleObject, calcDimensionsSingleObjectTexture } from '../engine/helpers';
-import { Resources, Config } from '../resources';
-import { ModalRenderer } from '../modal/modal';
+import {calcDimensionsSingleObjectTexture } from '../engine/helpers';
+import { Resources, Config, Upgrades } from '../resources';
 import UpgradeWidget from '../actors/upgrades/upgradeWidget';
+import { Difficulty } from '../engine/progression/difficulty';
 
-export class Upgrades extends BaseScene {
+export class UpgradeScene extends BaseScene {
 
   private coinsLabel: Label;
+  private maxGrid: UpgradeWidget;
+  private maxDiff: UpgradeWidget;
 
   public onInitialize(engine: Engine) {
     const title = this.title();
@@ -20,32 +22,46 @@ export class Upgrades extends BaseScene {
     const sizing = SizingManager.get().getUIButtonSizing();
     const dims = calcDimensionsSingleObjectTexture(engine.drawHeight, engine.drawWidth, Resources.gridTile, sizing.padding, sizing.maxScale);
     
-    const gridButton = new UpgradeWidget(
+    this.maxGrid = new UpgradeWidget(
       engine.drawWidth / 3,
       this.coinsLabel.getBottom() + 100,
       dims,
       Resources.gridTile,
       "Grid Size",
-      <any>{},//todo
-      () => alert("nice"),
+      Upgrades.gridSize.getDetails(PlayerSettingsManager.get().getMaxGridSize()),
+      () => {
+        const ps = PlayerSettingsManager.get();
+        const coins = ps.getTotalCoins();
+        const currentgrid = ps.getMaxGridSize();
+        ps.setTotalCoins(coins - Upgrades.gridSize.getDetails(currentgrid).price);
+        ps.setMaxGridSize(currentgrid+1);
+        this.onActivate(); //refresh
+      },
     );
 
-    const difficulty = new UpgradeWidget(
+    this.maxDiff = new UpgradeWidget(
       engine.drawWidth / 3,
-      gridButton.getBottom() + Config.optionPadding*2,
+      this.maxGrid.getBottom() + Config.optionPadding*2,
       dims,
       Resources.difficultyTile,
       "Difficulty",
-      <any>{},//todo
-      () => alert("diff"),
+      Upgrades.difficulty.getDetails(PlayerSettingsManager.get().getMaxDiff().getDifficultyLevel()),//todo
+      () => {
+        const ps = PlayerSettingsManager.get();
+        const coins = ps.getTotalCoins();
+        const currentDiff = ps.getMaxDiff().getDifficultyLevel();
+        ps.setTotalCoins(coins - Upgrades.difficulty.getDetails(currentDiff).price);
+        ps.setMaxDiff(Difficulty.getByDifficultyLevel(currentDiff+1));
+        this.onActivate(); //refresh
+      },
     );
 
     this.add(new ExitButton(engine, () => engine.goToScene(Scenes.MAIN_MENU)));
     this.add(title)
     this.add(this.coinsLabel);
-    gridButton.getDrawables()
+    this.maxGrid.getDrawables()
     .forEach(d => this.add(d));
-    difficulty.getDrawables()
+    this.maxDiff.getDrawables()
     .forEach(d => this.add(d));
 
     this.initScroll(0);
@@ -79,7 +95,11 @@ export class Upgrades extends BaseScene {
   }
 
   public onActivate() {
+    const psm = PlayerSettingsManager.get();
     this.coinsLabel.text = this.coinsLabelString(PlayerSettingsManager.get().getTotalCoins());
+    this.maxGrid.updateDetails(Upgrades.gridSize.getDetails(psm.getMaxGridSize()));
+    this.maxDiff.updateDetails(Upgrades.difficulty.getDetails(psm.getMaxDiff().getDifficultyLevel()))
+
   }
 
   public onDeactivate() {

@@ -55,7 +55,7 @@ export default class ProgressionManager {
     
             if(currentStage >= ProgressionManager.stagesPerNormalLevel) {
                 //on the last stage of the level, need to find out if we can move on or just move up stages
-                if(currentLevel === PlayerSettingsManager.get().maxLevel) {
+                if(currentLevel === PlayerSettingsManager.get().getMaxGridSize()-2) {
                     // on the max upgraded level just increase stage
                     PlayerSettingsManager.get().setCurrentStage(currentStage + 1);
                 } else {

@@ -95,7 +95,8 @@ export default class NumberSelector {
         return this.current;
     }
 
-    public setCurrent(newCurrent: number): void {
+    public setCurrent(newCurrent: number, max: number): void {
+        this.max = max;
         this.current = newCurrent;
         this.numberLabel.text = `${newCurrent}`;
     }

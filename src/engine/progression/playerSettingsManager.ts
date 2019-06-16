@@ -39,7 +39,7 @@ export interface SaveCellData {
 export default class PlayerSettingsManager {
     private static STORE_KEY = 'player_settings_v1';
     public static singleton: PlayerSettingsManager;
-    private static DEFAULT: PlayerSettingsManager = new PlayerSettingsManager(false, false, Difficulty.VERY_EASY, 3, 3, Difficulty.NORMAL, 1, 1, Optional.empty(), Optional.empty(), 0);
+    private static DEFAULT: PlayerSettingsManager = new PlayerSettingsManager(false, false, Difficulty.VERY_EASY, 3, 5, Difficulty.EASY, 1, 1, Optional.empty(), Optional.empty(), 0);
 
 
     //Settings
@@ -49,8 +49,8 @@ export default class PlayerSettingsManager {
     private chosenGridSize: number;
 
     //Unlocks
-    public readonly maxLevel: number; //unused atm
-    public readonly maxDifficulty: Difficulty; //unused atm
+    private maxGrid: number; 
+    private maxDifficulty: Difficulty;
 
     //Progression
     private totalCoins: number; //total coins collected, outside of current games
@@ -76,7 +76,7 @@ export default class PlayerSettingsManager {
         this.progressionDisabled = progressionDisabled;
         this.chosenDifficulty = chosenDiff;
         this.chosenGridSize = chosenGridSize;
-        this.maxLevel = maxLevel;
+        this.maxGrid = maxLevel;
         this.maxDifficulty = maxDiff;
         this.currentLevel = currentLevel;
         this.currentStage = currentStage;
@@ -200,6 +200,24 @@ export default class PlayerSettingsManager {
         this.saveToStorage();
     }
 
+    public getMaxGridSize(): number {
+        return this.maxGrid;
+    }
+
+    public setMaxGridSize(newVal: number): void {
+        this.maxGrid = newVal;
+        this.saveToStorage();
+    }
+
+    public getMaxDiff(): Difficulty {
+        return this.maxDifficulty;
+    }
+
+    public setMaxDiff(newDiff: Difficulty): void {
+        this.maxDifficulty = newDiff;
+        this.saveToStorage();
+    }
+
     private serializeV1(): SaveDataV1 {
         return {
             version: 1,
@@ -207,7 +225,7 @@ export default class PlayerSettingsManager {
             progressionDisabled: this.progressionDisabled,
             chosenDifficulty: this.chosenDifficulty.getDifficultyLevel(),
             chosenGridSize: this.chosenGridSize,
-            maxLevel: this.maxLevel,
+            maxLevel: this.maxGrid,
             maxDifficulty: this.maxDifficulty.getDifficultyLevel(),
             currentLevel: this.currentLevel,
             currentStage: this.currentStage,
@@ -239,5 +257,9 @@ export default class PlayerSettingsManager {
             PlayerSettingsManager.STORE_KEY,
             this.serializeV1(),
         );
+    }
+
+    public clearStorage() { //todo this is temporary, should build in permenatn button or something
+        localForage.setItem(PlayerSettingsManager.STORE_KEY, null);
     }
 }

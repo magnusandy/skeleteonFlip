@@ -5,6 +5,8 @@ import { render } from 'react-dom';
 import { Config } from '../resources';
 import { TextAlignProperty } from 'csstype';
 import { Supplier } from 'java8script';
+import { UpgradeDetails } from '../actors/upgrades/upgradeWidget';
+import PlayerSettingsManager from '../engine/progression/playerSettingsManager';
 const xButton = require('../images/ui/x.png');
 const skullImage = require('../images/skull.png');
 const swordImage = require('../images/sword.png');
@@ -58,7 +60,7 @@ export class ModalRenderer {
     private static singleton;
 
     public static get(): ModalRenderer {
-        if(!this.singleton) {
+        if (!this.singleton) {
             this.singleton = new ModalRenderer(false);
         }
         return this.singleton;
@@ -68,14 +70,16 @@ export class ModalRenderer {
         this.isOpen = isOpen;
     }
 
-    public upgradeMaxGridModal(currentMax: number, price: number, onClick: Supplier<void>) {
+    public upgradeModal(upgradeDetails: UpgradeDetails, onClick: () => void) {
         const innerStuff = (<div style={styles.holder}>
-            <h1 style={styles.h1}>Increase Max Grid</h1>
-            <h2 style={styles.h1}>Price to Upgrade: {price}</h2>
-            <h2 style={styles.h1}>Current Max: {currentMax}</h2>
-            <p style={styles.p}>Progress to a harder challenge, increase the max grid size you can reach, both in story mode or set to practice in the options.</p>
-            <div style={styles.h1}>            
-                <button onClick={this.onClickAndClose(onClick)}>BUY</button>
+            <h1 style={styles.h1}>{upgradeDetails.title}</h1>
+            <h2 style={styles.h1}>Price to Upgrade: {upgradeDetails.price}</h2>
+            <h2 style={styles.h1}>Current Level: {upgradeDetails.currentLevel}</h2>
+            <p style={styles.p}>{upgradeDetails.description}</p>
+            <div style={styles.h1}>
+                {PlayerSettingsManager.get().getTotalCoins() > upgradeDetails.price
+                    ? <button onClick={this.onClickAndClose(onClick)}>BUY</button>
+                    : <p style={styles.p}>Not Enough Coins</p>}
             </div>
         </div>);
         this.setOpenAndRerender(true, innerStuff);
@@ -144,6 +148,8 @@ export class ModalRenderer {
             <p style={styles.p}>
                 {text}
             </p>
+            <button onClick={() => PlayerSettingsManager.get().clearStorage()/*//todo Remove*/}>Clear Storage [Dev Tool]</button>
+            <button onClick={() => PlayerSettingsManager.get().setTotalCoins(PlayerSettingsManager.get().getTotalCoins()+10)/*//todo Remove*/}>Add 10 coins [Dev Tool]</button>
         </div>);
         this.setOpenAndRerender(true, innerStuff);
     }

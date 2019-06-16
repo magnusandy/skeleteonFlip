@@ -11,7 +11,7 @@ import SizingManager from './engine/managers/sizingManager';
 import PlayerSettingsManager from './engine/progression/playerSettingsManager';
 import { StoryGameWindow } from './scenes/gameWindows/storyGameWindow';
 import { GridGameWindow } from './scenes/gameWindows/gridGameWindow';
-import { Upgrades } from './scenes/upgrades';
+import { UpgradeScene } from './scenes/upgrades';
 
 const game = new Game();
 const mainMenu = new MainMenu(game);
@@ -23,7 +23,7 @@ game.add(Scenes.GRID_GAME_WINDOW, new GridGameWindow(game));
 game.add(Scenes.VICTORY, new Victory(game));
 game.add(Scenes.OPTIONS, options);
 game.add(Scenes.HELP, new Help(game));
-game.add(Scenes.UPGRADES, new Upgrades(game));
+game.add(Scenes.UPGRADES, new UpgradeScene(game));
 
 let loader = new GameLoader();
 Object.keys(Resources)

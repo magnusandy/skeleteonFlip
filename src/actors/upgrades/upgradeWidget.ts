@@ -1,6 +1,6 @@
 import { Actor, Label, Texture, BaseAlign, TextAlign } from "excalibur";
 import ButtonBase from "../bars/buttonBase";
-import { calcDimensionsSingleObjectTexture, IDimensions } from "../../engine/helpers";
+import { IDimensions } from "../../engine/helpers";
 import { ModalRenderer } from "../../modal/modal";
 import { Config } from "../../resources";
 import FontManager from "../../engine/managers/fontManager";
@@ -21,8 +21,9 @@ export default class UpgradeWidget {
     private upgradeDetails: UpgradeDetails;
 
     public constructor(x, y, tileDims: IDimensions, tileTexture: Texture, label: string, details: UpgradeDetails, onClick: () => void) {
-
-        this.tileButton = new ButtonBase(tileTexture, () => ModalRenderer.get().upgradeMaxGridModal(3, 100, onClick));
+        this.upgradeDetails = details;
+        this.purchaseOnClick = onClick;
+        this.tileButton = new ButtonBase(tileTexture, () => this.modalOnClick() );
         this.tileButton.x = x;
         this.tileButton.y = y;
         this.tileButton.scale = tileDims.scale;
@@ -35,6 +36,10 @@ export default class UpgradeWidget {
         this.label.textAlign = TextAlign.Left;
     }
 
+    public modalOnClick() {
+        ModalRenderer.get().upgradeModal(this.upgradeDetails, this.purchaseOnClick)
+    }
+
     public getDrawables(): Actor[] {
         return [
             this.label,
@@ -44,5 +49,9 @@ export default class UpgradeWidget {
 
     public  getBottom(): number {
         return this.tileButton.getBottom();
+    }
+
+    public updateDetails(newDeets: UpgradeDetails): void {
+        this.upgradeDetails = newDeets;
     }
 }
