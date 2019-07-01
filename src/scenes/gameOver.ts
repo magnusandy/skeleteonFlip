@@ -38,11 +38,12 @@ export class GameOver extends ex.Scene {
       Resources.menuMenu, 
       this.onMenu,
     );
+    menuButton.scale = buttonDims.scale;
     menuButton.setHeight(buttonDims.height);
     menuButton.setWidth(buttonDims.width);
-    menuButton.scale = buttonDims.scale;
     menuButton.x = engine.drawWidth/2;
     menuButton.y = engine.drawHeight - offset;
+  
     this.add(menuButton)
   }
 

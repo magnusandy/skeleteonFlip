@@ -155,7 +155,7 @@ export const Upgrades = {
     }),
     difficulty: Upgrade.create({
         title: "Difficulty",
-        description: "Things getting routine? Upgrade the difficulty to increase the challenge. Higher difficulties mean less room for error, more skeletons, but more rewards!",
+        description: "Things getting routine? Upgrade the difficulty to increase the challenge. Higher difficulties mean less room for error, more skeletons, but more rewards! Change the difficulty in the settings.",
         prices: [
             {level: 1, price: 10},
             {level: 2, price: 20},

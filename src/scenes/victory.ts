@@ -1,14 +1,13 @@
-import * as ex from 'excalibur';
 import { Resources, Config } from '../resources';
-import { Scenes, getGameWindow } from './scenes';
+import { getGameWindow } from './scenes';
 import SoundManager from '../engine/managers/soundManager';
-import ProgressionManager from '../engine/progression/progressionManager';
-import {calcDimensionsSingleObjectTexture, safePointerUp } from '../engine/helpers';
+import {calcDimensionsSingleObjectTexture } from '../engine/helpers';
 import BackgroundManager from '../engine/managers/backgroundManager';
 import ButtonBase from '../actors/bars/buttonBase';
 import SizingManager, { IButtonSizing } from '../engine/managers/sizingManager';
+import { Scene, Actor } from 'excalibur';
 
-export class Victory extends ex.Scene {
+export class Victory extends Scene {
 
   private engine;
 
@@ -20,7 +19,7 @@ export class Victory extends ex.Scene {
     const imageDims = calcDimensionsSingleObjectTexture(this.engine.drawHeight, this.engine.drawWidth, Resources.victory, 0.8, 1)
     const offset = buttonDims.height/2 + Config.optionPadding;
 
-    const victoryActor = new ex.Actor(
+    const victoryActor = new Actor(
       this.engine.drawWidth / 2,
       this.engine.drawHeight / 2 - offset,
       imageDims.width,
@@ -34,9 +33,9 @@ export class Victory extends ex.Scene {
       Resources.nextMenu, 
       this.onNext,
     );
+    nextButton.scale = buttonDims.scale;
     nextButton.setHeight(buttonDims.height);
     nextButton.setWidth(buttonDims.width);
-    nextButton.scale = buttonDims.scale;
     nextButton.x = engine.drawWidth/2;
     nextButton.y = engine.drawHeight - offset;
     this.add(nextButton);

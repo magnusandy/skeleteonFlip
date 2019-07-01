@@ -17,6 +17,7 @@ export default class Upgrade {
         this.title = title;
         this.description = description;
         this.currentLevelToPriceMap = currentLevelToPriceMap;
+        this.maxLevel = maxLevel;
     }
 
     public static create(upDesc: UpgradeDescription) {

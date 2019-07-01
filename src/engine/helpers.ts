@@ -20,18 +20,19 @@ function calcDimensionsSingleObject(screenHeight: number, screenWidth: number, t
     const scaleByWidth = maxWidth / textWidth;
 
     if ((scaleByWidth * textHeight) > screenHeight) {
+        console.log("height")
         // using width as the scale base pushes height out of the screen
         const scaleByHeight = maxHeight / textHeight;
         const scaleToUse = maxScale < scaleByHeight ? maxScale : scaleByHeight;
         return {
             width: textWidth * scaleToUse,
-            height: maxHeight * scaleToUse,
+            height: textHeight * scaleToUse,
             scale: new Vector(scaleToUse, scaleToUse)
         }
     } else {
         const scaleToUse = maxScale < scaleByWidth ? maxScale : scaleByWidth;
         return {
-            width: maxWidth * scaleToUse,
+            width: textWidth * scaleToUse,
             height: textHeight * scaleToUse,
             scale: new Vector(scaleToUse, scaleToUse)
         }

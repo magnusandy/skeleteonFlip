@@ -38,6 +38,10 @@ export default class SizingManager {
         return this.isMobile() ? 30 : 50;
     }
 
+    public menuFontSize() {
+        return this.isMobile() ? 22 : 37;
+    }
+
     public getUIButtonSizing(): IButtonSizing {
         return this.isMobile() 
         ? {padding: 0.4, maxScale: 0.3}

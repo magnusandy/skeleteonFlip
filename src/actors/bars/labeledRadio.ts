@@ -8,7 +8,7 @@ export default class LabeledRadio {
     private label: Label;
 
     constructor(label: string, size: number, x: number, y: number, defaultVal: boolean, engine: Engine, onToggle?: (checked:boolean) => void) {
-        const textSize = size - (size * 0.25)
+        const textSize = size - (size * 0.25);
         const buttonSize = size + (size * 0.25);
         
 

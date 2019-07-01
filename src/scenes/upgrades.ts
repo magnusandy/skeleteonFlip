@@ -21,9 +21,9 @@ export class UpgradeScene extends BaseScene {
     this.coinsLabel = this.playercoinsLabel(engine.drawWidth / 2, title.getBottom() + Config.optionPadding);
     const sizing = SizingManager.get().getUIButtonSizing();
     const dims = calcDimensionsSingleObjectTexture(engine.drawHeight, engine.drawWidth, Resources.gridTile, sizing.padding, sizing.maxScale);
-    
+    console.log(dims);
     this.maxGrid = new UpgradeWidget(
-      engine.drawWidth / 3,
+      this.getButtonX(engine, dims.width),
       this.coinsLabel.getBottom() + 100,
       dims,
       Resources.gridTile,
@@ -40,8 +40,8 @@ export class UpgradeScene extends BaseScene {
     );
 
     this.maxDiff = new UpgradeWidget(
-      engine.drawWidth / 3,
-      this.maxGrid.getBottom() + Config.optionPadding*2,
+      this.getButtonX(engine, dims.width),
+      this.maxGrid.getBottom() + dims.width/2 + Config.optionPadding,
       dims,
       Resources.difficultyTile,
       "Difficulty",
@@ -68,6 +68,12 @@ export class UpgradeScene extends BaseScene {
     this.setBackround(engine.drawHeight);
   }
 
+  private getButtonX(engine: Engine, buttonWidth: number): number {
+    return SizingManager.get().isMobile()
+     ? 0 + (buttonWidth/2) + Config.gridPadding
+     : engine.drawWidth/3;    
+  }
+
   private title(): Actor {
     const dims = calcDimensionsSingleObjectTexture(this.engine.drawHeight, this.engine.drawWidth, Resources.upgradeTitle, 0.6, 1);
     const sprite = Resources.upgradeTitle.asSprite();
@@ -84,14 +90,14 @@ export class UpgradeScene extends BaseScene {
   private playercoinsLabel(x: number, y: number): Label {
     const coins = PlayerSettingsManager.get().getTotalCoins();
     const coinsLabel = new Label(this.coinsLabelString(coins), x, y, null, FontManager.get().getMono());
-    coinsLabel.fontSize = SizingManager.get().getUIItemSize();
+    coinsLabel.fontSize = SizingManager.get().menuFontSize();
     coinsLabel.baseAlign = BaseAlign.Middle;
     coinsLabel.textAlign = TextAlign.Center;
     return coinsLabel;
   }
 
   private coinsLabelString(coins: number): string {
-    return `Current Coins: ${coins}`;
+    return `Coins: ${coins}`;
   }
 
   public onActivate() {

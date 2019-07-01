@@ -26,7 +26,7 @@ export default class NumberSelector {
         this.current = current;
         this.fontSize = fontSize;
 
-        const textSize = this.fontSize - (this.fontSize * 0.25)
+        const textSize = this.fontSize - (this.fontSize * 0.25);
         const buttonSize = this.fontSize + (this.fontSize * 0.25);
         
         //top text

@@ -30,8 +30,8 @@ export default class UpgradeWidget {
         this.tileButton.setHeight(tileDims.height);
         this.tileButton.setWidth(tileDims.width);
 
-        this.label = new Label(label, this.tileButton.getRight() + Config.gridPadding, y, null, FontManager.get().getMono());
-        this.label.fontSize = SizingManager.get().getUIItemSize();
+        this.label = new Label(label, this.tileButton.getRight() + Config.optionPadding, y, null, FontManager.get().getMono());
+        this.label.fontSize = SizingManager.get().menuFontSize();
         this.label.baseAlign = BaseAlign.Middle;
         this.label.textAlign = TextAlign.Left;
     }

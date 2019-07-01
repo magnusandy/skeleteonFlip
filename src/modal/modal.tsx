@@ -2,11 +2,12 @@
 import * as React from 'react';
 import ReactModal = require('react-modal');
 import { render } from 'react-dom';
-import { Config } from '../resources';
+import { Config, Resources } from '../resources';
 import { TextAlignProperty } from 'csstype';
 import { Supplier } from 'java8script';
 import { UpgradeDetails } from '../actors/upgrades/upgradeWidget';
 import PlayerSettingsManager from '../engine/progression/playerSettingsManager';
+import SoundManager from '../engine/managers/soundManager';
 const xButton = require('../images/ui/x.png');
 const skullImage = require('../images/skull.png');
 const swordImage = require('../images/sword.png');
@@ -15,6 +16,7 @@ const coinImage = require('../images/coin.png');
 const heartUIImg = require('../images/ui/heart.png');
 const swordUIImage = require('../images/ui/sword.png');
 const threeImage = require('../images/numbers/3.png');
+const buyImage = require('../images/menu/buy.png');
 
 interface Styles {
     p: {
@@ -71,22 +73,35 @@ export class ModalRenderer {
     }
 
     public upgradeModal(upgradeDetails: UpgradeDetails, onClick: () => void) {
-        const innerStuff = (<div style={styles.holder}>
+        const maxLevel: boolean = upgradeDetails.currentLevel === upgradeDetails.maxLevel;
+        const canAfford: boolean = PlayerSettingsManager.get().getTotalCoins() >= upgradeDetails.price;
+
+        const innerStuff = (isHover: boolean) => (<div style={styles.holder}>
             <h1 style={styles.h1}>{upgradeDetails.title}</h1>
             <h2 style={styles.h1}>Price to Upgrade: {upgradeDetails.price}</h2>
             <h2 style={styles.h1}>Current Level: {upgradeDetails.currentLevel}</h2>
             <p style={styles.p}>{upgradeDetails.description}</p>
             <div style={styles.h1}>
-                {PlayerSettingsManager.get().getTotalCoins() > upgradeDetails.price
-                    ? <button onClick={this.onClickAndClose(onClick)}>BUY</button>
-                    : <p style={styles.p}>Not Enough Coins</p>}
+                {canAfford && !maxLevel
+                    ? <div style={{ background: "black", display: "inline-block", lineHeight: 0 }}>
+                        <img width={175} src={buyImage} style={isHover ? { opacity: 0.8 } : {}}
+                            onMouseEnter={() => {
+                                this.setOpenAndRerender(true, innerStuff(true));
+                            }}
+                            onMouseLeave={() => {
+                                this.setOpenAndRerender(true, innerStuff(false));
+                            }}
+                            onClick={this.onClickAndClose(onClick)} />
+                    </div>
+                    : (!maxLevel ? <p style={styles.p}>Not Enough Coins</p> : <p style={styles.p}>Fully Upgraded!</p>)}
             </div>
         </div>);
-        this.setOpenAndRerender(true, innerStuff);
+        this.setOpenAndRerender(true, innerStuff(false));
     }
 
     private onClickAndClose(onclick: Supplier<void>): Supplier<void> {
         return () => {
+            SoundManager.get().playSoundInterrupt(Resources.buttonSound);
             onclick();
             this.setOpenAndRerender(false);
         }
@@ -149,7 +164,7 @@ export class ModalRenderer {
                 {text}
             </p>
             <button onClick={() => PlayerSettingsManager.get().clearStorage()/*//todo Remove*/}>Clear Storage [Dev Tool]</button>
-            <button onClick={() => PlayerSettingsManager.get().setTotalCoins(PlayerSettingsManager.get().getTotalCoins()+10)/*//todo Remove*/}>Add 10 coins [Dev Tool]</button>
+            <button onClick={() => PlayerSettingsManager.get().setTotalCoins(PlayerSettingsManager.get().getTotalCoins() + 10)/*//todo Remove*/}>Add 10 coins [Dev Tool]</button>
         </div>);
         this.setOpenAndRerender(true, innerStuff);
     }
@@ -159,12 +174,15 @@ export class ModalRenderer {
         this.render({
             innerStuff: innerStuff,
             open: this.isOpen,
-            closeFunc: () => this.setOpenAndRerender(false)
+            closeFunc: () => {
+                SoundManager.get().playSoundInterrupt(Resources.buttonSound);
+                this.setOpenAndRerender(false);
+            }
         });
     }
 
     private render = (props: Props) => {
-        render(<E {...props} />,
+        render(<Modal {...props} />,
             document.getElementById('modal')
         );
     }
@@ -179,7 +197,7 @@ interface Props {
 interface State {
 }
 
-export default class E extends React.Component<Props, State> {
+export default class Modal extends React.Component<Props, State> {
 
     constructor(props) {
         super(props);
