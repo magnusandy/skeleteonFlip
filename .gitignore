@@ -1,9 +1,9 @@
 dist
-cordovaFlip
 
 # Generated files
 bundle.js
 index.js
+*.aab
 
 # Logs
 logs
